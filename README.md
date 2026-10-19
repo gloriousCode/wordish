@@ -54,46 +54,21 @@ Features:
 Screenshots
 -----------
 
-The [Wordish store package](store/1.6.0/README.md) includes the native 720×320
+The [Wordish store package](store/1.6.2/README.md) includes the native 720×320
 banner, five upload-ready screenshots for every supported platform, two native app icons
 and the listing copy.
 
-Release 1.6.0 gallery, captured directly from the Emery and Gabbro emulators:
+Release 1.6.2 gallery, captured directly from the Emery and Gabbro emulators:
 
 | Time in words | Make it yours | A discreet date | Exact when needed |
 | --- | --- | --- | --- |
-| ![Clear words on Pebble Time 2](screenshots/release-1.6.0/emery_01-clear-words.png) | ![Coloured rows on Pebble Round 2](screenshots/release-1.6.0/gabbro_02-colour-rows.png) | ![Corner date on Pebble Round 2](screenshots/release-1.6.0/gabbro_03-corner-date.png) | ![Exact time on Pebble Time 2](screenshots/release-1.6.0/emery_04-exact-time.png) |
+| ![Clear words on Pebble Time 2](store/1.6.2/emery/01-time-in-words.png) | ![Coloured rows on Pebble Round 2](store/1.6.2/gabbro/02-make-it-yours.png) | ![Corner date on Pebble Round 2](store/1.6.2/gabbro/03-corner-date.png) | ![Exact time on Pebble Time 2](store/1.6.2/emery/04-exact-time.png) |
 
 The [capture helper](scripts/capture_screenshots.py) records bundle and source
-hashes alongside the raw images. It also checks double tap, return to fuzzy time
-and the gesture-off setting on both platforms. These are emulator results;
+hashes alongside the raw images in ignored `build/screenshots/`. Only the current
+store gallery is kept in Git. It also checks double tap, return to fuzzy time
+and the gesture-off setting on all seven platforms. These are emulator results;
 physical display contrast and battery life still need device measurement.
-
-Earlier platform and style examples:
-
-These screenshots show the modernised rendering across the supported
-PebbleOS platforms, including colour presets, text alignment, and the
-higher-resolution Emery and Gabbro layouts.
-
-| Platform | Default, 7:25 | Black/red, 12:00 | Ocean left, 3:15 | White/blue right, 11:45 |
-| --- | --- | --- | --- | --- |
-| Aplite | ![Aplite default 7:25](screenshots/aplite_0725_default.png) | ![Aplite black background red text 12:00](screenshots/aplite_1200_black_red.png) | ![Aplite ocean preset left aligned 3:15](screenshots/aplite_0315_left_ocean.png) | ![Aplite white background blue text right aligned 11:45](screenshots/aplite_1145_right_white_blue.png) |
-| Basalt | ![Basalt default 7:25](screenshots/basalt_0725_default.png) | ![Basalt black background red text 12:00](screenshots/basalt_1200_black_red.png) | ![Basalt ocean preset left aligned 3:15](screenshots/basalt_0315_left_ocean.png) | ![Basalt white background blue text right aligned 11:45](screenshots/basalt_1145_right_white_blue.png) |
-| Chalk | ![Chalk default 7:25](screenshots/chalk_0725_default.png) | ![Chalk black background red text 12:00](screenshots/chalk_1200_black_red.png) | ![Chalk ocean preset left aligned 3:15](screenshots/chalk_0315_left_ocean.png) | ![Chalk white background blue text right aligned 11:45](screenshots/chalk_1145_right_white_blue.png) |
-| Diorite | ![Diorite default 7:25](screenshots/diorite_0725_default.png) | ![Diorite black background red text 12:00](screenshots/diorite_1200_black_red.png) | ![Diorite ocean preset left aligned 3:15](screenshots/diorite_0315_left_ocean.png) | ![Diorite white background blue text right aligned 11:45](screenshots/diorite_1145_right_white_blue.png) |
-| Emery | ![Emery default 7:25](screenshots/emery_0725_default.png) | ![Emery black background red text 12:00](screenshots/emery_1200_black_red.png) | ![Emery ocean preset left aligned 3:15](screenshots/emery_0315_left_ocean.png) | ![Emery white background blue text right aligned 11:45](screenshots/emery_1145_right_white_blue.png) |
-| Gabbro | ![Gabbro default 7:25](screenshots/gabbro_0725_default.png) | ![Gabbro black background red text 12:00](screenshots/gabbro_1200_black_red.png) | ![Gabbro ocean preset left aligned 3:15](screenshots/gabbro_0315_left_ocean.png) | ![Gabbro white background blue text right aligned 11:45](screenshots/gabbro_1145_right_white_blue.png) |
-
-On monochrome platforms such as Aplite and Diorite, colour presets are
-mapped to high-contrast black and white so text remains readable.
-
-Feature showcases in skinned emulator frames:
-
-| Feature | Preset | Emery | Gabbro | Flint |
-| --- | --- | --- | --- | --- |
-| Double tap exact time with corner date | Paper / Festival | ![Emery exact time with corner date using the paper preset](screenshots/emery_exact_time_date_paper_skinned.png) | ![Gabbro large exact time with corner date using the festival preset](screenshots/gabbro_large_exact_time_festival_skinned.png) | ![Flint exact time with corner date using the paper preset](screenshots/flint_exact_time_date_paper_skinned.png) |
-| Quiet time indicator | Terminal / System | ![Emery quiet time indicator using the terminal preset](screenshots/emery_quiet_time_terminal_skinned.png) | ![Gabbro quiet time indicator using the system preset](screenshots/gabbro_quiet_time_system_skinned.png) | ![Flint quiet time indicator using the terminal preset](screenshots/flint_quiet_time_terminal_skinned.png) |
-| Three-colour time rows | Traffic / System | ![Emery three-colour time rows using the traffic preset](screenshots/emery_three_colour_traffic_skinned.png) | ![Gabbro three-colour time rows using the system preset](screenshots/gabbro_three_colour_system_skinned.png) | ![Flint three-colour time rows using the traffic preset](screenshots/flint_three_colour_traffic_skinned.png) |
 
 The following options can be configured, using the Pebble app on your
 phone:
@@ -137,9 +112,7 @@ callback tests, plus the Node.js configuration tests. Run `make lint` for the
 seven-platform Pebble SDK build. The callback tests use a small SDK model;
 they do not replace watch or emulator validation.
 
-The [watchface audit](WATCHFACE_AUDIT.md) records the store comparison, proposed
-listing copy, implementation changes and release checks from 19 October 2026.
-The [1.6.0 release plan](RELEASE_1.6.0.md) contains the proposed store description,
+The [1.6.2 release plan](RELEASE_1.6.2.md) contains the proposed store description,
 screenshot order and publishing checks. The app UUID, configuration URL and
 saved-settings key remain unchanged across the rename.
 

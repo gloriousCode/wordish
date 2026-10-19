@@ -15,7 +15,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DESTINATION = ROOT / "store/1.6.0"
+DESTINATION = ROOT / "store/1.6.2"
 DIMENSIONS = {"aplite": (144, 168), "basalt": (144, 168), "chalk": (180, 180),
               "diorite": (144, 168), "emery": (200, 228), "flint": (144, 168),
               "gabbro": (260, 260)}
@@ -31,14 +31,14 @@ SELECTION = [
 def main():
     """Validate capture provenance, prepare the gallery and draw native artwork."""
     DESTINATION.mkdir(parents=True, exist_ok=True)
-    manifest = {"name": "Wordish", "version": "1.6.0", "screenshots": []}
+    manifest = {"name": "Wordish", "version": "1.6.2", "screenshots": []}
     bundle_hash = None
     for platform, dimensions in DIMENSIONS.items():
-        capture_manifest = ROOT / f"screenshots/release-1.6.0/{platform}_manifest.json"
+        capture_manifest = ROOT / f"build/screenshots/release-1.6.2/{platform}_manifest.json"
         source = json.loads(capture_manifest.read_text())
         metadata = source["bundle_metadata"]
-        if metadata["longName"] != "Wordish" or metadata["versionLabel"] != "1.6.0":
-            raise ValueError("Capture does not describe Wordish 1.6.0")
+        if metadata["longName"] != "Wordish" or metadata["versionLabel"] != "1.6.2":
+            raise ValueError("Capture does not describe Wordish 1.6.2")
         digest = hashlib.sha256((ROOT / source["bundle"]).read_bytes()).hexdigest()
         if digest != source["bundle_sha256"] or bundle_hash not in (None, digest):
             raise ValueError("Rebuild and recapture: bundle differs from screenshot provenance")
@@ -49,7 +49,7 @@ def main():
         output = DESTINATION / platform
         output.mkdir(exist_ok=True)
         for original, selected, caption in SELECTION:
-            filename = f"screenshots/release-1.6.0/{platform}_{original}.png"
+            filename = f"build/screenshots/release-1.6.2/{platform}_{original}.png"
             shot = next(item for item in source["captures"] if item["file"] == filename)
             data = (ROOT / filename).read_bytes()
             if hashlib.sha256(data).hexdigest() != shot["sha256"]:

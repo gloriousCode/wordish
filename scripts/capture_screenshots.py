@@ -257,10 +257,10 @@ def main():
     """Validate release identity before touching any emulator state."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--pbw", default="build/fuzzy-text-two.pbw")
-    parser.add_argument("--output", default="screenshots/release-1.6.0")
+    parser.add_argument("--output", default="build/screenshots/release-1.6.2")
     parser.add_argument("--sdk", type=Path, default=SDK)
     parser.add_argument("--platform", choices=["all", *PORTS], default="all")
-    parser.add_argument("--expected-version", default="1.6.0")
+    parser.add_argument("--expected-version", default="1.6.2")
     parser.add_argument("--plan", action="store_true")
     parser.add_argument("--preset-audit", action="store_true",
                         help="Capture every actual configuration-page preset")

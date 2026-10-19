@@ -4,10 +4,10 @@
 Changes
 ========
 
-Version 1.6.0 is prepared locally and has not yet been published. It retains
+Version 1.6.0 has already been released. Version 1.6.2 is prepared locally and has not yet been published. It retains
 the existing app UUID and saved settings under the name Wordish.
 
-version 1.6.0 (unreleased)
+version 1.6.2 (unreleased)
 -------------------------
 
 - Smooths the larger clock fonts on Time 2 and Round 2 while measuring their

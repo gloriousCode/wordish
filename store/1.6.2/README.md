@@ -1,6 +1,6 @@
 # Wordish store package
 
-Prepared for version **1.6.0**, code **17**, using the existing app UUID
+Prepared for version **1.6.2**, code **19**, using the existing app UUID
 `bf4b4493-24d6-49e1-9388-4100aa55d9ba`. This package has not been published.
 
 ![Wordish banner](wordish-banner.png)
@@ -9,7 +9,7 @@ Prepared for version **1.6.0**, code **17**, using the existing app UUID
 
 - [Title](title.txt): Wordish.
 - [Description](description.txt): complete, plain-text listing copy ready to paste.
-- [Release notes](release-notes.txt): the 1.6.0 update summary, ready to paste.
+- [Release notes](release-notes.txt): the 1.6.2 update summary, ready to paste.
 - [Tagline](tagline.txt): included at the start of the description; also useful
   for announcements. It is not a separate required store field.
 
@@ -43,15 +43,15 @@ Upload these five filenames in order from each folder:
 | 4 | `04-exact-time.png` | Exact time on demand |
 | 5 | `05-status-indicators.png` | Useful details, quietly |
 
-These images are from the current Wordish 1.6.0 bundle. Older screenshots
-elsewhere in the repository are not part of this upload selection.
+These images are from the current Wordish 1.6.2 bundle. This directory is the
+only maintained store package; generated verification images stay in ignored `build/`.
 
 The fifth image shows low battery, the system Quiet Time indicator and date.
 Emery, Flint and Gabbro also show phone disconnection. The four legacy emulators
 must remain connected to retrieve screenshots, so their images do not show the
 disconnected-phone icon. Battery and disconnection indicators default to off.
 Long Catalan phrases and real gesture/timeout checks remain in
-[`screenshots/release-1.6.0`](../../screenshots/release-1.6.0) for verification.
+`build/screenshots/release-1.6.2` locally for verification.
 
 Time 2 and Round 2 use the new coordinated presets in this order:
 
@@ -64,8 +64,8 @@ Time 2 and Round 2 use the new coordinated presets in this order:
 | Useful details, quietly | Grove | Forest, mint and cream |
 
 The larger clock fonts are smoothed on these two models. All eight current
-presets were rendered on both emulators; see the [preset audit](../../screenshots/preset-audit-1.6.0/README.md)
-for native previews and contrast checks. The other five platform galleries retain
+presets were rendered on both emulators. Generated preset checks live locally in
+`build/screenshots/preset-audit-1.6.2/`. The other five platform galleries retain
 their original styles and rendering.
 
 ## Banner
@@ -96,7 +96,7 @@ accents. Neither icon is a resized copy of the other.
    The local publishing branch is `master`; `git push origin master` requires
    separate approval.
 2. Upload [`build/fuzzy-text-two.pbw`](../../build/fuzzy-text-two.pbw) as version
-   1.6.0 to the existing listing. The retained filename does not affect the
+   1.6.2 to the existing listing. The retained filename does not affect the
    Wordish display name. The bundle is a build output, not checked into Git.
 3. Apply the title, description and release notes, then the matching five
    screenshots and the shared banner for all seven tabs, then the two app icons.
@@ -111,4 +111,4 @@ provenance and draws the banner and icons natively. It does not change the listi
 
 The seven-platform SDK build and host tests pass. Emulator testing covers all
 seven platforms; physical watch contrast, battery life and phone-webview behaviour
-have not been verified. See [the full release plan](../../RELEASE_1.6.0.md).
+have not been verified. See [the full release plan](../../RELEASE_1.6.2.md).

@@ -1,27 +1,20 @@
-# Wordish 1.6.0
+# Wordish 1.6.2
 
 Prepared locally, not published. This release retains UUID
 `bf4b4493-24d6-49e1-9388-4100aa55d9ba`, the existing configuration URL and the
-`fuzzy-text-two-options-v2` storage key. `appinfo.json` uses version label 1.6.0
-and version code 17; the phone bridge reports the same version label.
+`fuzzy-text-two-options-v2` storage key. `appinfo.json` uses version label 1.6.2
+and version code 19; the phone bridge reports the same version label.
 
-The upload-ready [store package](store/1.6.0/README.md) contains plain-text listing
+The upload-ready [store package](store/1.6.2/README.md) contains plain-text listing
 copy and release notes, five screenshots for each of the seven platforms, native
 80×80 and 144×144 icons, and a native 720×320 banner. Its manifest records image
 and bundle checksums.
 
 ## Release identity
 
-The store's latest release is labelled 1.5.0, but its downloadable PBW contains
-an `appinfo.json` labelled 1.4.9. The store history lists a 1.4.10 double-tap fix
-uploaded after 1.5.0, while the latest release still selects 1.5.0. Origin's
-current source also says 1.4.10. This explains why a visitor might not receive
-the features present in this checkout. Version 1.6.0 moves beyond both labels;
-verify the uploaded bundle's embedded metadata after publishing.
-
-Evidence: [live release metadata](https://appstore-api.repebble.com/api/v1/apps/id/a77242a455c04f94a667dbdf?hardware=emery)
-and the [bundle served as 1.5.0](https://appstore-api.repebble.com/api/assets/pbw/a77242a455c04f94a667dbdf/1.5.0/55cc1c93-3951-4eaa-ac09-72f2928d0830.pbw),
-inspected on 19 October 2026. That bundle's phone JavaScript also says 1.4.9.
+The user has already published 1.6.0. This package advances the version label to
+1.6.2 and the version code to 19, retaining the existing UUID and saved settings.
+Version 1.6.2 is prepared locally for upload; it has not been published by this task.
 
 The original store entry is
 [Fuzzy Text Two](https://apps.repebble.com/fuzzy-text-two_a77242a455c04f94a667dbdf).
@@ -71,7 +64,7 @@ been replaced with Lagoon, Ember, Orchid, Grove and Sand.
 
 ## Screenshot sequence
 
-Use fresh, unaltered emulator captures from the 1.6.0 bundle. Lead with benefits
+Use fresh, unaltered emulator captures from the 1.6.2 bundle. Lead with benefits
 rather than a grid of nearly identical colour choices:
 
 1. **Time in words** — clear words at each platform's native resolution.
@@ -84,9 +77,9 @@ Additional verification captures should show long Catalan phrases and simultaneo
 date/status indicators on round and rectangular screens. Emulator captures do
 not establish physical watch contrast or battery life.
 
-The selected upload files are in seven platform folders under `store/1.6.0`,
+The selected upload files are in seven platform folders under `store/1.6.2`,
 numbered in this order for each platform. The full verification captures are in
-`screenshots/release-1.6.0`.
+`build/screenshots/release-1.6.2`.
 `scripts/capture_screenshots.py` records bundle/source hashes, settings and capture
 times in a manifest for each platform, and checks real emulated double taps,
 the exact-time timeout and the disabled-gesture setting.
@@ -114,7 +107,8 @@ captured on both modern emulators. The five colour palettes use related hues and
 one contrasting accent, with minimum solid word contrast of 6.53:1 and minimum
 date contrast of 7.15:1. These are palette calculations, not physical-display
 measurements. The settings preview now also checks small date text against 4.5:1.
-See the [preset audit](screenshots/preset-audit-1.6.0/README.md).
+Preset captures can be regenerated locally with `--preset-audit`; they are kept
+in ignored `build/screenshots/preset-audit-1.6.2/` rather than duplicated in Git.
 
 The final SDK 4.33.1 build passes `make lint` for all seven targets. The
 `make misc_checks` run passes both host C suites and 23 Node configuration tests,
@@ -147,11 +141,11 @@ an earlier 1.5-second capture was too soon to show the icon.
 2. Publish `resources/configure-fuzzy-text-two.html` at its existing URL. The new
    page tolerates missing new preferences; existing versions ignore the extra
    preferences. Confirm the hosted page displays the new name and controls.
-3. Upload `build/fuzzy-text-two.pbw` to the existing store entry as **1.6.0**.
+3. Upload `build/fuzzy-text-two.pbw` to the existing store entry as **1.6.2**.
    Apply the approved Wordish name, description, release notes and screenshot
    sequence above. Keep the existing listing and app UUID for continuity.
 4. Download the published bundle and inspect its embedded version/UUID. Confirm
-   the store selects 1.6.0 as latest and uses the intended screenshots.
+   the store selects 1.6.2 as latest and uses the intended screenshots.
 5. Check settings save/cancel on a real phone, including disconnected delivery,
    and verify the watch retains settings after reopening the face.
 
@@ -179,3 +173,11 @@ installs divided by views for each period. Otherwise record the change in hearts
 as a limited engagement signal. Do not infer improved conversion from a new name
 alone or compare the raw total directly with a face released in 2014. No monitoring
 automation or telemetry has been added.
+
+## Repository layout
+
+Only the current upload package is tracked under `store/1.6.2/`. Raw emulator
+captures and preset audits are generated into ignored `build/screenshots/` by
+`scripts/capture_screenshots.py`; run `scripts/prepare_store_assets.py` afterwards
+to validate and refresh the store gallery. Previous galleries and obsolete artwork
+remain available in Git history.
