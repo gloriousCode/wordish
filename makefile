@@ -26,6 +26,15 @@ test:
 		tests/watchface_runtime_test.c src/text_layout.c src/text_lines.c \
 		src/num2words.c src/strings-*.c -o build/watchface_runtime_test
 	./build/watchface_runtime_test
+	$(CC) -std=c99 -Wall -Wextra -Werror -Wno-unused-parameter -DWORDISH_GENTLE_GESTURE -Itests -Isrc \
+		tests/watchface_runtime_test.c src/text_layout.c src/text_lines.c \
+		src/num2words.c src/strings-*.c -o build/watchface_gentle_runtime_test
+	./build/watchface_gentle_runtime_test
+	$(CC) -std=c99 -Wall -Wextra -Werror -Isrc tests/gentle_tap_test.c -o build/gentle_tap_test
+	./build/gentle_tap_test
+	$(CC) -std=c99 -Wall -Wextra -Werror -Itests/gentle_gesture_stubs -Isrc \
+		tests/gentle_gesture_test.c -o build/gentle_gesture_test
+	./build/gentle_gesture_test
 	node --test tests/configuration_test.js
 	$(CC) -std=c99 -Wall -Wextra -Werror -DPBL_PLATFORM_EMERY \
 		-Itests/smooth_font_stubs -Isrc tests/smooth_font_renderer_test.c \

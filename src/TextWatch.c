@@ -6,6 +6,13 @@
 #include "status_indicators.h"
 #include "smooth_fonts.h"
 
+#if defined(PBL_PLATFORM_EMERY) || defined(PBL_PLATFORM_GABBRO)
+#define WORDISH_GENTLE_GESTURE
+#endif
+#ifdef WORDISH_GENTLE_GESTURE
+#include "gentle_gesture.h"
+#endif
+
 #define DEBUG 0
 
 #define NUM_LINES FUZZY_TEXT_NUM_LINES
@@ -1282,6 +1289,7 @@ static void cancel_timer(AppTimer **timer)
 	*timer = NULL;
 }
 
+#ifndef WORDISH_GENTLE_GESTURE
 static void tap_reset_timer_callback(void *context)
 {
 	(void)context;
@@ -1289,6 +1297,8 @@ static void tap_reset_timer_callback(void *context)
 	tap_reset_timer = NULL;
 	tap_pending = false;
 }
+
+#endif
 
 static void exact_time_timer_callback(void *context)
 {
@@ -1316,6 +1326,7 @@ static void show_exact_time_briefly(void)
 	}
 }
 
+#ifndef WORDISH_GENTLE_GESTURE
 static void tap_handler(AccelAxisType axis, int32_t direction)
 {
 	(void)axis;
@@ -1338,15 +1349,26 @@ static void tap_handler(AccelAxisType axis, int32_t direction)
 	}
 }
 
+#else
+static void backlight_changed(bool on)
+{
+	gentle_gesture_set_light(on);
+}
+#endif
+
 static void configure_gesture_service(void)
 {
 	if (gesture_enabled != gesture_subscribed) {
 		gesture_subscribed = gesture_enabled;
+#ifdef WORDISH_GENTLE_GESTURE
+		gentle_gesture_set_enabled(gesture_enabled ? show_exact_time_briefly : NULL);
+#else
 		if (gesture_enabled) {
 			accel_tap_service_subscribe(tap_handler);
 		} else {
 			accel_tap_service_unsubscribe();
 		}
+#endif
 	}
 	if (!gesture_enabled) {
 		cancel_timer(&tap_reset_timer);
@@ -1890,6 +1912,10 @@ static void handle_init() {
   
 	// Subscribe to minute ticks
 	tick_timer_service_subscribe(MINUTE_UNIT, handle_minute_tick);
+#ifdef WORDISH_GENTLE_GESTURE
+	backlight_service_subscribe(backlight_changed);
+	gentle_gesture_set_light(light_is_on());
+#endif
 	configure_gesture_service();
 
 #if DEBUG
@@ -1902,10 +1928,16 @@ static void handle_deinit()
 {
 	cancel_timer(&tap_reset_timer);
 	cancel_timer(&exact_time_timer);
+#ifdef WORDISH_GENTLE_GESTURE
+	backlight_service_unsubscribe();
+	gentle_gesture_deinit();
+	gesture_subscribed = false;
+#else
 	if (gesture_subscribed) {
 		accel_tap_service_unsubscribe();
 		gesture_subscribed = false;
 	}
+#endif
 	tick_timer_service_unsubscribe();
 	app_message_deregister_callbacks();
 

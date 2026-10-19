@@ -202,8 +202,8 @@
         "gabbro"
     ],
     "uuid": "bf4b4493-24d6-49e1-9388-4100aa55d9ba",
-    "versionCode": 20,
-    "versionLabel": "1.6.3",
+    "versionCode": 21,
+    "versionLabel": "1.6.4",
     "watchapp": {
         "watchface": true
     }

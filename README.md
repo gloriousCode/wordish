@@ -86,7 +86,10 @@ phone:
 - Low battery indicator (20% or less, hidden while charging)
 - Phone-disconnection indicator
 
-Double tap the watch to show the exact digital time for a few seconds.
+On Time 2 and Round 2, wake the backlight, hold your wrist still, then tap twice
+gently within eight seconds to show the exact digital time. Detection stops
+when the light goes out, after eight seconds, or after one successful gesture.
+Wake the light again to repeat. Other models retain the previous double-tap gesture.
 The exact time follows the watch's 12-hour or 24-hour clock setting, then
 the display returns to the fuzzy text face automatically. Animations and double
 tap are enabled by default; both status indicators are off by default. Disabling
@@ -116,7 +119,14 @@ The [1.6.2 release plan](RELEASE_1.6.2.md) contains the proposed store descripti
 screenshot order and publishing checks. The app UUID and saved-settings key
 remain unchanged across the rename.
 
-Version **1.6.3** (code **20**) corrects the configuration URL to
+Version **1.6.4** (code **21**) adds sampled gentle-tap detection on Time 2 and
+Round 2. It samples at 50 Hz in batches of five only during the bounded backlight
+window; there is no idle sampling or polling timer. Synthetic tests cover impulses,
+recoil, movement, vibration and subscription cleanup. Sensitivity and battery
+impact still need measurement on physical watches; synthetic samples do not
+establish real-world reliability.
+
+Version **1.6.3** (code **20**) corrected the configuration URL to
 `https://www.gloriousedge.com/wordish/resources/configure-fuzzy-text-two.html`.
 The old `/fuzzy-text-two/` URL no longer follows the renamed repository and
 returns 404. Install the updated bundle to use the corrected address. The

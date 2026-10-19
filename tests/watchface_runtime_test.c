@@ -4,6 +4,29 @@
 #undef main
 #include "../src/status_indicators.c"
 
+#ifdef WORDISH_GENTLE_GESTURE
+static void (*mock_gentle_handler)(void);
+static bool mock_gentle_light;
+static int mock_gentle_deinits;
+void gentle_gesture_set_enabled(void (*handler)(void)) { mock_gentle_handler = handler; }
+void gentle_gesture_set_light(bool on) { mock_gentle_light = on; }
+void gentle_gesture_deinit(void) { mock_gentle_handler = NULL; mock_gentle_light = false; mock_gentle_deinits++; }
+#endif
+
+static void trigger_exact_gesture(void)
+{
+#ifdef WORDISH_GENTLE_GESTURE
+  assert(mock_gentle_handler);
+  mock_light_on = true;
+  mock_backlight_handler(true);
+  assert(mock_gentle_light);
+  mock_gentle_handler();
+#else
+  mock_tap_handler(0, 1);
+  mock_tap_handler(0, 1);
+#endif
+}
+
 static void finish_animations(void)
 {
   for (int i = 0; i < NUM_LINES; i++) {
@@ -144,24 +167,38 @@ static void assert_optional_controls_and_services(void)
   handle_init();
   assert(animations_enabled && gesture_enabled && exact_time_seconds == 3);
   assert(!low_battery_enabled && !disconnect_enabled);
+#ifdef WORDISH_GENTLE_GESTURE
+  assert(mock_tap_subscriptions == 0 && !mock_tap_handler);
+  assert(mock_backlight_subscriptions == 1 && mock_gentle_handler);
+  assert(mock_gentle_light == mock_light_on);
+#else
   assert(mock_tap_subscriptions == 1);
+#endif
   assert(mock_battery_subscriptions == 0 && mock_connection_subscriptions == 0);
   assert(!status_indicators_visible());
 
   receive_setting(EXACT_TIME_SECONDS_KEY, 10);
-  mock_tap_handler(0, 1);
-  mock_tap_handler(0, 1);
+  trigger_exact_gesture();
   assert(exact_time_visible);
   assert(exact_time_timer->delay_ms == 10000);
   receive_setting(GESTURE_ENABLED_KEY, 0);
   assert(!gesture_subscribed && !mock_tap_handler);
   assert(!exact_time_visible && !tap_pending);
   assert(!tap_reset_timer && !exact_time_timer && mock_timer_count == 0);
+#ifdef WORDISH_GENTLE_GESTURE
+  assert(!mock_gentle_handler);
+  mock_backlight_handler(false);
+  assert(!mock_gentle_light);
+  receive_setting(GESTURE_ENABLED_KEY, 1);
+  assert(mock_gentle_handler && !mock_gentle_light);
+  assert(mock_backlight_subscriptions == 1 && mock_tap_subscriptions == 0);
+#else
   tap_handler(0, 1);
   assert(!tap_pending);
   receive_setting(GESTURE_ENABLED_KEY, 1);
   mock_tap_handler(0, 1);
   assert(tap_pending);
+#endif
   receive_setting(GESTURE_ENABLED_KEY, 0);
   assert(!tap_pending && mock_timer_count == 0);
 
@@ -218,6 +255,10 @@ static void assert_optional_controls_and_services(void)
   handle_deinit();
   assert(mock_tap_subscriptions == 0 && mock_battery_subscriptions == 0
       && mock_connection_subscriptions == 0);
+#ifdef WORDISH_GENTLE_GESTURE
+  assert(mock_backlight_subscriptions == 0 && !mock_backlight_handler);
+  assert(!mock_gentle_handler && !mock_gentle_light && mock_gentle_deinits > 0);
+#endif
 }
 
 static void assert_frame_inside_screen(GRect frame)
@@ -350,8 +391,7 @@ static void assert_tick_time_is_owned(void)
   borrowed.tm_hour = 20;
   borrowed.tm_min = 59;
   assert(t != &borrowed && t->tm_hour == 13 && t->tm_min == 42);
-  tap_handler(0, 1);
-  tap_handler(0, 1);
+  trigger_exact_gesture();
   assert(exact_time_visible);
   assert(strcmp(lines[0].currentLayer->text, "13:42") == 0);
   receive_setting(LOW_BATTERY_ENABLED_KEY, 1);

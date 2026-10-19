@@ -1,4 +1,4 @@
-var VERSION = "1.6.3";
+var VERSION = "1.6.4";
 var OPTIONS_STORAGE_KEY = "fuzzy-text-two-options-v2";
 var CONFIG_URL = "https://www.gloriousedge.com/wordish/resources/configure-fuzzy-text-two.html";
 

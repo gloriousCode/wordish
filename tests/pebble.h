@@ -167,8 +167,17 @@ static void app_message_register_inbox_received(void (*f)(DictionaryIterator *, 
 static void app_message_register_inbox_dropped(void (*f)(AppMessageResult, void *)) { (void)f; }
 static void app_message_deregister_callbacks(void) {}
 static void app_message_open(int i, int o) { (void)i; (void)o; }
+#ifdef WORDISH_GENTLE_GESTURE
+static bool mock_light_on;
+static void (*mock_backlight_handler)(bool);
+static int mock_backlight_subscriptions;
+static bool light_is_on(void) { return mock_light_on; }
+static void backlight_service_subscribe(void (*handler)(bool)) { assert(!mock_backlight_handler); mock_backlight_handler = handler; mock_backlight_subscriptions++; }
+static void backlight_service_unsubscribe(void) { assert(mock_backlight_handler); mock_backlight_handler = NULL; mock_backlight_subscriptions--; }
+#else
 static void accel_tap_service_subscribe(void (*f)(AccelAxisType, int32_t)) { assert(!mock_tap_handler); mock_tap_handler = f; mock_tap_subscriptions++; }
 static void accel_tap_service_unsubscribe(void) { assert(mock_tap_handler); mock_tap_handler = NULL; mock_tap_subscriptions--; }
+#endif
 static void tick_timer_service_subscribe(TimeUnits u, void (*f)(struct tm *, TimeUnits)) { (void)u; (void)f; }
 static void tick_timer_service_unsubscribe(void) {}
 static void app_event_loop(void) {}
