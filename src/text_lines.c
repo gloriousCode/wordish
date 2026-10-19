@@ -64,6 +64,12 @@ void time_to_lines_with_limit(Language lang, int hours, int minutes, int seconds
     start = end + 1;
     end = strstr(start, " ");
   }
+
+  // Narrow candidate layouts must never omit the hour to fit four rows.
+  if (*start != '\0' && append_limit < FUZZY_TEXT_LINE_LENGTH) {
+    time_to_lines_with_limit(lang, hours, minutes, seconds, FUZZY_TEXT_LINE_LENGTH,
+        lines, format);
+  }
 }
 
 void time_to_lines(Language lang, int hours, int minutes, int seconds,

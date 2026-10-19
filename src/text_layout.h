@@ -41,3 +41,17 @@ bool text_font_choice_fits(int screen_width, int screen_height, bool round,
 FontChoice text_font_choice_that_fits(int screen_width, int screen_height, bool round,
     FontChoice preferred,
     char lines[FUZZY_TEXT_NUM_LINES][FUZZY_TEXT_BUFFER_SIZE]);
+
+// Reserve decoration rows while retaining the physical screen's circular bounds.
+TextFrame text_frame_for_line_in_area(int screen_width, int screen_height, bool round,
+    FontChoice font_choice, int num_lines, int line_index, int top_inset, int bottom_inset);
+FontChoice text_font_choice_that_fits_in_area(int screen_width, int screen_height, bool round,
+    FontChoice preferred, char lines[FUZZY_TEXT_NUM_LINES][FUZZY_TEXT_BUFFER_SIZE],
+    int top_inset, int bottom_inset);
+
+// Runtime callers can measure real glyphs; host-only callers retain estimates.
+typedef int (*TextWidthMeasurer)(FontChoice font_choice, const char *text,
+    int line_index, void *context);
+FontChoice text_font_choice_that_fits_measured(int screen_width, int screen_height, bool round,
+    FontChoice preferred, char lines[FUZZY_TEXT_NUM_LINES][FUZZY_TEXT_BUFFER_SIZE],
+    int top_inset, int bottom_inset, TextWidthMeasurer measure_width, void *context);

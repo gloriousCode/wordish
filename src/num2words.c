@@ -134,6 +134,9 @@ const char* get_rel(Language lang, int index) {
 }
 
 void time_to_words(Language lang, int hours, int minutes, int seconds, char* words, size_t buffer_size) {
+  if (buffer_size == 0) {
+    return;
+  }
 
   size_t remaining = buffer_size - 1;
   memset(words, 0, buffer_size);
@@ -156,7 +159,7 @@ void time_to_words(Language lang, int hours, int minutes, int seconds, char* wor
   const char* next_hour = get_hour(lang, (hour_index + 1) % 24);
   const char* rel  = get_rel(lang, rel_index);
 
-  remaining -= interpolate_and_append(words, remaining, rel, hour, next_hour);
+  remaining = interpolate_and_append(words, remaining, rel, hour, next_hour);
 
   // Leave one space at the end
   remaining -= append_string(words, remaining, " ");
@@ -178,6 +181,9 @@ const char* get_month(Language lang, int index) {
 }
 
 void date_to_words(Language lang, int day, int date, int month, char* words, size_t buffer_size) {
+  if (buffer_size == 0) {
+    return;
+  }
   size_t remaining = buffer_size - 1;
   memset(words, 0, buffer_size);
   

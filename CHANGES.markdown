@@ -4,16 +4,24 @@
 Changes
 ========
 
-The latest version is 1.4.10.  To update, remove the watchface from your
-watch and then load it again from your locker.
+Version 1.6.0 is prepared locally and has not yet been published. It retains
+the existing app UUID and saved settings under the name Wordish.
 
-The iOS version has to go through the Apple Store approval process - so
-there will be a delay before iOS users are able to download the latest
-version.  Wait for the Pebble app to update, then try updating the
-watchface.
+version 1.6.0 (unreleased)
+-------------------------
 
-Android users do not need to wait for the Pebble app to update before
-updating the watchface.
+- Adds animation and double-tap switches, plus a choice of 3, 5 or 10 seconds
+  for exact time.
+- Adds optional, silent low-battery and phone-disconnection indicators.
+- Adds a settings colour preview, contrast warning and accurate custom-style label.
+- Preserves legacy inverted colours and existing settings during partial updates.
+- Retries failed settings delivery twice, without letting stale saves override new ones.
+- Fixes missing digital-time glyphs, truncated translated phrases, small-buffer
+  writes and interrupted animation cleanup.
+- Fits text using actual font measurements, with a small cache, to prevent
+  ellipsis on long words and circular layouts.
+- Avoids unnecessary layer updates while the displayed words/date stay unchanged.
+- Renames Fuzzy Text Two to Wordish and clarifies the store copy.
 
 version 1.4.10
 --------------

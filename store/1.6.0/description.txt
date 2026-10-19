@@ -1,0 +1,21 @@
+Time in words. Exact when you need it.
+
+Wordish gives the classic Pebble word clock crisp text and
+colourful personalisation. Previously called Fuzzy Text Two.
+
+- Read relaxed time at a glance, with native layouts for Pebble Time 2 and
+  Pebble Round 2 alongside classic Pebble models.
+- Double tap to reveal the exact time for 3, 5 or 10 seconds, following your
+  watch's 12-hour or 24-hour clock setting.
+- Pick a colour preset or customise individual text rows, fonts and alignment.
+- Add a discreet corner date with a choice of formats and colours.
+- Switch animations or the double-tap gesture off for a still, simple display.
+- Optionally show low battery or phone disconnection, without vibrations.
+- Choose Catalan, English, French, German, Norwegian, Spanish or Swedish.
+
+The low-battery indicator appears at 20% or less and stays hidden while charging.
+Indicators are off by default. Colour customisation requires a colour screen;
+monochrome watches use high-contrast black and white.
+
+Open settings in the Pebble app to make it yours. A colour preview helps you
+choose a readable combination before saving.

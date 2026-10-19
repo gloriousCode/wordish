@@ -8,13 +8,13 @@
 	<!-- Basic Page Needs
   ================================================== -->
 	<meta charset="utf-8">
-	<title>Configure Fuzzy Text Two</title>
-	<meta name="description" content="configuration page for Fuzzy Text Two, a Pebble watchface">
+	<title>Configure Wordish</title>
+	<meta name="description" content="configuration page for Wordish, a Pebble watchface">
 	<meta name="author" content="gloriousCode">
 
 	<!-- Mobile Specific Metas
   ================================================== -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<style>
 		body {
@@ -62,6 +62,24 @@
 			text-decoration: none;
 			font-size: 16px;
 		}
+		.preview-panel { text-align: center; }
+		#colour-preview {
+			width: 180px;
+			min-height: 210px;
+			box-sizing: border-box;
+			margin: 12px auto;
+			padding: 12px;
+			border-radius: 12px;
+			border: 3px solid #777;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+		}
+		.preview-row { font-size: 28px; line-height: 1.1; }
+		.preview-date { font-size: 14px; padding: 6px 0; }
+		.help { font-size: 14px; color: #555; }
+		#contrast-warning { color: #843d00; font-weight: 600; }
+		select:disabled { opacity: 0.55; }
 		.btn-primary {
 			background: #2f6fda;
 			border-color: #2558ad;
@@ -77,8 +95,20 @@
 
 	<div class="container">
 		<header>
-			<h1>Configure Fuzzy Text Two</h1>
+			<h1>Configure Wordish</h1>
 		</header>
+
+		<section class="preview-panel" aria-label="Colour preview">
+			<div id="colour-preview" aria-hidden="true">
+				<div id="preview-date-top" class="preview-date"></div>
+				<div id="preview-row-one" class="preview-row">quarter</div>
+				<div id="preview-row-two" class="preview-row">past</div>
+				<div id="preview-row-three" class="preview-row">three</div>
+				<div id="preview-date-bottom" class="preview-date"></div>
+			</div>
+			<p class="help">Colour preview only. The watch uses your selected language and its own fonts and layout. Colours require a colour screen.</p>
+			<p id="contrast-warning" role="status" class="hidden">Some text may be difficult to read against this background. Try contrasting colours.</p>
+		</section>
 
 		<form id="config" role="form" class="input-lg">
 
@@ -87,6 +117,7 @@
 				<div class="form-group">
 					<label for="preset">style</label>
 					<select class="form-control" id="preset" name="preset">
+						<option value="custom">custom</option>
 						<option value="classic" selected>classic</option>
 						<option value="paper">paper</option>
 						<option value="quiet">quiet</option>
@@ -278,7 +309,7 @@
 				<div class="radio-inline">
 					<label>
 						<input type="radio" name="align" value="center" checked />
-						center
+						centre
 					</label>
 				</div>
 				<div class="radio-inline">
@@ -309,6 +340,27 @@
 						<option value="mm_slash_dd">mm/dd</option>
 					</select>
 				</div>
+			</fieldset>
+
+			<fieldset>
+				<legend>Movement and exact time</legend>
+				<label><input type="checkbox" name="animations_enabled" value="true" checked /> Animate time changes</label>
+				<p class="help">Turn off movement for a still watchface.</p>
+				<label><input type="checkbox" name="gesture_enabled" value="true" checked /> Double tap to show exact time</label>
+				<label for="exact-time-seconds">Exact time display duration</label>
+				<select id="exact-time-seconds" name="exact_time_seconds">
+					<option value="3" selected>3 seconds</option>
+					<option value="5">5 seconds</option>
+					<option value="10">10 seconds</option>
+				</select>
+			</fieldset>
+
+			<fieldset>
+				<legend>Optional indicators</legend>
+				<label><input type="checkbox" name="low_battery_enabled" value="true" /> Show a low battery indicator</label>
+				<p class="help">The battery indicator appears at 20% or less when the watch is not charging.</p>
+				<label><input type="checkbox" name="disconnect_enabled" value="true" /> Show when the phone is disconnected</label>
+				<p class="help">Keep these off for a clean display. Indicators do not vibrate. Style presets preserve these preferences.</p>
 			</fieldset>
 
 			<fieldset>
@@ -535,6 +587,13 @@
 		}
 
 		function setChecked(name, value) {
+			var valid = false;
+			each('[name="' + name + '"]', function(input) {
+				valid = valid || input.value === value;
+			});
+			if (!valid) {
+				return;
+			}
 			each('[name="' + name + '"]', function(input) {
 				input.checked = input.value === value;
 			});
@@ -548,13 +607,17 @@
 		function setSelectValue(name, value) {
 			var select = document.querySelector('[name="' + name + '"]');
 			if (select) {
-				select.value = value;
+				Array.prototype.forEach.call(select.options, function(option) {
+					if (option.value === value) {
+						select.value = value;
+					}
+				});
 			}
 		}
 
 		function saveOptions() {
 			var options = {
-				schema:		4,
+				schema:		5,
 				text_align:	checkedValue('align') || 'center',
 				lang:		checkedValue('lang') || 'en_GB',
 				font:		checkedValue('font') || 'classic',
@@ -568,8 +631,13 @@
 				date_part_three_colour: document.querySelector('[name="date_part_three_colour"]').value || 'match',
 				date_position: selectValue('date_position', 'off'),
 				date_format: selectValue('date_format', 'dd_mm_yy'),
-				preset: selectValue('preset', 'classic')
-			}
+				preset: selectValue('preset', 'custom'),
+				animations_enabled: document.querySelector('[name="animations_enabled"]').checked,
+				gesture_enabled: document.querySelector('[name="gesture_enabled"]').checked,
+				exact_time_seconds: Number(selectValue('exact_time_seconds', '3')),
+				low_battery_enabled: document.querySelector('[name="low_battery_enabled"]').checked,
+				disconnect_enabled: document.querySelector('[name="disconnect_enabled"]').checked
+			};
 			return options;
 		}
 
@@ -584,36 +652,32 @@
 					opts = {};
 				}
 			}
-			if (opts && opts.text_align) {
-				setChecked('align', opts.text_align);
+			if (!opts || typeof opts !== 'object' || Array.isArray(opts)) {
+				opts = {};
 			}
-			if (opts && opts.lang) {
-				setChecked('lang', opts.lang);
+			setChecked('align', opts.text_align);
+			setChecked('lang', opts.lang);
+			setChecked('font', opts.font);
+			var inverted = opts.invert === true || opts.invert === 1;
+			setSelectValue('foreground_colour', opts.foreground_colour || (inverted ? 'black' : 'white'));
+			setSelectValue('background_colour', opts.background_colour || (inverted ? 'white' : 'black'));
+			setSelectValue('row_one_colour', opts.row_one_colour || opts.minute_colour || 'match');
+			setSelectValue('row_two_colour', opts.row_two_colour || opts.minute_colour || 'match');
+			setSelectValue('row_three_colour', opts.row_three_colour || opts.hour_colour || 'match');
+			setSelectValue('date_part_one_colour', opts.date_part_one_colour || opts.date_colour || 'match');
+			setSelectValue('date_part_two_colour', opts.date_part_two_colour || opts.date_colour || 'match');
+			setSelectValue('date_part_three_colour', opts.date_part_three_colour || opts.date_colour || 'match');
+			setSelectValue('date_position', opts.date_position);
+			setSelectValue('date_format', opts.date_format);
+			['animations_enabled', 'gesture_enabled', 'low_battery_enabled', 'disconnect_enabled'].forEach(function(key) {
+				if (opts[key] === true || opts[key] === false || opts[key] === 0 || opts[key] === 1) {
+					document.querySelector('[name="' + key + '"]').checked = !!opts[key];
+				}
+			});
+			if (opts.exact_time_seconds === 3 || opts.exact_time_seconds === 5 || opts.exact_time_seconds === 10) {
+				setSelectValue('exact_time_seconds', String(opts.exact_time_seconds));
 			}
-			if (opts && opts.font) {
-				setChecked('font', opts.font);
-			}
-			if (opts && opts.foreground_colour) {
-				document.querySelector('[name="foreground_colour"]').value = opts.foreground_colour;
-			}
-			if (opts && opts.background_colour) {
-				document.querySelector('[name="background_colour"]').value = opts.background_colour;
-			}
-			document.querySelector('[name="row_one_colour"]').value = opts.row_one_colour || opts.minute_colour || 'match';
-			document.querySelector('[name="row_two_colour"]').value = opts.row_two_colour || opts.minute_colour || 'match';
-			document.querySelector('[name="row_three_colour"]').value = opts.row_three_colour || opts.hour_colour || 'match';
-			document.querySelector('[name="date_part_one_colour"]').value = opts.date_part_one_colour || opts.date_colour || 'match';
-			document.querySelector('[name="date_part_two_colour"]').value = opts.date_part_two_colour || opts.date_colour || 'match';
-			document.querySelector('[name="date_part_three_colour"]').value = opts.date_part_three_colour || opts.date_colour || 'match';
-			if (opts && opts.date_position) {
-				setSelectValue('date_position', opts.date_position);
-			}
-			if (opts && opts.date_format) {
-				setSelectValue('date_format', opts.date_format);
-			}
-			if (opts && opts.preset) {
-				setSelectValue('preset', opts.preset);
-			}
+
 		}
 
 		function getParam(key) {
@@ -621,7 +685,12 @@
 			var val;
 			params.replace(/(?:^|[#?&])([a-z_]+)=([^&]+)/ig, function(_, k, v) {
 				if (key === k) {
-					val = decodeURIComponent(v);
+					try {
+						val = decodeURIComponent(v);
+					}
+					catch (err) {
+						// Ignore a damaged URL parameter and keep the form usable.
+					}
 				}
 			});
 			return val;
@@ -665,7 +734,89 @@
 			setSelectValue('date_format', preset.date_format);
 		});
 
+		// Keep the style label truthful after manual edits or loading old settings.
+		function updatePreset() {
+			var options = saveOptions();
+			var selected = 'custom';
+			Object.keys(presets).some(function(name) {
+				var matches = Object.keys(presets[name]).every(function(key) {
+					return options[key] === presets[name][key];
+				});
+				if (matches) {
+					selected = name;
+				}
+				return matches;
+			});
+			setSelectValue('preset', selected);
+		}
+
+		var previewColours = {
+			black: '#000000', white: '#ffffff', red: '#ff0000', orange: '#ff5500',
+			yellow: '#ffff00', green: '#00aa00', mint: '#55ffaa', cyan: '#00aaff',
+			blue: '#0055ff', purple: '#aa00ff', magenta: '#ff00aa'
+		};
+
+		function luminance(colour) {
+			var channels = [1, 3, 5].map(function(offset) {
+				var channel = parseInt(colour.substr(offset, 2), 16) / 255;
+				return channel <= 0.04045 ? channel / 12.92 : Math.pow((channel + 0.055) / 1.055, 2.4);
+			});
+			return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
+		}
+
+		function updatePreview() {
+			var options = saveOptions();
+			var preview = document.getElementById('colour-preview');
+			var background = previewColours[options.background_colour];
+			preview.style.backgroundColor = background;
+			preview.style.textAlign = options.text_align;
+			var backgroundLuminance = luminance(background);
+			var lowContrast = false;
+			function applyColour(element, colour) {
+				var value = previewColours[colour === 'match' ? options.foreground_colour : colour];
+				element.style.color = value;
+				var foregroundLuminance = luminance(value);
+				var contrast = (Math.max(backgroundLuminance, foregroundLuminance) + 0.05) /
+					(Math.min(backgroundLuminance, foregroundLuminance) + 0.05);
+				lowContrast = lowContrast || contrast < 3;
+			}
+			['one', 'two', 'three'].forEach(function(row) {
+				applyColour(document.getElementById('preview-row-' + row), options['row_' + row + '_colour']);
+			});
+			var dateParts = {
+				dd_mm_yy: ['03-', '08-', '26'], mm_dd_yyyy: ['08-', '03-', '2026'],
+				mon_d_aug: ['Mon ', '3 ', 'Aug'], dd_slash_mm: ['03/', '08'], mm_slash_dd: ['08/', '03']
+			}[options.date_format];
+			['top', 'bottom'].forEach(function(position) {
+				var date = document.getElementById('preview-date-' + position);
+				date.textContent = '';
+				date.className = 'preview-date' + (options.date_position === position ? '' : ' hidden');
+				if (options.date_position === position) {
+					dateParts.forEach(function(part, index) {
+						var span = document.createElement('span');
+						span.textContent = part;
+						applyColour(span, options['date_part_' + ['one', 'two', 'three'][index] + '_colour']);
+						date.appendChild(span);
+					});
+				}
+			});
+			document.querySelector('[name="exact_time_seconds"]').disabled = !options.gesture_enabled;
+			document.querySelector('[name="date_format"]').disabled = options.date_position === 'off';
+			['one', 'two', 'three'].forEach(function(part, index) {
+				document.querySelector('[name="date_part_' + part + '_colour"]').disabled =
+					options.date_position === 'off' || index >= dateParts.length;
+			});
+			document.getElementById('contrast-warning').className = lowContrast ? '' : 'hidden';
+		}
+
+		document.getElementById('config').addEventListener('change', function() {
+			updatePreset();
+			updatePreview();
+		});
+
 		applyOptions();
+		updatePreset();
+		updatePreview();
    </script>
 
 </body>

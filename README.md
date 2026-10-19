@@ -1,10 +1,12 @@
-Fuzzy Text Two
-==============
+# Wordish
 
-Fuzzy Text Two is a modernised Pebble watchface built from the classic
-fuzzy text lineage.  The goal of this project is to keep the simple,
-word-based feel of the original Text Watch style while updating it for
-newer PebbleOS targets, especially Emery and Gabbro.
+Time in words. Exact when you need it.
+
+Wordish (formerly Fuzzy Text Two) gives the classic Pebble word clock crisp text and colourful
+personalisation. Read relaxed time at a glance, double tap for the exact time,
+and choose a discreet corner date or a colour preset to make it yours.
+It supports classic Pebble watches as well as native layouts for Pebble Time 2
+(Emery) and Pebble Round 2 (Gabbro).
 
 The original watchface was designed around older 144x168 screens.  This
 version adds sharper high-resolution text, larger bundled fonts for
@@ -43,11 +45,29 @@ Features:
  - Font presets and visual style presets
  - Optional small corner date with compact numeric and abbreviated formats
  - Double tap gesture to briefly show the exact digital time
+ - Optional animation and double-tap controls, with 3, 5 or 10 seconds of exact time
+ - Optional low-battery and phone-disconnection indicators
  - Nice staggered animation
  - Multiple languages inherited from the original international face
 
 Screenshots
 -----------
+
+The [Wordish store package](store/1.6.0/README.md) includes the native 720×320
+banner, five upload-ready screenshots per modern platform and the listing copy.
+
+Release 1.6.0 gallery, captured directly from the Emery and Gabbro emulators:
+
+| Time in words | Make it yours | A discreet date | Exact when needed |
+| --- | --- | --- | --- |
+| ![Clear words on Pebble Time 2](screenshots/release-1.6.0/emery_01-clear-words.png) | ![Coloured rows on Pebble Round 2](screenshots/release-1.6.0/gabbro_02-colour-rows.png) | ![Corner date on Pebble Round 2](screenshots/release-1.6.0/gabbro_03-corner-date.png) | ![Exact time on Pebble Time 2](screenshots/release-1.6.0/emery_04-exact-time.png) |
+
+The [capture helper](scripts/capture_screenshots.py) records bundle and source
+hashes alongside the raw images. It also checks double tap, return to fuzzy time
+and the gesture-off setting on both platforms. These are emulator results;
+physical display contrast and battery life still need device measurement.
+
+Earlier platform and style examples:
 
 These screenshots show the modernised rendering across the supported
 PebbleOS platforms, including colour presets, text alignment, and the
@@ -65,6 +85,14 @@ higher-resolution Emery and Gabbro layouts.
 On monochrome platforms such as Aplite and Diorite, colour presets are
 mapped to high-contrast black and white so text remains readable.
 
+Feature showcases in skinned emulator frames:
+
+| Feature | Preset | Emery | Gabbro | Flint |
+| --- | --- | --- | --- | --- |
+| Double tap exact time with corner date | Paper / Festival | ![Emery exact time with corner date using the paper preset](screenshots/emery_exact_time_date_paper_skinned.png) | ![Gabbro large exact time with corner date using the festival preset](screenshots/gabbro_large_exact_time_festival_skinned.png) | ![Flint exact time with corner date using the paper preset](screenshots/flint_exact_time_date_paper_skinned.png) |
+| Quiet time indicator | Terminal / System | ![Emery quiet time indicator using the terminal preset](screenshots/emery_quiet_time_terminal_skinned.png) | ![Gabbro quiet time indicator using the system preset](screenshots/gabbro_quiet_time_system_skinned.png) | ![Flint quiet time indicator using the terminal preset](screenshots/flint_quiet_time_terminal_skinned.png) |
+| Three-colour time rows | Traffic / System | ![Emery three-colour time rows using the traffic preset](screenshots/emery_three_colour_traffic_skinned.png) | ![Gabbro three-colour time rows using the system preset](screenshots/gabbro_three_colour_system_skinned.png) | ![Flint three-colour time rows using the traffic preset](screenshots/flint_three_colour_traffic_skinned.png) |
+
 The following options can be configured, using the Pebble app on your
 phone:
 
@@ -72,14 +100,46 @@ phone:
 - Visual preset, including colour and corner date showcase presets
 - Foreground and background colours
 - Minute row one, minute row two, hour row, and date section text colours
-- Text alignment (centered, left, or right)
+- Text alignment (centred, left, or right)
 - Optional corner date, shown at the top or bottom with up to three coloured sections
 - Corner date format (`dd-mm-yy`, `mm-dd-yyyy`, `Mon 3 Aug`, `dd/mm`, or `mm/dd`)
 - Language
+- Animate time changes on/off
+- Double tap for exact time on/off, with a 3, 5 or 10 second display duration
+- Low battery indicator (20% or less, hidden while charging)
+- Phone-disconnection indicator
 
 Double tap the watch to show the exact digital time for a few seconds.
 The exact time follows the watch's 12-hour or 24-hour clock setting, then
-the display returns to the fuzzy text face automatically.
+the display returns to the fuzzy text face automatically. Animations and double
+tap are enabled by default; both status indicators are off by default. Disabling
+double tap unsubscribes from gestures. Indicators respond to battery/connection
+events and do not add second-by-second updates or vibrations. Space is reserved
+for enabled, visible indicators and the date, so long phrases may use smaller text.
+
+Settings include an illustrative colour preview and a warning when text has
+low contrast against its background. The preview does not reproduce the watch's
+fonts, language or screen geometry. Manual style changes are labelled as custom;
+date controls become available when the corner date is enabled. Existing legacy
+inverted colours are preserved when opening and saving settings.
+
+Style presets preserve animation, gesture and indicator preferences. If delivery
+fails, the phone retries twice after one and two seconds, keeping newer saves
+ahead of old retries. Settings remain saved for the next launch if all attempts fail.
+
+Development checks
+------------------
+
+Run `make misc_checks` for the host C layout, word-conversion and watchface
+callback tests, plus the Node.js configuration tests. Run `make lint` for the
+seven-platform Pebble SDK build. The callback tests use a small SDK model;
+they do not replace watch or emulator validation.
+
+The [watchface audit](WATCHFACE_AUDIT.md) records the store comparison, proposed
+listing copy, implementation changes and release checks from 19 October 2026.
+The [1.6.0 release plan](RELEASE_1.6.0.md) contains the proposed store description,
+screenshot order and publishing checks. The app UUID, configuration URL and
+saved-settings key remain unchanged across the rename.
 
 At this time the included languages are:
 
@@ -95,7 +155,7 @@ At this time the included languages are:
 Authorship
 ----------
 
-Fuzzy Text Two is maintained by [gloriousCode][gloriousCode].  This
+Wordish is maintained by [gloriousCode][gloriousCode].  This
 modernised version updates the old watchface for current PebbleOS
 targets, adds colour customisation, and improves text resolution on
 newer screens.

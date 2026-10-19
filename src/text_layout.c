@@ -85,11 +85,22 @@ TextMetrics text_metrics_for_font_choice(FontChoice font_choice)
   }
 }
 
-TextFrame text_frame_for_line(int screen_width, int screen_height, bool round,
-    FontChoice font_choice, int num_lines, int line_index)
+TextFrame text_frame_for_line_in_area(int screen_width, int screen_height, bool round,
+    FontChoice font_choice, int num_lines, int line_index, int top_inset, int bottom_inset)
 {
   TextMetrics metrics = text_metrics_for_font_choice(font_choice);
-  int y = (screen_height - (num_lines * metrics.row_height)) / 2 - metrics.top_margin;
+  int y = top_inset + (screen_height - top_inset - bottom_inset
+      - (num_lines * metrics.row_height)) / 2 - metrics.top_margin;
+  if (top_inset > 0 || bottom_inset > 0) {
+    int last_start = screen_height - bottom_inset - metrics.layer_height
+        - ((num_lines - 1) * metrics.row_height);
+    if (y > last_start) {
+      y = last_start;
+    }
+    if (y < top_inset) {
+      y = top_inset;
+    }
+  }
   y += line_index * metrics.row_height;
 
   int x = 0;
@@ -120,6 +131,13 @@ TextFrame text_frame_for_line(int screen_width, int screen_height, bool round,
     .w = width,
     .h = metrics.layer_height,
   };
+}
+
+TextFrame text_frame_for_line(int screen_width, int screen_height, bool round,
+    FontChoice font_choice, int num_lines, int line_index)
+{
+  return text_frame_for_line_in_area(screen_width, screen_height, round,
+      font_choice, num_lines, line_index, 0, 0);
 }
 
 int text_estimated_width(FontChoice font_choice, const char *text)
@@ -164,25 +182,34 @@ static int count_lines(char lines[FUZZY_TEXT_NUM_LINES][FUZZY_TEXT_BUFFER_SIZE])
   return count;
 }
 
-bool text_font_choice_fits(int screen_width, int screen_height, bool round,
+static bool text_font_choice_fits_in_area(int screen_width, int screen_height, bool round,
     FontChoice font_choice,
-    char lines[FUZZY_TEXT_NUM_LINES][FUZZY_TEXT_BUFFER_SIZE])
+    char lines[FUZZY_TEXT_NUM_LINES][FUZZY_TEXT_BUFFER_SIZE], int top_inset, int bottom_inset,
+    TextWidthMeasurer measure_width, void *context)
 {
   int line_count = count_lines(lines);
 
   for (int i = 0; i < line_count; i++) {
-    TextFrame frame = text_frame_for_line(screen_width, screen_height, round,
-        font_choice, line_count, i);
+    TextFrame frame = text_frame_for_line_in_area(screen_width, screen_height, round,
+        font_choice, line_count, i, top_inset, bottom_inset);
 
-    if (frame.x < 0 || frame.y < 0
+    if (frame.x < 0 || frame.y < top_inset
         || frame.x + frame.w > screen_width
-        || frame.y + frame.h > screen_height
-        || text_estimated_width(font_choice, lines[i]) > frame.w) {
+        || frame.y + frame.h > screen_height - bottom_inset
+        || (measure_width ? measure_width(font_choice, lines[i], i, context)
+            : text_estimated_width(font_choice, lines[i])) > frame.w) {
       return false;
     }
   }
 
   return true;
+}
+
+bool text_font_choice_fits(int screen_width, int screen_height, bool round,
+    FontChoice font_choice, char lines[FUZZY_TEXT_NUM_LINES][FUZZY_TEXT_BUFFER_SIZE])
+{
+  return text_font_choice_fits_in_area(screen_width, screen_height, round,
+      font_choice, lines, 0, 0, NULL, NULL);
 }
 
 static FontChoice fallback_font_choice(FontChoice preferred, int attempt, bool high_resolution)
@@ -258,18 +285,35 @@ static FontChoice fallback_font_choice(FontChoice preferred, int attempt, bool h
   }
 }
 
-FontChoice text_font_choice_that_fits(int screen_width, int screen_height, bool round,
+FontChoice text_font_choice_that_fits_measured(int screen_width, int screen_height, bool round,
     FontChoice preferred,
-    char lines[FUZZY_TEXT_NUM_LINES][FUZZY_TEXT_BUFFER_SIZE])
+    char lines[FUZZY_TEXT_NUM_LINES][FUZZY_TEXT_BUFFER_SIZE], int top_inset, int bottom_inset,
+    TextWidthMeasurer measure_width, void *context)
 {
   bool high_resolution = screen_width >= 200 && screen_height >= 200;
 
   for (int attempt = 0; attempt < FONT_CHOICE_COUNT; attempt++) {
     FontChoice font_choice = fallback_font_choice(preferred, attempt, high_resolution);
-    if (text_font_choice_fits(screen_width, screen_height, round, font_choice, lines)) {
+    if (text_font_choice_fits_in_area(screen_width, screen_height, round,
+        font_choice, lines, top_inset, bottom_inset, measure_width, context)) {
       return font_choice;
     }
   }
 
-  return FONT_CHOICE_COMPACT;
+  return FONT_CHOICE_SMALL;
+}
+
+FontChoice text_font_choice_that_fits(int screen_width, int screen_height, bool round,
+    FontChoice preferred, char lines[FUZZY_TEXT_NUM_LINES][FUZZY_TEXT_BUFFER_SIZE])
+{
+  return text_font_choice_that_fits_in_area(screen_width, screen_height, round,
+      preferred, lines, 0, 0);
+}
+
+FontChoice text_font_choice_that_fits_in_area(int screen_width, int screen_height, bool round,
+    FontChoice preferred, char lines[FUZZY_TEXT_NUM_LINES][FUZZY_TEXT_BUFFER_SIZE],
+    int top_inset, int bottom_inset)
+{
+  return text_font_choice_that_fits_measured(screen_width, screen_height, round,
+      preferred, lines, top_inset, bottom_inset, NULL, NULL);
 }

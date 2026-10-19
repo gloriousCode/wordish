@@ -1,9 +1,13 @@
-var VERSION = "1.4.10";
+var VERSION = "1.6.0";
 var OPTIONS_STORAGE_KEY = "fuzzy-text-two-options-v2";
 var CONFIG_URL = "https://www.gloriousedge.com/fuzzy-text-two/resources/configure-fuzzy-text-two.html";
 
 var isReady = false;
 var callbacks = [];
+var pendingConfiguration = null;
+var inFlightConfiguration = null;
+var configurationRetryTimer = null;
+var MAX_CONFIGURATION_ATTEMPTS = 3;
 
 var alignments = {
   center: 0,
@@ -88,7 +92,7 @@ function readyCallback(event) {
 function showConfiguration(event) {
   onReady(function() {
     var opts = getOptions();
-    Pebble.openURL(CONFIG_URL + "#v=" + encodeURIComponent(VERSION) + "&options=" + encodeURIComponent(opts));
+    Pebble.openURL(CONFIG_URL + "?v=" + encodeURIComponent(VERSION) + "#options=" + encodeURIComponent(opts));
   });
 }
 
@@ -97,25 +101,42 @@ function webviewclosed(event) {
   console.log('configuration response: '+ resp + ' ('+ typeof resp +')');
 
   var options = parseConfigurationResponse(resp);
-  if (typeof options.invert === 'undefined' &&
-      typeof options.text_align === 'undefined' &&
-      typeof options.lang === 'undefined' &&
-      typeof options.font === 'undefined' &&
-      typeof options.foreground_colour === 'undefined' &&
-      typeof options.background_colour === 'undefined' &&
-      typeof options.date_position === 'undefined' &&
-      typeof options.date_format === 'undefined' &&
-      typeof options.row_one_colour === 'undefined' &&
-      typeof options.row_two_colour === 'undefined' &&
-      typeof options.row_three_colour === 'undefined' &&
-      typeof options.date_part_one_colour === 'undefined' &&
-      typeof options.date_part_two_colour === 'undefined' &&
-      typeof options.date_part_three_colour === 'undefined') {
+  if (Object.keys(options).length === 0) {
     return;
   }
 
+  // Migrate incoming legacy choices before merging, so an old page can still
+  // change settings that a newer page previously saved under canonical names.
+  // Explicit canonical fields in this response always take precedence.
+  if (typeof options.invert !== 'undefined') {
+    if (typeof options.foreground_colour === 'undefined') {
+      options.foreground_colour = options.invert ? 'black' : 'white';
+    }
+    if (typeof options.background_colour === 'undefined') {
+      options.background_colour = options.invert ? 'white' : 'black';
+    }
+  }
+  var aliases = {
+    minute_colour: ['row_one_colour', 'row_two_colour'],
+    hour_colour: ['row_three_colour'],
+    date_colour: ['date_part_one_colour', 'date_part_two_colour', 'date_part_three_colour']
+  };
+  Object.keys(aliases).forEach(function(alias) {
+    if (typeof options[alias] !== 'undefined') {
+      aliases[alias].forEach(function(key) {
+        if (typeof options[key] === 'undefined') {
+          options[key] = options[alias];
+        }
+      });
+    }
+  });
+
   onReady(function() {
-    var serializedOptions = JSON.stringify(options);
+    var stored = parseConfigurationResponse(getOptions());
+    Object.keys(options).forEach(function(key) {
+      stored[key] = options[key];
+    });
+    var serializedOptions = JSON.stringify(stored);
     setOptions(serializedOptions);
 
     var message = prepareConfiguration(serializedOptions);
@@ -123,23 +144,67 @@ function webviewclosed(event) {
   });
 }
 
+// Only known values may reach storage or the watch. Webviews can return valid
+// JSON primitives (including null) as well as malformed or cancelled responses.
 function parseConfigurationResponse(resp) {
+  var parsed;
   if (!resp) {
     return {};
   }
 
   try {
-    return JSON.parse(resp);
+    parsed = JSON.parse(resp);
   }
   catch (err) {
     try {
-      return JSON.parse(decodeURIComponent(resp));
+      parsed = JSON.parse(decodeURIComponent(resp));
     }
     catch (decodeErr) {
       console.log('Unable to parse configuration response: ' + decodeErr.message);
       return {};
     }
   }
+  if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+    return {};
+  }
+
+  var options = {};
+  var choices = {
+    text_align: alignments,
+    lang: langs,
+    font: fonts,
+    foreground_colour: colourValues,
+    background_colour: colourValues,
+    date_position: datePositions,
+    date_format: dateFormats,
+    row_one_colour: optionalColourValues,
+    row_two_colour: optionalColourValues,
+    row_three_colour: optionalColourValues,
+    date_part_one_colour: optionalColourValues,
+    date_part_two_colour: optionalColourValues,
+    date_part_three_colour: optionalColourValues,
+    minute_colour: optionalColourValues,
+    hour_colour: optionalColourValues,
+    date_colour: optionalColourValues
+  };
+  Object.keys(choices).forEach(function(key) {
+    if (typeof parsed[key] === 'string' &&
+        Object.prototype.hasOwnProperty.call(choices[key], parsed[key])) {
+      options[key] = parsed[key];
+    }
+  });
+  ['invert', 'animations_enabled', 'gesture_enabled',
+    'low_battery_enabled', 'disconnect_enabled'].forEach(function(key) {
+    if (parsed[key] === true || parsed[key] === false ||
+        parsed[key] === 0 || parsed[key] === 1) {
+      options[key] = !!parsed[key];
+    }
+  });
+  if (parsed.exact_time_seconds === 3 || parsed.exact_time_seconds === 5 ||
+      parsed.exact_time_seconds === 10) {
+    options.exact_time_seconds = parsed.exact_time_seconds;
+  }
+  return options;
 }
 
 // Retrieves stored configuration from localStorage.
@@ -167,13 +232,7 @@ function setOptions(options) {
 // format that is sent back from the configuration web UI.  Produces
 // a JSON message to send to the watch face.
 function prepareConfiguration(serialized_settings) {
-  var settings = {};
-  try {
-    settings = JSON.parse(serialized_settings || "{}");
-  }
-  catch (err) {
-    console.log('Unable to parse stored settings: ' + err.message);
-  }
+  var settings = parseConfigurationResponse(serialized_settings);
 
   settings.lang = settings.lang || "en_GB";
   settings.text_align = settings.text_align || "center";
@@ -203,16 +262,73 @@ function prepareConfiguration(serialized_settings) {
     "10": lookupValue(optionalColourValues, rowThree, "match"),
     "11": lookupValue(optionalColourValues, datePartOne, "match"),
     "12": lookupValue(optionalColourValues, datePartTwo, "match"),
-    "13": lookupValue(optionalColourValues, datePartThree, "match")
+    "13": lookupValue(optionalColourValues, datePartThree, "match"),
+    "14": settings.animations_enabled === false ? 0 : 1,
+    "15": settings.gesture_enabled === false ? 0 : 1,
+    "16": settings.exact_time_seconds || 3,
+    "17": settings.low_battery_enabled ? 1 : 0,
+    "18": settings.disconnect_enabled ? 1 : 0
   };
 }
 
-// Takes a JSON message as input.  Sends the message to the watch.
+// Keep only the latest unsent settings, and never overlap AppMessage requests.
 function transmitConfiguration(settings) {
-  console.log('sending message: '+ JSON.stringify(settings));
-  Pebble.sendAppMessage(settings, function(event) {
-    // Message delivered successfully
-  }, logError);
+  pendingConfiguration = { settings: settings, attempts: 0 };
+  if (configurationRetryTimer !== null) {
+    clearTimeout(configurationRetryTimer);
+    configurationRetryTimer = null;
+  }
+  sendPendingConfiguration();
+}
+
+// Retry transient failures twice, after one and two seconds. A newer save
+// replaces a waiting retry and follows any in-flight delivery in order.
+function sendPendingConfiguration() {
+  if (inFlightConfiguration || !pendingConfiguration || configurationRetryTimer !== null) {
+    return;
+  }
+  var delivery = pendingConfiguration;
+  pendingConfiguration = null;
+  var attempt = {};
+  inFlightConfiguration = attempt;
+  delivery.attempts++;
+
+  function delivered() {
+    if (inFlightConfiguration !== attempt) {
+      return;
+    }
+    inFlightConfiguration = null;
+    sendPendingConfiguration();
+  }
+
+  function failed(event) {
+    if (inFlightConfiguration !== attempt) {
+      return;
+    }
+    inFlightConfiguration = null;
+    logError(event);
+    if (pendingConfiguration) {
+      sendPendingConfiguration();
+    }
+    else if (delivery.attempts < MAX_CONFIGURATION_ATTEMPTS) {
+      pendingConfiguration = delivery;
+      configurationRetryTimer = setTimeout(function() {
+        configurationRetryTimer = null;
+        sendPendingConfiguration();
+      }, delivery.attempts * 1000);
+    }
+    else {
+      console.log('Configuration delivery stopped after ' + delivery.attempts + ' attempts; saved settings will retry on the next launch.');
+    }
+  }
+
+  console.log('sending message: ' + JSON.stringify(delivery.settings));
+  try {
+    Pebble.sendAppMessage(delivery.settings, delivered, failed);
+  }
+  catch (err) {
+    failed({ error: err });
+  }
 }
 
 function logError(event) {

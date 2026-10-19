@@ -22,8 +22,14 @@ test:
 		src/strings-sv.c \
 		-o build/text_layout_test
 	./build/text_layout_test
+	$(CC) -std=c99 -Wall -Wextra -Werror -Wno-unused-parameter -Itests -Isrc \
+		tests/watchface_runtime_test.c src/text_layout.c src/text_lines.c \
+		src/num2words.c src/strings-*.c -o build/watchface_runtime_test
+	./build/watchface_runtime_test
+	node --test tests/configuration_test.js
 
 lint: build
+	node --check src/js/pebble-js-app.js
 
 misc_checks: test
 

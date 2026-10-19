@@ -13,13 +13,18 @@
         "ROW_THREE_COLOR": 10,
         "DATE_PART_ONE_COLOR": 11,
         "DATE_PART_TWO_COLOR": 12,
-        "DATE_PART_THREE_COLOR": 13
+        "DATE_PART_THREE_COLOR": 13,
+        "ANIMATIONS_ENABLED": 14,
+        "GESTURE_ENABLED": 15,
+        "EXACT_TIME_SECONDS": 16,
+        "LOW_BATTERY_ENABLED": 17,
+        "DISCONNECT_ENABLED": 18
     },
     "capabilities": [
         "configurable"
     ],
     "companyName": "gloriousCode",
-    "longName": "Fuzzy Text Two",
+    "longName": "Wordish",
     "projectType": "native",
     "resources": {
         "media": [
@@ -27,30 +32,30 @@
                 "type": "font",
                 "name": "FONT_ROBOTO_CONDENSED_54",
                 "file": "fonts/Roboto-Condensed.ttf",
-                "characterRegex": "[ A-Za-zÀ-ÿ'-]"
+                "characterRegex": "[ 0-9:A-Za-zÀ-ÿ'-]"
             },
             {
                 "type": "font",
                 "name": "FONT_ROBOTO_BOLD_54",
                 "file": "fonts/Roboto-Bold.ttf",
-                "characterRegex": "[ A-Za-zÀ-ÿ'-]"
+                "characterRegex": "[ 0-9:A-Za-zÀ-ÿ'-]"
             },
             {
                 "type": "font",
                 "name": "FONT_ROBOTO_CONDENSED_48",
                 "file": "fonts/Roboto-Condensed.ttf",
-                "characterRegex": "[ A-Za-zÀ-ÿ'-]"
+                "characterRegex": "[ 0-9:A-Za-zÀ-ÿ'-]"
             },
             {
                 "type": "font",
                 "name": "FONT_ROBOTO_BOLD_48",
                 "file": "fonts/Roboto-Bold.ttf",
-                "characterRegex": "[ A-Za-zÀ-ÿ'-]"
+                "characterRegex": "[ 0-9:A-Za-zÀ-ÿ'-]"
             }
         ]
     },
     "sdkVersion": "3",
-    "shortName": "Fuzzy Text Two",
+    "shortName": "Wordish",
     "targetPlatforms": [
         "aplite",
         "basalt",
@@ -61,8 +66,8 @@
         "gabbro"
     ],
     "uuid": "bf4b4493-24d6-49e1-9388-4100aa55d9ba",
-    "versionCode": 15,
-    "versionLabel": "1.4.10",
+    "versionCode": 17,
+    "versionLabel": "1.6.0",
     "watchapp": {
         "watchface": true
     }

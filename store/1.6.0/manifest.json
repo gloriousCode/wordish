@@ -1,0 +1,117 @@
+{
+  "name": "Wordish",
+  "version": "1.6.0",
+  "screenshots": [
+    {
+      "platform": "emery",
+      "file": "emery/01-time-in-words.png",
+      "caption": "Time in words",
+      "source": "screenshots/release-1.6.0/emery_01-clear-words.png",
+      "sha256": "b59b824d26f221c27045a84a805bed73af9cd03a76985429b284eb5564528629",
+      "width": 200,
+      "height": 228,
+      "captured_utc": "2026-10-19T01:44:59.623049+00:00"
+    },
+    {
+      "platform": "emery",
+      "file": "emery/02-make-it-yours.png",
+      "caption": "Make it yours",
+      "source": "screenshots/release-1.6.0/emery_02-colour-rows.png",
+      "sha256": "43825c86e482252bcc9b879553e270d6b3a0abae47059acc355c7c4e714ebad1",
+      "width": 200,
+      "height": 228,
+      "captured_utc": "2026-10-19T01:45:01.198304+00:00"
+    },
+    {
+      "platform": "emery",
+      "file": "emery/03-corner-date.png",
+      "caption": "A discreet date",
+      "source": "screenshots/release-1.6.0/emery_03-corner-date.png",
+      "sha256": "2b201b78d77c66482c43527a028bf885e9b1b9a2d58931d5223ad3951aa91fcd",
+      "width": 200,
+      "height": 228,
+      "captured_utc": "2026-10-19T01:45:02.782796+00:00"
+    },
+    {
+      "platform": "emery",
+      "file": "emery/04-exact-time.png",
+      "caption": "Exact when needed",
+      "source": "screenshots/release-1.6.0/emery_04-exact-time.png",
+      "sha256": "75ec0f352bb26a5ef86a4859b5062cddffbfd4e79694b0c756defa8673e3c0a0",
+      "width": 200,
+      "height": 228,
+      "captured_utc": "2026-10-19T01:45:04.357215+00:00"
+    },
+    {
+      "platform": "emery",
+      "file": "emery/05-status-indicators.png",
+      "caption": "Useful details, quietly",
+      "source": "screenshots/release-1.6.0/emery_05-status-proof.png",
+      "sha256": "dcd115a9235cae75304ef6a1b494564744409b4da2f92d87a4e4bff5bb257c12",
+      "width": 200,
+      "height": 228,
+      "captured_utc": "2026-10-19T01:45:31.448596+00:00"
+    },
+    {
+      "platform": "gabbro",
+      "file": "gabbro/01-time-in-words.png",
+      "caption": "Time in words",
+      "source": "screenshots/release-1.6.0/gabbro_01-clear-words.png",
+      "sha256": "bb84f6739732d9b5f0751e9692da5b9d7b1597d6f01cda3f4b6e6b74b3a53495",
+      "width": 260,
+      "height": 260,
+      "captured_utc": "2026-10-19T01:45:50.020765+00:00"
+    },
+    {
+      "platform": "gabbro",
+      "file": "gabbro/02-make-it-yours.png",
+      "caption": "Make it yours",
+      "source": "screenshots/release-1.6.0/gabbro_02-colour-rows.png",
+      "sha256": "5538ccfe0ff01f1c038869128df48dfb0507035e98d8bb92108b953d8628a73c",
+      "width": 260,
+      "height": 260,
+      "captured_utc": "2026-10-19T01:45:51.618443+00:00"
+    },
+    {
+      "platform": "gabbro",
+      "file": "gabbro/03-corner-date.png",
+      "caption": "A discreet date",
+      "source": "screenshots/release-1.6.0/gabbro_03-corner-date.png",
+      "sha256": "92f9562c99d313190283681213f4816fc86c7bcaddbb050021449974ed0ece51",
+      "width": 260,
+      "height": 260,
+      "captured_utc": "2026-10-19T01:45:53.226539+00:00"
+    },
+    {
+      "platform": "gabbro",
+      "file": "gabbro/04-exact-time.png",
+      "caption": "Exact when needed",
+      "source": "screenshots/release-1.6.0/gabbro_04-exact-time.png",
+      "sha256": "23073fc52af06fc08d8000332a19f29af61256a2de17d3b761040cff58fe7f15",
+      "width": 260,
+      "height": 260,
+      "captured_utc": "2026-10-19T01:45:54.832387+00:00"
+    },
+    {
+      "platform": "gabbro",
+      "file": "gabbro/05-status-indicators.png",
+      "caption": "Useful details, quietly",
+      "source": "screenshots/release-1.6.0/gabbro_05-status-proof.png",
+      "sha256": "a9edb2966d44ced33826fe87d1a0db725006fcc7aaa85591a9b323049381e59a",
+      "width": 260,
+      "height": 260,
+      "captured_utc": "2026-10-19T01:46:21.948086+00:00"
+    }
+  ],
+  "bundle": "build/fuzzy-text-two.pbw",
+  "bundle_sha256": "2e844cce2c2a006dcd79349776e9797bd532a4fa75ca1baedbf1d30a7483fe95",
+  "uuid": "bf4b4493-24d6-49e1-9388-4100aa55d9ba",
+  "version_code": 17,
+  "banner": {
+    "file": "wordish-banner.png",
+    "width": 720,
+    "height": 320,
+    "sha256": "5d21ba4d9ab577fca841a9645dd849ceb6f7f219c12493d636a1cc8960ba5a3c",
+    "method": "Original typography drawn natively at 720x320; no resizing"
+  }
+}

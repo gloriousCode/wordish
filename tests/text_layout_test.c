@@ -259,6 +259,82 @@ static void assert_high_resolution_short_lines_preserve_large_fonts(void)
       gabbro->round, FONT_CHOICE_CLASSIC, lines) == FONT_CHOICE_LARGE);
 }
 
+static void assert_word_buffers_are_bounded(void)
+{
+  const char *expected_time = "quarter past *three ";
+  const char *expected_date = "mon  oct 19 ";
+  char buffer[96];
+
+  time_to_words(EN_GB, 3, 15, 0, NULL, 0);
+  date_to_words(EN_GB, 1, 19, 9, NULL, 0);
+  for (size_t size = 0; size < sizeof(buffer); size++) {
+    memset(buffer, '!', sizeof(buffer));
+    time_to_words(EN_GB, 3, 15, 0, buffer, size);
+    assert(buffer[size] == '!');
+    if (size > 0) {
+      size_t expected_length = strlen(expected_time);
+      if (expected_length >= size) {
+        expected_length = size - 1;
+      }
+      assert(strlen(buffer) == expected_length);
+      assert(strncmp(buffer, expected_time, expected_length) == 0);
+    }
+
+    memset(buffer, '!', sizeof(buffer));
+    date_to_words(EN_GB, 1, 19, 9, buffer, size);
+    assert(buffer[size] == '!');
+    if (size > 0) {
+      size_t expected_length = strlen(expected_date);
+      if (expected_length >= size) {
+        expected_length = size - 1;
+      }
+      assert(strlen(buffer) == expected_length);
+      assert(strncmp(buffer, expected_date, expected_length) == 0);
+    }
+  }
+}
+
+static void assert_short_lines_preserve_complete_time(void)
+{
+  char lines[FUZZY_TEXT_NUM_LINES][FUZZY_TEXT_BUFFER_SIZE];
+  char format[FUZZY_TEXT_NUM_LINES];
+  char words[96];
+  char expected[96];
+  char actual[96];
+
+  for (int language = CA; language <= SV; language++) {
+    for (int hour = 0; hour < 24; hour++) {
+      for (int minute = 0; minute < 60; minute += 5) {
+        time_to_words((Language)language, hour, minute, 0, words, sizeof(words));
+        int offset = 0;
+        for (int i = 0; words[i] != '\0'; i++) {
+          if (words[i] != '*' && words[i] != ' ') {
+            expected[offset++] = words[i];
+          }
+        }
+        expected[offset] = '\0';
+        for (int limit = 7; limit <= FUZZY_TEXT_LINE_LENGTH; limit++) {
+          time_to_lines_with_limit((Language)language, hour, minute, 0, limit, lines, format);
+          offset = 0;
+          for (int line = 0; line < FUZZY_TEXT_NUM_LINES; line++) {
+            for (int i = 0; lines[line][i] != '\0'; i++) {
+              if (lines[line][i] != ' ') {
+                actual[offset++] = lines[line][i];
+              }
+            }
+          }
+          actual[offset] = '\0';
+          if (strcmp(expected, actual) != 0) {
+            fprintf(stderr, "dropped words language=%d hour=%d minute=%d limit=%d expected=%s actual=%s\n",
+                language, hour, minute, limit, expected, actual);
+          }
+          assert(strcmp(expected, actual) == 0);
+        }
+      }
+    }
+  }
+}
+
 int main(void)
 {
   signal(SIGSEGV, print_crash_context);
@@ -269,6 +345,8 @@ int main(void)
   assert_time_lines_mark_hour_bold();
   assert_high_resolution_time_uses_large_fonts();
   assert_high_resolution_short_lines_preserve_large_fonts();
+  assert_word_buffers_are_bounded();
+  assert_short_lines_preserve_complete_time();
 
   puts("text layout compatibility checks passed");
   return 0;

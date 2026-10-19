@@ -3,6 +3,7 @@
 #include "num2words.h"
 #include "text_layout.h"
 #include "text_lines.h"
+#include "status_indicators.h"
 
 #define DEBUG 0
 
@@ -24,11 +25,18 @@
 #define DATE_PART_ONE_COLOR_KEY 11
 #define DATE_PART_TWO_COLOR_KEY 12
 #define DATE_PART_THREE_COLOR_KEY 13
+#define ANIMATIONS_ENABLED_KEY 14
+#define GESTURE_ENABLED_KEY 15
+#define EXACT_TIME_SECONDS_KEY 16
+#define LOW_BATTERY_ENABLED_KEY 17
+#define DISCONNECT_ENABLED_KEY 18
+#define TEST_EXACT_TIME_KEY 95
+#define TEST_QUIET_TIME_KEY 96
 #define SETTINGS_SCHEMA_KEY 97
 #define TEST_HOUR_KEY 98
 #define TEST_MINUTE_KEY 99
 
-#define SETTINGS_SCHEMA_VERSION 4
+#define SETTINGS_SCHEMA_VERSION 5
 
 #define TEXT_ALIGN_CENTER 0
 #define TEXT_ALIGN_LEFT 1
@@ -52,7 +60,7 @@
 #define QUIET_TIME_ICON_SIZE 18
 #define QUIET_TIME_ICON_SPACING 3
 #define DOUBLE_TAP_WINDOW_MS 700
-#define EXACT_TIME_DISPLAY_MS 3000
+#define STATUS_RESERVED_HEIGHT 24
 
 // The time it takes for a layer to slide in or out.
 #define ANIMATION_DURATION 400
@@ -76,6 +84,12 @@ static int date_part_colors[DATE_PART_COUNT] = {
 };
 static int date_position = DATE_POSITION_OFF;
 static int date_format = DATE_FORMAT_DD_MM_YY;
+static bool animations_enabled = true;
+static bool gesture_enabled = true;
+static bool gesture_subscribed;
+static int exact_time_seconds = 3;
+static bool low_battery_enabled;
+static bool disconnect_enabled;
 static FontChoice font_choice = FONT_CHOICE_CLASSIC;
 static FontChoice render_font_choice = FONT_CHOICE_CLASSIC;
 static Language lang = EN_GB;
@@ -108,10 +122,13 @@ typedef struct {
 static Line lines[NUM_LINES];
 
 static struct tm *t;
+static struct tm current_time;
 static struct tm test_time;
 static bool use_test_time = false;
 static bool pending_test_hour = false;
 static bool pending_test_minute = false;
+static bool test_exact_time_active = false;
+static bool test_quiet_time_active = false;
 static int requested_test_hour = 0;
 static int requested_test_minute = 0;
 
@@ -125,15 +142,36 @@ static bool exact_time_visible = false;
 static AppTimer *tap_reset_timer;
 static AppTimer *exact_time_timer;
 
+static void display_time(struct tm *date_time);
+
+static bool valid_toggle(int value, bool default_value)
+{
+	return value == 0 ? false : value == 1 ? true : default_value;
+}
+
+static int valid_exact_time_seconds(int value)
+{
+	return value == 3 || value == 5 || value == 10 ? value : 3;
+}
+
+static void status_visibility_changed(void)
+{
+	forceDisplayUpdate = true;
+	if (t != NULL && window_loaded) {
+		display_time(t);
+	}
+}
+
 static void destroy_property_animation(PropertyAnimation **animation)
 {
 	if (*animation == NULL) {
 		return;
 	}
 
-	animation_unschedule(property_animation_get_animation(*animation));
-	property_animation_destroy(*animation);
+	PropertyAnimation *old_animation = *animation;
 	*animation = NULL;
+	animation_unschedule(property_animation_get_animation(old_animation));
+	property_animation_destroy(old_animation);
 }
 
 static void destroy_finished_property_animation(PropertyAnimation **animation)
@@ -148,22 +186,23 @@ static void destroy_finished_property_animation(PropertyAnimation **animation)
 
 static void animationStoppedHandler(struct Animation *animation, bool finished, void *context)
 {
-	(void)animation;
-	(void)finished;
-
 	Line *line = (Line *)context;
 	if (line == NULL) {
 		return;
 	}
 
-	if (line->nextLayer != NULL) {
-		GRect rect = layer_get_frame((Layer *)line->nextLayer);
-		rect.origin.x = screen_bounds.size.w;
-		layer_set_frame((Layer *)line->nextLayer, rect);
+	if (line->animation1 != NULL
+			&& property_animation_get_animation(line->animation1) == animation) {
+		destroy_finished_property_animation(&line->animation1);
+	} else if (line->animation2 != NULL
+			&& property_animation_get_animation(line->animation2) == animation) {
+		if (finished && line->nextLayer != NULL) {
+			GRect rect = layer_get_frame((Layer *)line->nextLayer);
+			rect.origin.x = screen_bounds.size.w;
+			layer_set_frame((Layer *)line->nextLayer, rect);
+		}
+		destroy_finished_property_animation(&line->animation2);
 	}
-
-	destroy_finished_property_animation(&line->animation1);
-	destroy_finished_property_animation(&line->animation2);
 }
 
 // Animate line
@@ -190,6 +229,9 @@ static void makeAnimationsForLayer(Line *line, int delay)
 	animation_set_duration(animation1, ANIMATION_DURATION);
 	animation_set_delay(animation1, delay);
 	animation_set_curve(animation1, AnimationCurveEaseIn); // Accelerate
+	animation_set_handlers(animation1, (AnimationHandlers) {
+		.stopped = animationStoppedHandler
+	}, line);
 
 	// Configure animation for current layer to move in
 	GRect rect2 = layer_get_frame((Layer *)next);
@@ -206,7 +248,7 @@ static void makeAnimationsForLayer(Line *line, int delay)
 
 	// Set a handler to rearrange layers after animation is finished
 	animation_set_handlers(animation2, (AnimationHandlers) {
-		.stopped = (AnimationStoppedHandler)animationStoppedHandler
+		.stopped = animationStoppedHandler
 	}, line);
 
 	// Start the animations
@@ -234,7 +276,22 @@ static void updateLayerText(TextLayer* layer, char* text)
 static void updateLineTo(Line *line, char *value, int delay)
 {
 	updateLayerText(line->nextLayer, value);
-	makeAnimationsForLayer(line, delay);
+	if (animations_enabled) {
+		makeAnimationsForLayer(line, delay);
+	} else {
+		destroy_property_animation(&line->animation1);
+		destroy_property_animation(&line->animation2);
+		if (line->currentLayer != NULL) {
+			GRect rect = layer_get_frame((Layer *)line->currentLayer);
+			rect.origin.x = screen_bounds.size.w;
+			layer_set_frame((Layer *)line->currentLayer, rect);
+		}
+		if (line->nextLayer != NULL) {
+			GRect rect = layer_get_frame((Layer *)line->nextLayer);
+			rect.origin.x = (screen_bounds.size.w - rect.size.w) / 2;
+			layer_set_frame((Layer *)line->nextLayer, rect);
+		}
+	}
 
 	// Swap current/next layers
 	TextLayer *tmp = line->nextLayer;
@@ -279,7 +336,7 @@ static int count_text_lines(char text[NUM_LINES][BUFFER_SIZE])
 	return count;
 }
 
-static FontChoice choose_render_font(char text[NUM_LINES][BUFFER_SIZE]);
+static FontChoice choose_render_font(char text[NUM_LINES][BUFFER_SIZE], char format[]);
 
 static void clear_text_lines(char text[NUM_LINES][BUFFER_SIZE], char format[])
 {
@@ -304,7 +361,7 @@ static void exact_time_to_lines(const struct tm *date_time,
 
 	snprintf(text[0], BUFFER_SIZE, "%d:%02d", hour, date_time->tm_min);
 	format[0] = 'b';
-	render_font_choice = choose_render_font(text);
+	render_font_choice = choose_render_font(text, format);
 }
 
 static GTextAlignment lookup_text_alignment(int align_key)
@@ -597,14 +654,46 @@ static void configureLayerForFormat(TextLayer *textlayer, char format, int row)
 
 static GRect date_layer_frame_for_position(int position)
 {
-	const int horizontal_margin = PBL_IF_ROUND_ELSE(20, 4);
-	int y = DATE_LAYER_VERTICAL_MARGIN;
+	int horizontal_margin = 4;
+	int y = PBL_IF_ROUND_ELSE(14, DATE_LAYER_VERTICAL_MARGIN);
 
 	if (position == DATE_POSITION_BOTTOM) {
-		y = screen_bounds.size.h - DATE_LAYER_HEIGHT - DATE_LAYER_VERTICAL_MARGIN;
+		y = screen_bounds.size.h - DATE_LAYER_HEIGHT
+			- (status_indicators_visible() ? DATE_LAYER_VERTICAL_MARGIN
+				: PBL_IF_ROUND_ELSE(18, DATE_LAYER_VERTICAL_MARGIN));
+		if (status_indicators_visible()) {
+			y -= STATUS_RESERVED_HEIGHT;
+		}
+	}
+	if (PBL_IF_ROUND_ELSE(true, false)) {
+		int radius = screen_bounds.size.w / 2;
+		int top_distance = abs(y - screen_bounds.size.h / 2);
+		int bottom_distance = abs(y + DATE_LAYER_HEIGHT - screen_bounds.size.h / 2);
+		int distance = top_distance > bottom_distance ? top_distance : bottom_distance;
+		int half_width = radius;
+		while (half_width > 0 && half_width * half_width + distance * distance > radius * radius) {
+			half_width--;
+		}
+		horizontal_margin = radius - half_width + 2;
 	}
 
 	return GRect(horizontal_margin, y, screen_bounds.size.w - (horizontal_margin * 2), DATE_LAYER_HEIGHT);
+}
+
+static GRect time_content_frame(void)
+{
+	int top = 0;
+	int bottom = screen_bounds.size.h;
+	if (date_position == DATE_POSITION_TOP || quiet_time_active) {
+		GRect frame = date_layer_frame_for_position(DATE_POSITION_TOP);
+		top = frame.origin.y + frame.size.h + 2;
+	}
+	if (date_position == DATE_POSITION_BOTTOM) {
+		bottom = date_layer_frame_for_position(DATE_POSITION_BOTTOM).origin.y - 2;
+	} else if (status_indicators_visible()) {
+		bottom -= STATUS_RESERVED_HEIGHT;
+	}
+	return GRect(0, top, screen_bounds.size.w, bottom - top);
 }
 
 static GRect date_layer_frame(void)
@@ -614,7 +703,10 @@ static GRect date_layer_frame(void)
 
 static GFont date_layer_font(void)
 {
-	return fonts_get_system_font(FONT_KEY_GOTHIC_18);
+	bool tight_round_header = PBL_IF_ROUND_ELSE(true, false)
+		&& date_position == DATE_POSITION_TOP && quiet_time_active
+		&& date_layer_frame().size.w < 100;
+	return fonts_get_system_font(tight_round_header ? FONT_KEY_GOTHIC_14 : FONT_KEY_GOTHIC_18);
 }
 
 static void quiet_time_icon_layer_update_proc(Layer *layer, GContext *ctx)
@@ -787,12 +879,30 @@ static void split_corner_date(char source[])
 
 static void update_corner_date(struct tm *date_time)
 {
-	quiet_time_active = quiet_time_is_active();
+	static char previous_date[16];
+	static int previous_position = -1;
+	bool next_quiet_time = quiet_time_is_active() || test_quiet_time_active;
+	bool quiet_changed = quiet_time_active != next_quiet_time;
+	quiet_time_active = next_quiet_time;
+	if (quiet_changed) {
+		forceDisplayUpdate = true;
+	}
 
 	if (date_time == NULL) {
 		configureDateLayers();
 		return;
 	}
+
+	char formatted_date[16] = "";
+	if (date_position != DATE_POSITION_OFF) {
+		format_corner_date(formatted_date, sizeof(formatted_date), date_time);
+	}
+	if (!forceDisplayUpdate && !quiet_changed && previous_position == date_position
+			&& strcmp(previous_date, formatted_date) == 0) {
+		return;
+	}
+	strncpy(previous_date, formatted_date, sizeof(previous_date));
+	previous_position = date_position;
 
 	if (date_position == DATE_POSITION_OFF) {
 		for (int i = 0; i < DATE_PART_COUNT; i++) {
@@ -806,8 +916,6 @@ static void update_corner_date(struct tm *date_time)
 		return;
 	}
 
-	char formatted_date[16];
-	format_corner_date(formatted_date, sizeof(formatted_date), date_time);
 	split_corner_date(formatted_date);
 	for (int i = 0; i < DATE_PART_COUNT; i++) {
 		if (date_layers[i] != NULL) {
@@ -847,15 +955,49 @@ static void apply_layer_styles(void)
 		}
 	}
 	configureDateLayers();
+	status_indicators_configure(low_battery_enabled, disconnect_enabled, foreground_colour());
 	forceDisplayUpdate = true;
 }
 
 static bool should_use_high_resolution_layout(void);
 
-static FontChoice choose_render_font(char text[NUM_LINES][BUFFER_SIZE])
+static int measured_line_width(FontChoice choice, const char *text, int line_index, void *context)
 {
-	return text_font_choice_that_fits(screen_bounds.size.w, screen_bounds.size.h,
-		PBL_IF_ROUND_ELSE(true, false), font_choice, text);
+	typedef struct {
+		char text[BUFFER_SIZE];
+		FontChoice choice;
+		bool bold;
+		int width;
+	} WidthCacheEntry;
+	static WidthCacheEntry cache[16];
+	static unsigned int next_entry;
+	const char *format = context;
+	bool bold = format[line_index] == 'b';
+	for (unsigned int i = 0; i < ARRAY_LENGTH(cache); i++) {
+		if (cache[i].width > 0 && cache[i].choice == choice && cache[i].bold == bold
+				&& strcmp(cache[i].text, text) == 0) {
+			return cache[i].width;
+		}
+	}
+
+	// A wide measurement box prevents wrapping or ellipsis from hiding the true width.
+	GSize size = graphics_text_layout_get_content_size(text, font_for_choice(choice, bold),
+		GRect(0, 0, 1024, 128), GTextOverflowModeWordWrap, GTextAlignmentLeft);
+	WidthCacheEntry *entry = &cache[next_entry++ % ARRAY_LENGTH(cache)];
+	strncpy(entry->text, text, BUFFER_SIZE);
+	entry->text[BUFFER_SIZE - 1] = '\0';
+	entry->choice = choice;
+	entry->bold = bold;
+	entry->width = size.w + 2;
+	return entry->width;
+}
+
+static FontChoice choose_render_font(char text[NUM_LINES][BUFFER_SIZE], char format[])
+{
+	GRect content = time_content_frame();
+	return text_font_choice_that_fits_measured(screen_bounds.size.w, screen_bounds.size.h,
+		PBL_IF_ROUND_ELSE(true, false), font_choice, text, content.origin.y,
+		screen_bounds.size.h - content.origin.y - content.size.h, measured_line_width, format);
 }
 
 static bool should_use_high_resolution_layout(void)
@@ -906,14 +1048,14 @@ static void choose_time_lines(Language language, int hours, int minutes, int sec
 
 	if (!should_use_high_resolution_layout()) {
 		time_to_lines(language, hours, minutes, seconds, text, format);
-		render_font_choice = choose_render_font(text);
+		render_font_choice = choose_render_font(text, format);
 		return;
 	}
 
 	for (int i = 0; i < (int)(sizeof(high_resolution_limits) / sizeof(high_resolution_limits[0])); i++) {
 		time_to_lines_with_limit(language, hours, minutes, seconds, high_resolution_limits[i],
 			candidate, candidate_format);
-		FontChoice candidate_font = choose_render_font(candidate);
+		FontChoice candidate_font = choose_render_font(candidate, candidate_format);
 		int candidate_line_count = count_text_lines(candidate);
 
 		if (!found || font_visual_rank(candidate_font) < font_visual_rank(best_font)
@@ -944,14 +1086,14 @@ static void choose_date_lines(Language language, int day, int date, int month,
 
 	if (!should_use_high_resolution_layout()) {
 		date_to_lines(language, day, date, month, text, format);
-		render_font_choice = choose_render_font(text);
+		render_font_choice = choose_render_font(text, format);
 		return;
 	}
 
 	for (int i = 0; i < (int)(sizeof(high_resolution_limits) / sizeof(high_resolution_limits[0])); i++) {
 		date_to_lines_with_limit(language, day, date, month, high_resolution_limits[i],
 			candidate, candidate_format);
-		FontChoice candidate_font = choose_render_font(candidate);
+		FontChoice candidate_font = choose_render_font(candidate, candidate_format);
 		int candidate_line_count = count_text_lines(candidate);
 
 		if (!found || font_visual_rank(candidate_font) < font_visual_rank(best_font)
@@ -993,8 +1135,10 @@ static int configureLayersForText(char text[NUM_LINES][BUFFER_SIZE], char format
 	// Set y positions for the lines
 	for (int i = 0; i < numLines; i++)
 	{
-		TextFrame frame = text_frame_for_line(screen_bounds.size.w, screen_bounds.size.h,
-			PBL_IF_ROUND_ELSE(true, false), render_font_choice, numLines, i);
+		GRect content = time_content_frame();
+		TextFrame frame = text_frame_for_line_in_area(screen_bounds.size.w, screen_bounds.size.h,
+			PBL_IF_ROUND_ELSE(true, false), render_font_choice, numLines, i,
+			content.origin.y, screen_bounds.size.h - content.origin.y - content.size.h);
 		if (lines[i].nextLayer != NULL) {
 			layer_set_frame((Layer *)lines[i].nextLayer, GRect(screen_bounds.size.w, frame.y, frame.w, frame.h));
 		}
@@ -1009,9 +1153,10 @@ static void display_time(struct tm *t)
   // The current time text will be stored in the following strings
   char textLine[NUM_LINES][BUFFER_SIZE];
   char format[NUM_LINES];
+  FontChoice previous_font = render_font_choice;
   update_corner_date(t);
   
-  if (exact_time_visible) {
+  if (exact_time_visible || test_exact_time_active) {
   	exact_time_to_lines(t, textLine, format);
   } else if (showTime || dateTimeout > 1) {
   	choose_time_lines(lang, t->tm_hour, t->tm_min, t->tm_sec, textLine, format);
@@ -1021,11 +1166,23 @@ static void display_time(struct tm *t)
     choose_date_lines(lang, t->tm_wday, t->tm_mday, t->tm_mon, textLine, format);
   }
   
-  int nextNLines = configureLayersForText(textLine, format);
+  int nextNLines = count_text_lines(textLine);
+  bool layout_changed = forceDisplayUpdate || previous_font != render_font_choice
+      || nextNLines != currentNLines;
+  bool text_changed = layout_changed;
+  for (int i = 0; i < NUM_LINES && !text_changed; i++) {
+    text_changed = needToUpdateLine(&lines[i], textLine[i])
+        || (textLine[i][0] != '\0' && lines[i].currentFormat != format[i]);
+  }
+  if (!text_changed) {
+    return;
+  }
+  configureLayersForText(textLine, format);
 
   int delay = 0;
   for (int i = 0; i < NUM_LINES; i++) {
-    if (forceDisplayUpdate || nextNLines != currentNLines || needToUpdateLine(&lines[i], textLine[i])) {
+    if (layout_changed || needToUpdateLine(&lines[i], textLine[i])
+        || (textLine[i][0] != '\0' && lines[i].currentFormat != format[i])) {
       updateLineTo(&lines[i], textLine[i], delay);
       delay += ANIMATION_STAGGER_TIME;
     }
@@ -1063,6 +1220,7 @@ static void display_initial_time(struct tm *t)
 	// The current time text will be stored in the following strings
 	char textLine[NUM_LINES][BUFFER_SIZE];
 	char format[NUM_LINES];
+	forceDisplayUpdate = true;
 	update_corner_date(t);
 
 	choose_time_lines(lang, t->tm_hour, t->tm_min, t->tm_sec, textLine, format);
@@ -1077,6 +1235,7 @@ static void display_initial_time(struct tm *t)
 		// This call switches current- and nextLayer
 		initLineForStart(&lines[i]);
 	}	
+	forceDisplayUpdate = false;
 }
 
 // Time handler called every minute by the system
@@ -1085,13 +1244,14 @@ static void handle_minute_tick(struct tm *tick_time, TimeUnits units_changed)
 	if (use_test_time) {
 		return;
 	}
-	t = tick_time;
+	current_time = *tick_time;
+	t = &current_time;
   
   if (!showTime) {
     dateTimeout++;
   }
   
-	display_time(tick_time);
+	display_time(t);
 }
 
 static void cancel_timer(AppTimer **timer)
@@ -1132,7 +1292,7 @@ static void show_exact_time_briefly(void)
 	if (t != NULL && window_loaded) {
 		display_time(t);
 	}
-	exact_time_timer = app_timer_register(EXACT_TIME_DISPLAY_MS, exact_time_timer_callback, NULL);
+	exact_time_timer = app_timer_register(exact_time_seconds * 1000, exact_time_timer_callback, NULL);
 	if (exact_time_timer == NULL) {
 		exact_time_timer_callback(NULL);
 	}
@@ -1142,6 +1302,9 @@ static void tap_handler(AccelAxisType axis, int32_t direction)
 {
 	(void)axis;
 	(void)direction;
+	if (!gesture_enabled) {
+		return;
+	}
 
 	if (tap_pending) {
 		cancel_timer(&tap_reset_timer);
@@ -1154,6 +1317,25 @@ static void tap_handler(AccelAxisType axis, int32_t direction)
 	tap_reset_timer = app_timer_register(DOUBLE_TAP_WINDOW_MS, tap_reset_timer_callback, NULL);
 	if (tap_reset_timer == NULL) {
 		tap_pending = false;
+	}
+}
+
+static void configure_gesture_service(void)
+{
+	if (gesture_enabled != gesture_subscribed) {
+		gesture_subscribed = gesture_enabled;
+		if (gesture_enabled) {
+			accel_tap_service_subscribe(tap_handler);
+		} else {
+			accel_tap_service_unsubscribe();
+		}
+	}
+	if (!gesture_enabled) {
+		cancel_timer(&tap_reset_timer);
+		cancel_timer(&exact_time_timer);
+		tap_pending = false;
+		exact_time_visible = false;
+		forceDisplayUpdate = true;
 	}
 }
 
@@ -1257,6 +1439,7 @@ static void apply_settings_tuple(const uint32_t key, const Tuple* new_tuple) {
 			apply_window_colours();
 			break;
 		case DATE_POSITION_KEY:
+			forceDisplayUpdate = true;
 			date_position = valid_date_position(new_tuple->value->uint8);
 			persist_write_int(DATE_POSITION_KEY, date_position);
 			update_corner_date(t);
@@ -1295,6 +1478,40 @@ static void apply_settings_tuple(const uint32_t key, const Tuple* new_tuple) {
 			date_part_colors[2] = new_tuple->value->int32;
 			persist_write_int(DATE_PART_THREE_COLOR_KEY, date_part_colors[2]);
 			configureDateLayers();
+			break;
+		case ANIMATIONS_ENABLED_KEY:
+			animations_enabled = valid_toggle(new_tuple->value->int32, true);
+			persist_write_int(ANIMATIONS_ENABLED_KEY, animations_enabled);
+			forceDisplayUpdate = true;
+			break;
+		case GESTURE_ENABLED_KEY:
+			gesture_enabled = valid_toggle(new_tuple->value->int32, true);
+			persist_write_int(GESTURE_ENABLED_KEY, gesture_enabled);
+			configure_gesture_service();
+			break;
+		case EXACT_TIME_SECONDS_KEY:
+			exact_time_seconds = valid_exact_time_seconds(new_tuple->value->int32);
+			persist_write_int(EXACT_TIME_SECONDS_KEY, exact_time_seconds);
+			break;
+		case LOW_BATTERY_ENABLED_KEY:
+			low_battery_enabled = valid_toggle(new_tuple->value->int32, false);
+			persist_write_int(LOW_BATTERY_ENABLED_KEY, low_battery_enabled);
+			status_indicators_configure(low_battery_enabled, disconnect_enabled, foreground_colour());
+			break;
+		case DISCONNECT_ENABLED_KEY:
+			disconnect_enabled = valid_toggle(new_tuple->value->int32, false);
+			persist_write_int(DISCONNECT_ENABLED_KEY, disconnect_enabled);
+			status_indicators_configure(low_battery_enabled, disconnect_enabled, foreground_colour());
+			break;
+		case TEST_EXACT_TIME_KEY:
+			test_exact_time_active = new_tuple->value->uint8 == 1;
+			if (t != NULL && window_loaded) {
+				display_time(t);
+			}
+			break;
+		case TEST_QUIET_TIME_KEY:
+			test_quiet_time_active = new_tuple->value->uint8 == 1;
+			update_corner_date(t);
 			break;
 		case TEST_HOUR_KEY:
 			requested_test_hour = new_tuple->value->uint8;
@@ -1421,13 +1638,16 @@ static void window_load(Window *window)
 		layer_set_hidden(quiet_time_icon_layer, true);
 		layer_add_child(window_layer, quiet_time_icon_layer);
 	}
+	status_indicators_init(window_layer, screen_bounds, status_visibility_changed);
+	status_indicators_configure(low_battery_enabled, disconnect_enabled, foreground_colour());
 	window_loaded = true;
 
 	// Configure time on init
 	time_t raw_time;
 
 	time(&raw_time);
-	t = localtime(&raw_time);
+	current_time = *localtime(&raw_time);
+	t = &current_time;
 	display_initial_time(t);
 
 }
@@ -1435,6 +1655,7 @@ static void window_load(Window *window)
 static void window_unload(Window *window)
 {
 	window_loaded = false;
+	status_indicators_deinit();
 
 	for (int i = 0; i < NUM_LINES; i++)
 	{
@@ -1461,9 +1682,15 @@ static void handle_init() {
 			persist_write_int(TEXT_ALIGN_KEY, text_align);
 		}
 		if (!persist_exists(FOREGROUND_COLOR_KEY)) {
+			if (persist_exists(INVERT_KEY) && persist_read_bool(INVERT_KEY)) {
+				foreground_color = 0x000000;
+			}
 			persist_write_int(FOREGROUND_COLOR_KEY, foreground_color);
 		}
 		if (!persist_exists(BACKGROUND_COLOR_KEY)) {
+			if (persist_exists(INVERT_KEY) && persist_read_bool(INVERT_KEY)) {
+				background_color = 0xFFFFFF;
+			}
 			persist_write_int(BACKGROUND_COLOR_KEY, background_color);
 		}
 		if (!persist_exists(FONT_CHOICE_KEY)) {
@@ -1498,6 +1725,17 @@ static void handle_init() {
 		}
 		persist_write_int(SETTINGS_SCHEMA_KEY, SETTINGS_SCHEMA_VERSION);
 	}
+
+	animations_enabled = !persist_exists(ANIMATIONS_ENABLED_KEY)
+		|| valid_toggle(persist_read_int(ANIMATIONS_ENABLED_KEY), true);
+	gesture_enabled = !persist_exists(GESTURE_ENABLED_KEY)
+		|| valid_toggle(persist_read_int(GESTURE_ENABLED_KEY), true);
+	exact_time_seconds = persist_exists(EXACT_TIME_SECONDS_KEY)
+		? valid_exact_time_seconds(persist_read_int(EXACT_TIME_SECONDS_KEY)) : 3;
+	low_battery_enabled = persist_exists(LOW_BATTERY_ENABLED_KEY)
+		&& valid_toggle(persist_read_int(LOW_BATTERY_ENABLED_KEY), false);
+	disconnect_enabled = persist_exists(DISCONNECT_ENABLED_KEY)
+		&& valid_toggle(persist_read_int(DISCONNECT_ENABLED_KEY), false);
 
 	// Load settings from persistent storage
 	if (persist_exists(TEXT_ALIGN_KEY))
@@ -1597,7 +1835,7 @@ static void handle_init() {
   
 	// Subscribe to minute ticks
 	tick_timer_service_subscribe(MINUTE_UNIT, handle_minute_tick);
-	accel_tap_service_subscribe(tap_handler);
+	configure_gesture_service();
 
 #if DEBUG
 	// Button functionality
@@ -1609,7 +1847,10 @@ static void handle_deinit()
 {
 	cancel_timer(&tap_reset_timer);
 	cancel_timer(&exact_time_timer);
-	accel_tap_service_unsubscribe();
+	if (gesture_subscribed) {
+		accel_tap_service_unsubscribe();
+		gesture_subscribed = false;
+	}
 	tick_timer_service_unsubscribe();
 	app_message_deregister_callbacks();
 
@@ -1622,4 +1863,5 @@ int main(void)
 	handle_init();
 	app_event_loop();
 	handle_deinit();
+	return 0;
 }

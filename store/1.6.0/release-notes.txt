@@ -1,0 +1,6 @@
+Fuzzy Text Two is now Wordish. This update adds animation and
+double-tap switches, adjustable exact-time duration, optional silent battery and
+connection indicators, and a clearer settings page with colour preview. It also
+fixes missing exact-time characters, truncated translated phrases, interrupted
+animations and legacy colour migration. Settings delivery now retries transient
+failures while preserving your latest choices.
