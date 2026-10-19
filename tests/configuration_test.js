@@ -398,7 +398,8 @@ test('configuration URL versions the hosted page query while preserving saved op
   handlers.ready();
   assert.equal(urls.length, 1);
   const url = new URL(urls[0]);
-  assert.equal(url.origin + url.pathname, context.CONFIG_URL);
+  assert.equal(url.origin + url.pathname,
+    "https://www.gloriousedge.com/wordish/resources/configure-fuzzy-text-two.html");
   assert.equal(url.search, '?v=' + encodeURIComponent(context.VERSION));
   assert.equal(url.hash, '#options=' + encodeURIComponent(stored));
   assert.equal(decodeURIComponent(url.hash.slice('#options='.length)), stored);

@@ -113,8 +113,14 @@ seven-platform Pebble SDK build. The callback tests use a small SDK model;
 they do not replace watch or emulator validation.
 
 The [1.6.2 release plan](RELEASE_1.6.2.md) contains the proposed store description,
-screenshot order and publishing checks. The app UUID, configuration URL and
-saved-settings key remain unchanged across the rename.
+screenshot order and publishing checks. The app UUID and saved-settings key
+remain unchanged across the rename.
+
+Version **1.6.3** (code **20**) corrects the configuration URL to
+`https://www.gloriousedge.com/wordish/resources/configure-fuzzy-text-two.html`.
+The old `/fuzzy-text-two/` URL no longer follows the renamed repository and
+returns 404. Install the updated bundle to use the corrected address. The
+existing 1.6.2 screenshots remain representative; this update changes no visuals.
 
 At this time the included languages are:
 
