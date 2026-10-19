@@ -1,7 +1,7 @@
 Time in words. Exact when you need it.
 
 Wordish gives the classic Pebble word clock crisp text and
-colourful personalisation. Previously called Fuzzy Text Two.
+coordinated colour palettes. Previously called Fuzzy Text Two.
 
 - Read relaxed time at a glance, with native layouts for Pebble Time 2 and
   Pebble Round 2 alongside classic Pebble models.

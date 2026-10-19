@@ -4,3 +4,8 @@ connection indicators, and a clearer settings page with colour preview. It also
 fixes missing exact-time characters, truncated translated phrases, interrupted
 animations and legacy colour migration. Settings delivery now retries transient
 failures while preserving your latest choices.
+
+Time 2 and Round 2 also gain smoother large clock text, with measured layout
+bounds to keep complete words inside the display.
+The colourful presets have been replaced with Lagoon, Ember, Orchid, Grove and
+Sand: coordinated palettes with clearer word and date contrast.

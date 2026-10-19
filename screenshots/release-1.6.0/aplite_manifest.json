@@ -34,25 +34,161 @@
           "type": "font",
           "name": "FONT_ROBOTO_CONDENSED_54",
           "file": "fonts/Roboto-Condensed.ttf",
-          "characterRegex": "[ 0-9:A-Za-z\u00c0-\u00ff'-]"
+          "characterRegex": "[ 0-9:A-Za-z\u00c0-\u00ff'-]",
+          "targetPlatforms": [
+            "aplite",
+            "basalt",
+            "chalk",
+            "diorite",
+            "flint"
+          ]
         },
         {
           "type": "font",
           "name": "FONT_ROBOTO_BOLD_54",
           "file": "fonts/Roboto-Bold.ttf",
-          "characterRegex": "[ 0-9:A-Za-z\u00c0-\u00ff'-]"
+          "characterRegex": "[ 0-9:A-Za-z\u00c0-\u00ff'-]",
+          "targetPlatforms": [
+            "aplite",
+            "basalt",
+            "chalk",
+            "diorite",
+            "flint"
+          ]
         },
         {
           "type": "font",
           "name": "FONT_ROBOTO_CONDENSED_48",
           "file": "fonts/Roboto-Condensed.ttf",
-          "characterRegex": "[ 0-9:A-Za-z\u00c0-\u00ff'-]"
+          "characterRegex": "[ 0-9:A-Za-z\u00c0-\u00ff'-]",
+          "targetPlatforms": [
+            "aplite",
+            "basalt",
+            "chalk",
+            "diorite",
+            "flint"
+          ]
         },
         {
           "type": "font",
           "name": "FONT_ROBOTO_BOLD_48",
           "file": "fonts/Roboto-Bold.ttf",
-          "characterRegex": "[ 0-9:A-Za-z\u00c0-\u00ff'-]"
+          "characterRegex": "[ 0-9:A-Za-z\u00c0-\u00ff'-]",
+          "targetPlatforms": [
+            "aplite",
+            "basalt",
+            "chalk",
+            "diorite",
+            "flint"
+          ]
+        },
+        {
+          "type": "font",
+          "name": "FONT_SMOOTH_CONDENSED_48_1",
+          "file": "fonts/smooth/Roboto-Condensed-48-1.pbf",
+          "targetPlatforms": [
+            "emery",
+            "gabbro"
+          ]
+        },
+        {
+          "type": "font",
+          "name": "FONT_SMOOTH_CONDENSED_48_2",
+          "file": "fonts/smooth/Roboto-Condensed-48-2.pbf",
+          "targetPlatforms": [
+            "emery",
+            "gabbro"
+          ]
+        },
+        {
+          "type": "font",
+          "name": "FONT_SMOOTH_CONDENSED_48_3",
+          "file": "fonts/smooth/Roboto-Condensed-48-3.pbf",
+          "targetPlatforms": [
+            "emery",
+            "gabbro"
+          ]
+        },
+        {
+          "type": "font",
+          "name": "FONT_SMOOTH_BOLD_48_1",
+          "file": "fonts/smooth/Roboto-Bold-48-1.pbf",
+          "targetPlatforms": [
+            "emery",
+            "gabbro"
+          ]
+        },
+        {
+          "type": "font",
+          "name": "FONT_SMOOTH_BOLD_48_2",
+          "file": "fonts/smooth/Roboto-Bold-48-2.pbf",
+          "targetPlatforms": [
+            "emery",
+            "gabbro"
+          ]
+        },
+        {
+          "type": "font",
+          "name": "FONT_SMOOTH_BOLD_48_3",
+          "file": "fonts/smooth/Roboto-Bold-48-3.pbf",
+          "targetPlatforms": [
+            "emery",
+            "gabbro"
+          ]
+        },
+        {
+          "type": "font",
+          "name": "FONT_SMOOTH_CONDENSED_54_1",
+          "file": "fonts/smooth/Roboto-Condensed-54-1.pbf",
+          "targetPlatforms": [
+            "emery",
+            "gabbro"
+          ]
+        },
+        {
+          "type": "font",
+          "name": "FONT_SMOOTH_CONDENSED_54_2",
+          "file": "fonts/smooth/Roboto-Condensed-54-2.pbf",
+          "targetPlatforms": [
+            "emery",
+            "gabbro"
+          ]
+        },
+        {
+          "type": "font",
+          "name": "FONT_SMOOTH_CONDENSED_54_3",
+          "file": "fonts/smooth/Roboto-Condensed-54-3.pbf",
+          "targetPlatforms": [
+            "emery",
+            "gabbro"
+          ]
+        },
+        {
+          "type": "font",
+          "name": "FONT_SMOOTH_BOLD_54_1",
+          "file": "fonts/smooth/Roboto-Bold-54-1.pbf",
+          "targetPlatforms": [
+            "emery",
+            "gabbro"
+          ]
+        },
+        {
+          "type": "font",
+          "name": "FONT_SMOOTH_BOLD_54_2",
+          "file": "fonts/smooth/Roboto-Bold-54-2.pbf",
+          "targetPlatforms": [
+            "emery",
+            "gabbro"
+          ]
+        },
+        {
+          "type": "font",
+          "name": "FONT_SMOOTH_BOLD_54_3",
+          "file": "fonts/smooth/Roboto-Bold-54-3.pbf",
+          "targetPlatforms": [
+            "emery",
+            "gabbro"
+          ]
         }
       ]
     },
@@ -95,14 +231,16 @@
       "DISCONNECT_ENABLED": 18
     }
   },
-  "bundle_sha256": "2e844cce2c2a006dcd79349776e9797bd532a4fa75ca1baedbf1d30a7483fe95",
+  "bundle_sha256": "42a77b89aa1a8946010a75580f615aa40e149435ea93f4da248b00961bae07fe",
   "source_sha256": {
-    "appinfo.json": "7ce0a49143e7c7e26795d4e559ac18d69192ab4e1480f15ab639512788ec1a70",
+    "appinfo.json": "eeed353a91b49095be44bd8df47343b5b2d12a9d799bbbe92a3a0ef1704a2302",
     "wscript": "41b4662a9243c3d5e5741679e44e3c9d28cfcbf82adaee4ede0ac9260d43ba27",
-    "src/TextWatch.c": "f9070fdf86340a6fafec5377b756a42f9242e9c8d6445d2c0ba30b9edf1c9e9c",
-    "src/js/pebble-js-app.js": "70e6ebed0915510d1ee71cec11d511ad9920ff3f3307e1161943c16e5568e873",
+    "src/TextWatch.c": "d6cc8d1ce5615fe2dff1240758f2a0211500c334c65e17fc1a26e1ca42e3d0c1",
+    "src/js/pebble-js-app.js": "1467acf14e575e401637488e83b22e76d207361a869a4eb11aed977b391e7ef5",
     "src/num2words.c": "ded088db7255696ad727458f47d0e90616fa509240d4051a3adbc4b1683b3944",
     "src/num2words.h": "31ed071674011433569a67fbe504cf416a07834e1af3522b30c2d092df951ae6",
+    "src/smooth_fonts.c": "45a65d459f08c8282f89a35d600226f7deffe4cc47e9d0075561f34801633c36",
+    "src/smooth_fonts.h": "0c3a21fe215dc39583e3d94115a962cc33a352c4e7b23f60adfcf2c9c1afe6fe",
     "src/status_indicators.c": "09062d11ad4fc99aa10616ad826521a67a85fc1c83f56ad9a5cb2cdd818e964e",
     "src/status_indicators.h": "fec9fd6fabadf7a2011c697e3f4d82370d4ebe34bc869fe0703fab282b9dfd43",
     "src/strings-ca.c": "9e7b827b9127551428ba672326cbdcc413d7000641c5daa65db2c3e9478a91a9",
@@ -125,12 +263,24 @@
     "src/text_layout.h": "e16e39b3956efa00b10175b405654457e0cb3d1955b25f6024fdfa75cfbb30b0",
     "src/text_lines.c": "f7c4f1f3ef0b46f1575404d34af18f42365b898d8926a25b07f280708d19fcb1",
     "src/text_lines.h": "4b198fb19d30f732099deee694e3d5ba86875567ef840e6961f85423bdf58795",
-    "resources/CHANGES.html": "cdcc8f2fb3228d6a9d591bd8089b77a85b8d91795b3996104e5b74b9251f93f5",
+    "resources/CHANGES.html": "4bf7fa61fc73cb9586d649d6d68c9b867bc52306db3abc8dc9f03f9ee754eb76",
     "resources/banner.png": "bb3372c648976a5fe4c7d87d1749a8532333b5735e9740af923d63d3a11a77d1",
     "resources/banner.xcf": "0498ca9772187681791a833193c8cd89881dbf50f11d722c11680f012244426b",
-    "resources/configure-fuzzy-text-two.html": "67a7bb8d960af258ba2fc8f409db2f50001ab6c1f2606c5d2125fdcf4d0bb02f",
+    "resources/configure-fuzzy-text-two.html": "219c18728ac19a73e50fd1138862b3dc2c8d6ec1c784980ddd1d076983288948",
     "resources/fonts/Roboto-Bold.ttf": "deb990e241954e1af87c6033d40a76cf0f48e0d112541794526051ac4a3ee2c8",
     "resources/fonts/Roboto-Condensed.ttf": "2af71369b6e1ab597407c5d720ca6e3fcf33554762c14953aa21dbb8667c55f0",
+    "resources/fonts/smooth/Roboto-Bold-48-1.pbf": "7a40f3bfe943806ef72e25eb664e3c7202a4014b8e9437aa0a71e242d74df5ff",
+    "resources/fonts/smooth/Roboto-Bold-48-2.pbf": "2b1a731d0b80a45da68b056a8c9dca27898b23e4b1d2f2e63497b32f429085e5",
+    "resources/fonts/smooth/Roboto-Bold-48-3.pbf": "54980531ed56fe403009bd812c328b85cf8ec6835cc62ee773402ba9f28495a0",
+    "resources/fonts/smooth/Roboto-Bold-54-1.pbf": "233e6badd2b338266c4fa9e573d1556e2753ddd9e7aa99b36d1a9a0118c849f7",
+    "resources/fonts/smooth/Roboto-Bold-54-2.pbf": "619827e8425d9d608dd71f0ca3be0def11e078f57fff957dd35c4b97e807c7af",
+    "resources/fonts/smooth/Roboto-Bold-54-3.pbf": "49e8e5b3981b6613e9700da35fba9a0eb4221851824ad7458a96107dcd154646",
+    "resources/fonts/smooth/Roboto-Condensed-48-1.pbf": "a6dd40ef8603856ffed2d85be3e6201110dd3d58b0c73677ab0f47c99d7f73ac",
+    "resources/fonts/smooth/Roboto-Condensed-48-2.pbf": "e230bd6b138994c3cc2cf99a9cf8f4882e4c88c8ec15683b54417d30757a6ff1",
+    "resources/fonts/smooth/Roboto-Condensed-48-3.pbf": "2612867cb9aaed2a4c69ff50647e1b3567fccb2d014816a4b8735c50375da5a3",
+    "resources/fonts/smooth/Roboto-Condensed-54-1.pbf": "e57a2484c2409f2ac7d27838a218e622f3203d5473ca289d1b20764799b07cc8",
+    "resources/fonts/smooth/Roboto-Condensed-54-2.pbf": "3e5521aae12c41726332d7a2acf944113085fc566011727cb5167aa71c9f2d4a",
+    "resources/fonts/smooth/Roboto-Condensed-54-3.pbf": "eb14566bd7e7e1e12fe461fcdcb1703be0841e486239c5ecc7ca4bb67053c975",
     "resources/pebble-screenshot-english.png": "cafe23a3fb78d6b2d52a5e4298a8b3cf53956e8e72cce9d87ed27885c57e93f6",
     "resources/pebble-screenshot-french.png": "34f78833dd0e5664bbad827c4fd2c2e2c52108753ee50f4c767ec3bef9db1669",
     "resources/pebble-screenshot-german.png": "4e7bb6c85c6d3f464d4b7e640b97c006e09207325afa4a05b0a7ca82c4efc586",
@@ -138,8 +288,8 @@
     "resources/pebble-screenshot-swedish.png": "e502457255c242d49b3f605bc5cfa5097705b466a6323d33ded193be362ffe0f"
   },
   "sdk": "/Users/scottg/Library/Application Support/Pebble SDK/SDKs/4.33.1",
-  "git_head": "3e6e48cbe65ee1a9227ef077408375b84ce84d93",
-  "git_status": " M README.md\n M RELEASE_1.6.0.md\n M scripts/capture_screenshots.py\n M scripts/prepare_store_assets.py\n M store/1.6.0/README.md\n?? screenshots/release-1.6.0/aplite_01-clear-words.png\n?? screenshots/release-1.6.0/aplite_02-colour-rows.png\n?? screenshots/release-1.6.0/aplite_03-corner-date.png\n?? screenshots/release-1.6.0/aplite_04-exact-time.png\n?? screenshots/release-1.6.0/aplite_manifest.json\n?? screenshots/release-1.6.0/basalt_01-clear-words.png\n?? screenshots/release-1.6.0/basalt_02-colour-rows.png\n?? screenshots/release-1.6.0/basalt_03-corner-date.png\n?? screenshots/release-1.6.0/basalt_04-exact-time.png\n?? screenshots/release-1.6.0/basalt_manifest.json\n?? screenshots/release-1.6.0/chalk_01-clear-words.png\n?? screenshots/release-1.6.0/chalk_02-colour-rows.png\n?? screenshots/release-1.6.0/chalk_03-corner-date.png\n?? screenshots/release-1.6.0/chalk_04-exact-time.png\n?? screenshots/release-1.6.0/chalk_manifest.json\n?? screenshots/release-1.6.0/diorite_01-clear-words.png\n?? screenshots/release-1.6.0/diorite_02-colour-rows.png\n?? screenshots/release-1.6.0/diorite_03-corner-date.png\n?? screenshots/release-1.6.0/diorite_04-exact-time.png\n?? screenshots/release-1.6.0/diorite_manifest.json\n?? screenshots/release-1.6.0/flint_01-clear-words.png\n?? screenshots/release-1.6.0/flint_02-colour-rows.png\n?? screenshots/release-1.6.0/flint_03-corner-date.png\n?? screenshots/release-1.6.0/flint_04-exact-time.png\n?? screenshots/release-1.6.0/flint_05-status-proof.png\n?? screenshots/release-1.6.0/flint_06-catalan-status.png\n?? screenshots/release-1.6.0/flint_07-long-phrase.png\n?? screenshots/release-1.6.0/flint_08-double-tap-restored.png\n?? screenshots/release-1.6.0/flint_08-double-tap-triggered.png\n?? screenshots/release-1.6.0/flint_08-double-tap.png\n?? screenshots/release-1.6.0/flint_09-gesture-disabled-restored.png\n?? screenshots/release-1.6.0/flint_09-gesture-disabled-triggered.png\n?? screenshots/release-1.6.0/flint_09-gesture-disabled.png\n?? screenshots/release-1.6.0/flint_manifest.json\n",
+  "git_head": "119fb6937ef1ef348d9ef36c3b0f56d24fa50cb6",
+  "git_status": " M CHANGES.markdown\n M README.md\n M RELEASE_1.6.0.md\n M appinfo.json\n M makefile\n M resources/CHANGES.html\n M resources/configure-fuzzy-text-two.html\n M screenshots/release-1.6.0/aplite_manifest.json\n M screenshots/release-1.6.0/basalt_manifest.json\n M screenshots/release-1.6.0/chalk_manifest.json\n M screenshots/release-1.6.0/diorite_manifest.json\n M screenshots/release-1.6.0/emery_01-clear-words.png\n M screenshots/release-1.6.0/emery_02-colour-rows.png\n M screenshots/release-1.6.0/emery_03-corner-date.png\n M screenshots/release-1.6.0/emery_04-exact-time.png\n M screenshots/release-1.6.0/emery_05-status-proof.png\n M screenshots/release-1.6.0/emery_07-long-phrase.png\n M screenshots/release-1.6.0/emery_08-double-tap-restored.png\n M screenshots/release-1.6.0/emery_08-double-tap-triggered.png\n M screenshots/release-1.6.0/emery_08-double-tap.png\n M screenshots/release-1.6.0/emery_09-gesture-disabled-restored.png\n M screenshots/release-1.6.0/emery_09-gesture-disabled-triggered.png\n M screenshots/release-1.6.0/emery_09-gesture-disabled.png\n M screenshots/release-1.6.0/emery_manifest.json\n M screenshots/release-1.6.0/flint_manifest.json\n M screenshots/release-1.6.0/gabbro_01-clear-words.png\n M screenshots/release-1.6.0/gabbro_02-colour-rows.png\n M screenshots/release-1.6.0/gabbro_03-corner-date.png\n M screenshots/release-1.6.0/gabbro_04-exact-time.png\n M screenshots/release-1.6.0/gabbro_05-status-proof.png\n M screenshots/release-1.6.0/gabbro_07-long-phrase.png\n M screenshots/release-1.6.0/gabbro_08-double-tap-restored.png\n M screenshots/release-1.6.0/gabbro_08-double-tap-triggered.png\n M screenshots/release-1.6.0/gabbro_08-double-tap.png\n M screenshots/release-1.6.0/gabbro_09-gesture-disabled-restored.png\n M screenshots/release-1.6.0/gabbro_09-gesture-disabled-triggered.png\n M screenshots/release-1.6.0/gabbro_09-gesture-disabled.png\n M screenshots/release-1.6.0/gabbro_manifest.json\n M scripts/capture_screenshots.py\n M src/TextWatch.c\n M src/js/pebble-js-app.js\n M store/1.6.0/release-notes.txt\n M tests/configuration_test.js\n?? resources/fonts/smooth/\n?? screenshots/preset-audit-1.6.0/\n?? scripts/generate_smooth_fonts.py\n?? scripts/screenshot_presets.js\n?? src/smooth_fonts.c\n?? src/smooth_fonts.h\n?? tests/smooth_font_renderer_test.c\n?? tests/smooth_font_stubs/\n?? tests/smooth_fonts_test.py\n",
   "emulator": {
     "pid": 20842,
     "platform": "aplite",
@@ -171,7 +321,7 @@
     {
       "file": "screenshots/release-1.6.0/aplite_01-clear-words.png",
       "sha256": "f00c4f37d5d543ddd17d8ad3d31ca073d103a4653ed19668b83d935be4fca0d8",
-      "captured_utc": "2026-10-19T02:24:40.895537+00:00",
+      "captured_utc": "2026-10-19T02:54:38.167147+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -200,12 +350,13 @@
       },
       "battery_percent": 80,
       "bluetooth_connected": true,
-      "note": "Raw emulator pixels; exact/quiet states use test keys where set. Date follows emulator clock. Settled for 1.5s after inputs; Legacy transport stays connected for screenshots; no simulated disconnection."
+      "note": "Raw emulator pixels; exact/quiet states use test keys where set. Date follows emulator clock. Settled for 1.5s after inputs; Legacy transport stays connected for screenshots; no simulated disconnection.",
+      "preset": null
     },
     {
       "file": "screenshots/release-1.6.0/aplite_02-colour-rows.png",
       "sha256": "1001efdaf4b431e9f0e4c13deed23dee6d1aca49a1141afc08e74048e60aa467",
-      "captured_utc": "2026-10-19T02:24:42.745766+00:00",
+      "captured_utc": "2026-10-19T02:54:40.153874+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -234,12 +385,13 @@
       },
       "battery_percent": 80,
       "bluetooth_connected": true,
-      "note": "Raw emulator pixels; exact/quiet states use test keys where set. Date follows emulator clock. Settled for 1.5s after inputs; Legacy transport stays connected for screenshots; no simulated disconnection."
+      "note": "Raw emulator pixels; exact/quiet states use test keys where set. Date follows emulator clock. Settled for 1.5s after inputs; Legacy transport stays connected for screenshots; no simulated disconnection.",
+      "preset": null
     },
     {
       "file": "screenshots/release-1.6.0/aplite_03-corner-date.png",
       "sha256": "4b0194f11b97f3aca7af24ba602b113139fe713ead82eedd0fa702992d8fdc8c",
-      "captured_utc": "2026-10-19T02:24:44.602562+00:00",
+      "captured_utc": "2026-10-19T02:54:42.161790+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -268,12 +420,13 @@
       },
       "battery_percent": 80,
       "bluetooth_connected": true,
-      "note": "Raw emulator pixels; exact/quiet states use test keys where set. Date follows emulator clock. Settled for 1.5s after inputs; Legacy transport stays connected for screenshots; no simulated disconnection."
+      "note": "Raw emulator pixels; exact/quiet states use test keys where set. Date follows emulator clock. Settled for 1.5s after inputs; Legacy transport stays connected for screenshots; no simulated disconnection.",
+      "preset": null
     },
     {
       "file": "screenshots/release-1.6.0/aplite_04-exact-time.png",
       "sha256": "2f9cd4fba4464361fb85e7f435649a07f27a3ca71a60b73d63ac340e8029c0e8",
-      "captured_utc": "2026-10-19T02:24:46.461522+00:00",
+      "captured_utc": "2026-10-19T02:54:44.166367+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -302,12 +455,13 @@
       },
       "battery_percent": 80,
       "bluetooth_connected": true,
-      "note": "Raw emulator pixels; exact/quiet states use test keys where set. Date follows emulator clock. Settled for 1.5s after inputs; Legacy transport stays connected for screenshots; no simulated disconnection."
+      "note": "Raw emulator pixels; exact/quiet states use test keys where set. Date follows emulator clock. Settled for 1.5s after inputs; Legacy transport stays connected for screenshots; no simulated disconnection.",
+      "preset": null
     },
     {
       "file": "screenshots/release-1.6.0/aplite_05-status-proof.png",
       "sha256": "10e240b02029808568cb1043d9be0dafc68719165f136664fc7218aa56399624",
-      "captured_utc": "2026-10-19T02:24:48.325715+00:00",
+      "captured_utc": "2026-10-19T02:54:46.172425+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -336,12 +490,13 @@
       },
       "battery_percent": 15,
       "bluetooth_connected": true,
-      "note": "Raw emulator pixels; exact/quiet states use test keys where set. Date follows emulator clock. Settled for 1.5s after inputs; Legacy transport stays connected for screenshots; no simulated disconnection."
+      "note": "Raw emulator pixels; exact/quiet states use test keys where set. Date follows emulator clock. Settled for 1.5s after inputs; Legacy transport stays connected for screenshots; no simulated disconnection.",
+      "preset": null
     },
     {
       "file": "screenshots/release-1.6.0/aplite_06-catalan-status.png",
       "sha256": "d2d94bdb5b26a10777dea00a797c7a50221ee25c26aa2b264de172570db5bfd6",
-      "captured_utc": "2026-10-19T02:24:50.253018+00:00",
+      "captured_utc": "2026-10-19T02:54:48.074717+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -370,12 +525,13 @@
       },
       "battery_percent": 15,
       "bluetooth_connected": true,
-      "note": "Raw emulator pixels; exact/quiet states use test keys where set. Date follows emulator clock. Settled for 1.5s after inputs; Legacy transport stays connected for screenshots; no simulated disconnection."
+      "note": "Raw emulator pixels; exact/quiet states use test keys where set. Date follows emulator clock. Settled for 1.5s after inputs; Legacy transport stays connected for screenshots; no simulated disconnection.",
+      "preset": null
     },
     {
       "file": "screenshots/release-1.6.0/aplite_07-long-phrase.png",
       "sha256": "20935430708933cf079f2d83bc9cb768351d326575290bfbbb872870f7ad5d13",
-      "captured_utc": "2026-10-19T02:24:52.133512+00:00",
+      "captured_utc": "2026-10-19T02:54:49.912916+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -404,12 +560,13 @@
       },
       "battery_percent": 80,
       "bluetooth_connected": true,
-      "note": "Raw emulator pixels; exact/quiet states use test keys where set. Date follows emulator clock. Settled for 1.5s after inputs; Legacy transport stays connected for screenshots; no simulated disconnection."
+      "note": "Raw emulator pixels; exact/quiet states use test keys where set. Date follows emulator clock. Settled for 1.5s after inputs; Legacy transport stays connected for screenshots; no simulated disconnection.",
+      "preset": null
     },
     {
       "file": "screenshots/release-1.6.0/aplite_08-double-tap.png",
       "sha256": "66bb07f17fffecb12afcfc953e4b05e751be3add27008103e5f9e489685de555",
-      "captured_utc": "2026-10-19T02:24:54.016531+00:00",
+      "captured_utc": "2026-10-19T02:54:51.764971+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -438,12 +595,13 @@
       },
       "battery_percent": 80,
       "bluetooth_connected": true,
-      "note": "Raw emulator pixels; exact/quiet states use test keys where set. Date follows emulator clock. Settled for 1.5s after inputs; Legacy transport stays connected for screenshots; no simulated disconnection."
+      "note": "Raw emulator pixels; exact/quiet states use test keys where set. Date follows emulator clock. Settled for 1.5s after inputs; Legacy transport stays connected for screenshots; no simulated disconnection.",
+      "preset": null
     },
     {
       "file": "screenshots/release-1.6.0/aplite_08-double-tap-triggered.png",
       "sha256": "b279e9ca0d88879bd3f740b68dd4b99adfb33e039512e248d670111e6cb626fa",
-      "captured_utc": "2026-10-19T02:24:54.431775+00:00",
+      "captured_utc": "2026-10-19T02:54:52.190738+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -472,12 +630,13 @@
       },
       "battery_percent": 80,
       "bluetooth_connected": true,
-      "note": "Two real QemuTap X+ events 200 ms apart; TEST_EXACT_TIME remains zero."
+      "note": "Two real QemuTap X+ events 200 ms apart; TEST_EXACT_TIME remains zero.",
+      "preset": null
     },
     {
       "file": "screenshots/release-1.6.0/aplite_08-double-tap-restored.png",
       "sha256": "66bb07f17fffecb12afcfc953e4b05e751be3add27008103e5f9e489685de555",
-      "captured_utc": "2026-10-19T02:24:57.942467+00:00",
+      "captured_utc": "2026-10-19T02:54:55.710483+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -506,12 +665,13 @@
       },
       "battery_percent": 80,
       "bluetooth_connected": true,
-      "note": "Captured after the configured exact-time duration; must match pre-tap pixels."
+      "note": "Captured after the configured exact-time duration; must match pre-tap pixels.",
+      "preset": null
     },
     {
       "file": "screenshots/release-1.6.0/aplite_09-gesture-disabled.png",
       "sha256": "66bb07f17fffecb12afcfc953e4b05e751be3add27008103e5f9e489685de555",
-      "captured_utc": "2026-10-19T02:24:59.825366+00:00",
+      "captured_utc": "2026-10-19T02:54:57.580944+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -540,12 +700,13 @@
       },
       "battery_percent": 80,
       "bluetooth_connected": true,
-      "note": "Raw emulator pixels; exact/quiet states use test keys where set. Date follows emulator clock. Settled for 1.5s after inputs; Legacy transport stays connected for screenshots; no simulated disconnection."
+      "note": "Raw emulator pixels; exact/quiet states use test keys where set. Date follows emulator clock. Settled for 1.5s after inputs; Legacy transport stays connected for screenshots; no simulated disconnection.",
+      "preset": null
     },
     {
       "file": "screenshots/release-1.6.0/aplite_09-gesture-disabled-triggered.png",
       "sha256": "66bb07f17fffecb12afcfc953e4b05e751be3add27008103e5f9e489685de555",
-      "captured_utc": "2026-10-19T02:25:00.238502+00:00",
+      "captured_utc": "2026-10-19T02:54:58.005487+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -574,12 +735,13 @@
       },
       "battery_percent": 80,
       "bluetooth_connected": true,
-      "note": "Two real QemuTap X+ events 200 ms apart; TEST_EXACT_TIME remains zero."
+      "note": "Two real QemuTap X+ events 200 ms apart; TEST_EXACT_TIME remains zero.",
+      "preset": null
     },
     {
       "file": "screenshots/release-1.6.0/aplite_09-gesture-disabled-restored.png",
       "sha256": "66bb07f17fffecb12afcfc953e4b05e751be3add27008103e5f9e489685de555",
-      "captured_utc": "2026-10-19T02:25:03.750167+00:00",
+      "captured_utc": "2026-10-19T02:55:01.528650+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -608,7 +770,8 @@
       },
       "battery_percent": 80,
       "bluetooth_connected": true,
-      "note": "Captured after the configured exact-time duration; must match pre-tap pixels."
+      "note": "Captured after the configured exact-time duration; must match pre-tap pixels.",
+      "preset": null
     }
   ]
 }

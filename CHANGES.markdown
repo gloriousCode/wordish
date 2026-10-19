@@ -10,6 +10,10 @@ the existing app UUID and saved settings under the name Wordish.
 version 1.6.0 (unreleased)
 -------------------------
 
+- Smooths the larger clock fonts on Time 2 and Round 2 while measuring their
+  full outer edges for screen fit. Older models retain their existing rendering.
+- Replaces the old colourful presets with Lagoon, Ember, Orchid, Grove and Sand:
+  coordinated palettes with strong contrast and quieter date accents.
 - Adds animation and double-tap switches, plus a choice of 3, 5 or 10 seconds
   for exact time.
 - Adds optional, silent low-battery and phone-disconnection indicators.

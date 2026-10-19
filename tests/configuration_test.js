@@ -442,3 +442,39 @@ test('incoming legacy aliases override saved canonical values while preserving n
     assert.equal(state.messages.at(-1)['5'], 0);
   }
 });
+
+test('every preset has readable word and date contrast and valid bridge colours', () => {
+  const { context, field, document } = page({});
+  const bridgeState = bridge('{}');
+  function contrast(a, b) {
+    const first = context.luminance(context.previewColours[a]);
+    const second = context.luminance(context.previewColours[b]);
+    return (Math.max(first, second) + 0.05) / (Math.min(first, second) + 0.05);
+  }
+  for (const [name, preset] of Object.entries(context.presets)) {
+    field('preset').value = name;
+    field('preset').listeners.change.call(field('preset'));
+    document.getElementById('config').listeners.change();
+    assert.equal(document.getElementById('contrast-warning').className, 'hidden', name);
+    for (const row of ['one', 'two', 'three']) {
+      const chosen = preset['row_' + row + '_colour'];
+      const colour = chosen === 'match' ? preset.foreground_colour : chosen;
+      assert.ok(contrast(colour, preset.background_colour) >= 3, name + ' row ' + row);
+      assert.equal(bridgeState.context.colourValues[colour], parseInt(context.previewColours[colour].slice(1), 16));
+      if (preset.date_position !== 'off') {
+        const dateChoice = preset['date_part_' + row + '_colour'];
+        const dateColour = dateChoice === 'match' ? preset.foreground_colour : dateChoice;
+        assert.ok(contrast(dateColour, preset.background_colour) >= 4.5, name + ' date ' + row);
+      }
+    }
+  }
+  for (const colour of ['navy', 'plum']) {
+    const saved = page({ foreground_colour: colour, background_colour: colour,
+      row_one_colour: colour, date_part_one_colour: colour }).context.saveOptions();
+    assert.equal(saved.foreground_colour, colour);
+    assert.equal(saved.background_colour, colour);
+    assert.equal(saved.row_one_colour, colour);
+    assert.equal(saved.date_part_one_colour, colour);
+    assert.equal(bridgeState.context.colourValues[colour], bridgeState.context.optionalColourValues[colour]);
+  }
+});

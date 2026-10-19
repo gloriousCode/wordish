@@ -32,25 +32,161 @@
                 "type": "font",
                 "name": "FONT_ROBOTO_CONDENSED_54",
                 "file": "fonts/Roboto-Condensed.ttf",
-                "characterRegex": "[ 0-9:A-Za-zÀ-ÿ'-]"
+                "characterRegex": "[ 0-9:A-Za-zÀ-ÿ'-]",
+                "targetPlatforms": [
+                    "aplite",
+                    "basalt",
+                    "chalk",
+                    "diorite",
+                    "flint"
+                ]
             },
             {
                 "type": "font",
                 "name": "FONT_ROBOTO_BOLD_54",
                 "file": "fonts/Roboto-Bold.ttf",
-                "characterRegex": "[ 0-9:A-Za-zÀ-ÿ'-]"
+                "characterRegex": "[ 0-9:A-Za-zÀ-ÿ'-]",
+                "targetPlatforms": [
+                    "aplite",
+                    "basalt",
+                    "chalk",
+                    "diorite",
+                    "flint"
+                ]
             },
             {
                 "type": "font",
                 "name": "FONT_ROBOTO_CONDENSED_48",
                 "file": "fonts/Roboto-Condensed.ttf",
-                "characterRegex": "[ 0-9:A-Za-zÀ-ÿ'-]"
+                "characterRegex": "[ 0-9:A-Za-zÀ-ÿ'-]",
+                "targetPlatforms": [
+                    "aplite",
+                    "basalt",
+                    "chalk",
+                    "diorite",
+                    "flint"
+                ]
             },
             {
                 "type": "font",
                 "name": "FONT_ROBOTO_BOLD_48",
                 "file": "fonts/Roboto-Bold.ttf",
-                "characterRegex": "[ 0-9:A-Za-zÀ-ÿ'-]"
+                "characterRegex": "[ 0-9:A-Za-zÀ-ÿ'-]",
+                "targetPlatforms": [
+                    "aplite",
+                    "basalt",
+                    "chalk",
+                    "diorite",
+                    "flint"
+                ]
+            },
+            {
+                "type": "font",
+                "name": "FONT_SMOOTH_CONDENSED_48_1",
+                "file": "fonts/smooth/Roboto-Condensed-48-1.pbf",
+                "targetPlatforms": [
+                    "emery",
+                    "gabbro"
+                ]
+            },
+            {
+                "type": "font",
+                "name": "FONT_SMOOTH_CONDENSED_48_2",
+                "file": "fonts/smooth/Roboto-Condensed-48-2.pbf",
+                "targetPlatforms": [
+                    "emery",
+                    "gabbro"
+                ]
+            },
+            {
+                "type": "font",
+                "name": "FONT_SMOOTH_CONDENSED_48_3",
+                "file": "fonts/smooth/Roboto-Condensed-48-3.pbf",
+                "targetPlatforms": [
+                    "emery",
+                    "gabbro"
+                ]
+            },
+            {
+                "type": "font",
+                "name": "FONT_SMOOTH_BOLD_48_1",
+                "file": "fonts/smooth/Roboto-Bold-48-1.pbf",
+                "targetPlatforms": [
+                    "emery",
+                    "gabbro"
+                ]
+            },
+            {
+                "type": "font",
+                "name": "FONT_SMOOTH_BOLD_48_2",
+                "file": "fonts/smooth/Roboto-Bold-48-2.pbf",
+                "targetPlatforms": [
+                    "emery",
+                    "gabbro"
+                ]
+            },
+            {
+                "type": "font",
+                "name": "FONT_SMOOTH_BOLD_48_3",
+                "file": "fonts/smooth/Roboto-Bold-48-3.pbf",
+                "targetPlatforms": [
+                    "emery",
+                    "gabbro"
+                ]
+            },
+            {
+                "type": "font",
+                "name": "FONT_SMOOTH_CONDENSED_54_1",
+                "file": "fonts/smooth/Roboto-Condensed-54-1.pbf",
+                "targetPlatforms": [
+                    "emery",
+                    "gabbro"
+                ]
+            },
+            {
+                "type": "font",
+                "name": "FONT_SMOOTH_CONDENSED_54_2",
+                "file": "fonts/smooth/Roboto-Condensed-54-2.pbf",
+                "targetPlatforms": [
+                    "emery",
+                    "gabbro"
+                ]
+            },
+            {
+                "type": "font",
+                "name": "FONT_SMOOTH_CONDENSED_54_3",
+                "file": "fonts/smooth/Roboto-Condensed-54-3.pbf",
+                "targetPlatforms": [
+                    "emery",
+                    "gabbro"
+                ]
+            },
+            {
+                "type": "font",
+                "name": "FONT_SMOOTH_BOLD_54_1",
+                "file": "fonts/smooth/Roboto-Bold-54-1.pbf",
+                "targetPlatforms": [
+                    "emery",
+                    "gabbro"
+                ]
+            },
+            {
+                "type": "font",
+                "name": "FONT_SMOOTH_BOLD_54_2",
+                "file": "fonts/smooth/Roboto-Bold-54-2.pbf",
+                "targetPlatforms": [
+                    "emery",
+                    "gabbro"
+                ]
+            },
+            {
+                "type": "font",
+                "name": "FONT_SMOOTH_BOLD_54_3",
+                "file": "fonts/smooth/Roboto-Bold-54-3.pbf",
+                "targetPlatforms": [
+                    "emery",
+                    "gabbro"
+                ]
             }
         ]
     },

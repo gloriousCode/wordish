@@ -64,6 +64,7 @@ def main():
                 "caption": caption, "source": filename, "sha256": shot["sha256"],
                 "width": dimensions[0], "height": dimensions[1],
                 "captured_utc": shot["captured_utc"],
+                "preset": shot.get("preset"),
             })
         manifest.update(bundle=source["bundle"], bundle_sha256=bundle_hash,
                         uuid=metadata["uuid"], version_code=metadata["versionCode"])

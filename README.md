@@ -36,13 +36,13 @@ Features:
 
  - Fuzzy time in natural language
  - Modern PebbleOS target support, including Emery and Gabbro
- - Sharper high-resolution word rendering with bundled Roboto fonts
+ - Smoothed Roboto word rendering on Pebble Time 2 and Pebble Round 2
  - Larger text on newer screens without relying on bitmap scaling
  - Fit-safe line breaking across one to four lines of text
  - Automatic fallback to smaller font tiers when a line would overflow
  - Foreground and background colour customisation
  - Optional separate colours for minute row one, minute row two, hour row, and corner date sections
- - Font presets and visual style presets
+ - Font presets and coordinated Lagoon, Ember, Orchid, Grove and Sand colour styles
  - Optional small corner date with compact numeric and abbreviated formats
  - Double tap gesture to briefly show the exact digital time
  - Optional animation and double-tap controls, with 3, 5 or 10 seconds of exact time

@@ -57,6 +57,38 @@ SHOTS = [
     ("08-double-tap", {6: 1, 98: 10, 99: 42}, 80, True),
     ("09-gesture-disabled", {6: 1, 15: 0, 98: 10, 99: 42}, 80, True),
 ]
+MODERN_GALLERY = {
+    "01-clear-words": "lagoon", "02-colour-rows": "ember",
+    "03-corner-date": "sand", "04-exact-time": "orchid",
+    "05-status-proof": "grove",
+}
+
+
+def capture_shots(platform, preset_audit=False):
+    """Resolve real presets and platform-specific inputs before capture or planning."""
+    modern = platform in ("emery", "gabbro")
+    presets = {}
+    if modern or preset_audit:
+        presets = json.loads(subprocess.check_output(
+            ["node", str(ROOT / "scripts/screenshot_presets.js")], text=True))
+    definitions = ([(f"preset-{name}", {}, 80, True) for name in presets]
+                   if preset_audit else SHOTS)
+    result = []
+    for name, overrides, battery, connected in definitions:
+        settings = dict(BASE | overrides)
+        preset = None
+        if preset_audit:
+            preset = name.removeprefix("preset-")
+        elif modern:
+            preset = MODERN_GALLERY.get(name)
+        if preset:
+            settings.update({int(key): value for key, value in presets[preset].items()})
+        if platform in ("aplite", "diorite", "flint") and name == "02-colour-rows":
+            settings.update({1: 1, 3: 1, 4: 0, 5: 0xFFFFFF})
+        if platform in ("aplite", "basalt", "chalk", "diorite"):
+            connected = True
+        result.append((name, settings, battery, connected, preset))
+    return result
 
 
 def repo_path(value):
@@ -130,7 +162,7 @@ def ensure_emulator(platform, sdk):
     return record
 
 
-def capture(platform, pbw, output, sdk, metadata):
+def capture(platform, pbw, output, sdk, metadata, preset_audit=False):
     """Install the checked bundle, capture raw pixels, and exercise gestures."""
     import png
     from libpebble2.communication import PebbleConnection
@@ -162,7 +194,7 @@ def capture(platform, pbw, output, sdk, metadata):
     service.register_handler("nack", lambda transaction, app: acknowledgements.put((transaction, False)))
     captures = []
 
-    def save_capture(name, pixels, settings, battery, connected, note):
+    def save_capture(name, pixels, settings, battery, connected, note, preset=None):
         """Save original framebuffer pixels together with their exact inputs."""
         filename = output / f"{platform}_{name}.png"
         png.from_array(pixels, mode="RGB;8").save(str(filename))
@@ -171,22 +203,13 @@ def capture(platform, pbw, output, sdk, metadata):
                          "captured_utc": datetime.now(timezone.utc).isoformat(),
                          "width": len(pixels[0]) // 3, "height": len(pixels),
                          "settings": settings, "battery_percent": battery,
-                         "bluetooth_connected": connected, "note": note})
+                         "bluetooth_connected": connected, "note": note, "preset": preset})
         print(f"Captured {filename}", flush=True)
         (output / f"{platform}_manifest.json").write_text(json.dumps(
             dict(metadata, emulator=session, captures=captures), indent=2) + "\n")
 
-    for name, overrides, battery, connected in SHOTS:
+    for name, settings, battery, connected, preset in capture_shots(platform, preset_audit):
         legacy_transport = platform in ("aplite", "basalt", "chalk", "diorite")
-        if legacy_transport:
-            # Legacy firmware also blocks screenshot/debug packets when disconnected.
-            # Showcase battery and Quiet Time while retaining the capture connection.
-            connected = True
-        settings = dict(BASE)
-        settings.update(overrides)
-        if platform in ("aplite", "diorite", "flint") and name == "02-colour-rows":
-            # Monochrome models showcase font/alignment and inversion, not colour.
-            settings.update({1: 1, 3: 1, 4: 0, 5: 0xFFFFFF})
         # Older firmware rejects AppMessage traffic while simulated BT is off.
         # Apply preferences while connected, then enter the requested state.
         pebble.transport.send_packet(QemuBluetoothConnection(connected=True), MessageTargetQemu())
@@ -206,7 +229,8 @@ def capture(platform, pbw, output, sdk, metadata):
                      f"Date follows emulator clock. Settled for {settle_seconds}s after inputs; "
                      + ("Legacy transport stays connected for screenshots; no simulated disconnection."
                         if legacy_transport else
-                        "disconnect transitions wait beyond PebbleOS's 25-second debounce."))
+                        "disconnect transitions wait beyond PebbleOS's 25-second debounce.")
+                     + (f" Configuration preset: {preset}." if preset else ""), preset)
         if name in ("08-double-tap", "09-gesture-disabled"):
             pebble.transport.send_packet(QemuTap(axis=QemuTap.Axis.X, direction=1), MessageTargetQemu())
             time.sleep(0.2)
@@ -238,13 +262,17 @@ def main():
     parser.add_argument("--platform", choices=["all", *PORTS], default="all")
     parser.add_argument("--expected-version", default="1.6.0")
     parser.add_argument("--plan", action="store_true")
+    parser.add_argument("--preset-audit", action="store_true",
+                        help="Capture every actual configuration-page preset")
     args = parser.parse_args()
     if Path.cwd().resolve() != ROOT:
         parser.error(f"Run from the current repository: {ROOT}")
     if args.plan:
-        print(json.dumps({"ports": PORTS, "shots": [
-            {"name": name, "settings": dict(BASE | overrides), "battery": battery, "connected": connected}
-            for name, overrides, battery, connected in SHOTS]}, indent=2))
+        platforms = list(PORTS) if args.platform == "all" else [args.platform]
+        print(json.dumps({platform: [
+            {"name": name, "settings": settings, "battery": battery, "connected": connected, "preset": preset}
+            for name, settings, battery, connected, preset in capture_shots(platform, args.preset_audit)]
+            for platform in platforms}, indent=2))
         return
     pbw = repo_path(args.pbw)
     output = repo_path(args.output)
@@ -262,7 +290,7 @@ def main():
                 "git_status": subprocess.check_output(["git", "status", "--short"], text=True)}
     output.mkdir(parents=True, exist_ok=True)
     for platform in platforms:
-        capture(platform, pbw, output, args.sdk.resolve(), metadata)
+        capture(platform, pbw, output, args.sdk.resolve(), metadata, args.preset_audit)
 
 
 if __name__ == "__main__":

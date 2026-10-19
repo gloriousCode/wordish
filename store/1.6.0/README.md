@@ -53,6 +53,21 @@ disconnected-phone icon. Battery and disconnection indicators default to off.
 Long Catalan phrases and real gesture/timeout checks remain in
 [`screenshots/release-1.6.0`](../../screenshots/release-1.6.0) for verification.
 
+Time 2 and Round 2 use the new coordinated presets in this order:
+
+| Shot | Preset | Palette |
+| --- | --- | --- |
+| Time in words | Lagoon | Deep teal, ice and cream |
+| Make it yours | Ember | Maroon, peach and cream |
+| A discreet date | Sand | Cream, slate and deep teal |
+| Exact when needed | Orchid | Plum, lavender and soft rose |
+| Useful details, quietly | Grove | Forest, mint and cream |
+
+The larger clock fonts are smoothed on these two models. All eight current
+presets were rendered on both emulators; see the [preset audit](../../screenshots/preset-audit-1.6.0/README.md)
+for native previews and contrast checks. The other five platform galleries retain
+their original styles and rendering.
+
 ## Banner
 
 Upload [wordish-banner.png](wordish-banner.png) for every platform collection.

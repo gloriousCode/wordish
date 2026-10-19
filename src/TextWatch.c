@@ -4,6 +4,7 @@
 #include "text_layout.h"
 #include "text_lines.h"
 #include "status_indicators.h"
+#include "smooth_fonts.h"
 
 #define DEBUG 0
 
@@ -564,9 +565,18 @@ static GColor date_part_colour_for_index(int part)
 
 static GFont font_for_choice(FontChoice choice, bool bold)
 {
+#ifdef WORDISH_SMOOTH_FONTS
+	GFont smooth = smooth_font_for_choice(choice, bold);
+	if (smooth != NULL) {
+		return smooth;
+	}
+#endif
 	switch (choice)
 	{
 		case FONT_CHOICE_LARGE:
+#ifdef WORDISH_SMOOTH_FONTS
+			return fonts_get_system_font(bold ? FONT_KEY_BITHAM_42_BOLD : FONT_KEY_BITHAM_42_LIGHT);
+#else
 			if (bold) {
 				if (custom_font_large_bold == NULL) {
 					custom_font_large_bold = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_54));
@@ -577,7 +587,11 @@ static GFont font_for_choice(FontChoice choice, bool bold)
 				custom_font_large_light = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_54));
 			}
 			return custom_font_large_light ? custom_font_large_light : fonts_get_system_font(FONT_KEY_BITHAM_42_LIGHT);
+#endif
 		case FONT_CHOICE_MEDIUM:
+#ifdef WORDISH_SMOOTH_FONTS
+			return fonts_get_system_font(bold ? FONT_KEY_BITHAM_42_BOLD : FONT_KEY_BITHAM_42_LIGHT);
+#else
 			if (bold) {
 				if (custom_font_medium_bold == NULL) {
 					custom_font_medium_bold = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_48));
@@ -588,6 +602,7 @@ static GFont font_for_choice(FontChoice choice, bool bold)
 				custom_font_medium_light = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_48));
 			}
 			return custom_font_medium_light ? custom_font_medium_light : fonts_get_system_font(FONT_KEY_BITHAM_42_LIGHT);
+#endif
 		case FONT_CHOICE_SHARP:
 			return fonts_get_system_font(bold ? FONT_KEY_GOTHIC_28_BOLD : FONT_KEY_GOTHIC_28);
 		case FONT_CHOICE_COMPACT:
@@ -611,6 +626,9 @@ static void unload_custom_font(GFont *font)
 
 static void unload_custom_fonts(void)
 {
+#ifdef WORDISH_SMOOTH_FONTS
+	smooth_fonts_unload();
+#endif
 	unload_custom_font(&custom_font_large_light);
 	unload_custom_font(&custom_font_large_bold);
 	unload_custom_font(&custom_font_medium_light);
@@ -1556,6 +1574,38 @@ static void inbox_dropped_callback(AppMessageResult reason, void *context)
 	APP_LOG(APP_LOG_LEVEL_DEBUG, "App Message dropped: %d", reason);
 }
 
+#ifdef WORDISH_SMOOTH_FONTS
+// Retain TextLayer storage/animation, drawing the same measured font in three masks.
+static void smooth_time_layer_update(Layer *layer, GContext *ctx)
+{
+	for (int i = 0; i < NUM_LINES; i++) {
+		bool current = lines[i].currentLayer != NULL
+			&& layer == text_layer_get_layer(lines[i].currentLayer);
+		if (!current && (lines[i].nextLayer == NULL
+				|| layer != text_layer_get_layer(lines[i].nextLayer))) {
+			continue;
+		}
+		TextLayer *text_layer = current ? lines[i].currentLayer : lines[i].nextLayer;
+		bool bold = (current ? lines[i].currentFormat : lines[i].nextFormat) == 'b';
+		int row = current ? lines[i].currentRow : lines[i].nextRow;
+		const char *text = text_layer_get_text(text_layer);
+		if (text == NULL || text[0] == '\0') {
+			return;
+		}
+		GRect bounds = layer_get_bounds(layer);
+		GTextAlignment alignment = lookup_text_alignment(text_align);
+		GColor colour = row_colour_for_index(row);
+		if (!smooth_font_draw(ctx, text, render_font_choice, bold, bounds,
+				alignment, colour, background_colour())) {
+			graphics_context_set_text_color(ctx, colour);
+			graphics_draw_text(ctx, text, font_for_choice(render_font_choice, bold), bounds,
+				GTextOverflowModeTrailingEllipsis, alignment, NULL);
+		}
+		return;
+	}
+}
+#endif
+
 static void init_line(Line* line)
 {
 	// Create layers with dummy position to the right of the screen
@@ -1565,6 +1615,11 @@ static void init_line(Line* line)
 		APP_LOG(APP_LOG_LEVEL_ERROR, "Failed to create text layers");
 		return;
 	}
+
+#ifdef WORDISH_SMOOTH_FONTS
+	layer_set_update_proc(text_layer_get_layer(line->currentLayer), smooth_time_layer_update);
+	layer_set_update_proc(text_layer_get_layer(line->nextLayer), smooth_time_layer_update);
+#endif
 
 	// Set the text buffers
 	line->lineStr1[0] = '\0';
