@@ -19,29 +19,43 @@ and hearts. Source: https://github.com/gloriousCode/fuzzy-text-two.
 
 ## Screenshots, in upload order
 
-There are five images for each of the two modern platforms. Use the matching
-folder for each platform's asset collection. The files contain original emulator
-pixels with no scaling, added frames or promotional text. These images are from
-the current Wordish 1.6.0 bundle; the older screenshots elsewhere in the repository
-are not part of this upload selection.
+There are **35 screenshots: five for each of the seven platform tabs** in the
+store. Use the folder matching the selected tab. All screenshots contain
+original emulator pixels with no scaling, added frames or promotional text.
 
-| Order | Purpose | Pebble Time 2 — Emery, 200×228 | Pebble Round 2 — Gabbro, 260×260 |
+| Store tab | Folder | Native size | Preview |
 | --- | --- | --- | --- |
-| 1 | Time in words | ![Time 2 words](emery/01-time-in-words.png) | ![Round 2 words](gabbro/01-time-in-words.png) |
-| 2 | Make it yours | ![Time 2 colours](emery/02-make-it-yours.png) | ![Round 2 colours](gabbro/02-make-it-yours.png) |
-| 3 | A discreet date | ![Time 2 date](emery/03-corner-date.png) | ![Round 2 date](gabbro/03-corner-date.png) |
-| 4 | Exact when needed | ![Time 2 exact time](emery/04-exact-time.png) | ![Round 2 exact time](gabbro/04-exact-time.png) |
-| 5 | Useful details, quietly | ![Time 2 indicators](emery/05-status-indicators.png) | ![Round 2 indicators](gabbro/05-status-indicators.png) |
+| Pebble Classic | [aplite](aplite) | 144×168 | ![Classic](aplite/01-time-in-words.png) |
+| Pebble Time | [basalt](basalt) | 144×168 | ![Time](basalt/01-time-in-words.png) |
+| Pebble Time Round | [chalk](chalk) | 180×180 | ![Time Round](chalk/01-time-in-words.png) |
+| Pebble 2 | [diorite](diorite) | 144×168 | ![Pebble 2](diorite/01-time-in-words.png) |
+| Pebble Time 2 | [emery](emery) | 200×228 | ![Time 2](emery/01-time-in-words.png) |
+| Pebble 2 Duo | [flint](flint) | 144×168 | ![2 Duo](flint/01-time-in-words.png) |
+| Pebble Round 2 | [gabbro](gabbro) | 260×260 | ![Round 2](gabbro/01-time-in-words.png) |
 
-The fifth image shows the optional battery and phone-disconnection indicators,
-plus the system Quiet Time indicator and date. These are deliberately enabled
-for the showcase; battery and disconnection indicators default to off.
+Upload these five filenames in order from each folder:
+
+| Order | Filename | Purpose |
+| --- | --- | --- |
+| 1 | `01-time-in-words.png` | Clear, relaxed time |
+| 2 | `02-make-it-yours.png` | Row colours on colour screens; font, alignment and inversion on monochrome screens |
+| 3 | `03-corner-date.png` | A discreet date |
+| 4 | `04-exact-time.png` | Exact time on demand |
+| 5 | `05-status-indicators.png` | Useful details, quietly |
+
+These images are from the current Wordish 1.6.0 bundle. Older screenshots
+elsewhere in the repository are not part of this upload selection.
+
+The fifth image shows low battery, the system Quiet Time indicator and date.
+Emery, Flint and Gabbro also show phone disconnection. The four legacy emulators
+must remain connected to retrieve screenshots, so their images do not show the
+disconnected-phone icon. Battery and disconnection indicators default to off.
 Long Catalan phrases and real gesture/timeout checks remain in
 [`screenshots/release-1.6.0`](../../screenshots/release-1.6.0) for verification.
 
 ## Banner
 
-Upload [wordish-banner.png](wordish-banner.png) for both platform collections.
+Upload [wordish-banner.png](wordish-banner.png) for every platform collection.
 It is exactly **720×320**, drawn directly at that resolution with the repository's
 Roboto fonts. It is original promotional typography, not a watch screenshot.
 No resizing, upscaling or downscaling was used. The larger AI-generated concepts
@@ -50,6 +64,16 @@ were not used in the final file.
 The [current official submission requirements](https://developer.repebble.com/guides/appstore-publishing/preparing-a-submission/)
 allow five screenshots per platform at exact screen dimensions, without watch
 frames, and a 720×320 banner. The images here are PNG files below the 4.4 MB limit.
+
+## App icons
+
+Use [wordish-icon-80.png](wordish-icon-80.png) for Small Icon and
+[wordish-icon-144.png](wordish-icon-144.png) for Large Icon. Each is drawn directly
+at its native 80×80 or 144×144 size with a bold W and the banner's three colour
+accents. Neither icon is a resized copy of the other.
+
+![80-pixel Wordish icon](wordish-icon-80.png)
+![144-pixel Wordish icon](wordish-icon-144.png)
 
 ## Upload and verification
 
@@ -60,16 +84,16 @@ frames, and a 720×320 banner. The images here are PNG files below the 4.4 MB li
    1.6.0 to the existing listing. The retained filename does not affect the
    Wordish display name. The bundle is a build output, not checked into Git.
 3. Apply the title, description and release notes, then the matching five
-   screenshots and banner for Emery and Gabbro.
+   screenshots and the shared banner for all seven tabs, then the two app icons.
 4. Check the store preview and download the published PBW to verify its name,
    version and UUID. The previous store download had mismatched version metadata.
 
 [manifest.json](manifest.json) records the bundle hash, screenshot source paths,
-capture times, dimensions and hashes, plus the banner hash. To regenerate this
+capture times, dimensions and hashes, plus the banner and icon hashes. To regenerate this
 selection after new captures, run `python3 scripts/prepare_store_assets.py` from
 the repository with Pillow installed. The helper rejects stale source/bundle
-provenance and draws the banner natively. It does not change the listing text.
+provenance and draws the banner and icons natively. It does not change the listing text.
 
-The seven-platform SDK build and host tests pass. Emulator testing covers Time 2
-and Round 2; physical watch contrast, battery life and phone-webview behaviour
+The seven-platform SDK build and host tests pass. Emulator testing covers all
+seven platforms; physical watch contrast, battery life and phone-webview behaviour
 have not been verified. See [the full release plan](../../RELEASE_1.6.0.md).

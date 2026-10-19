@@ -54,7 +54,8 @@ Screenshots
 -----------
 
 The [Wordish store package](store/1.6.0/README.md) includes the native 720×320
-banner, five upload-ready screenshots per modern platform and the listing copy.
+banner, five upload-ready screenshots for every supported platform, two native app icons
+and the listing copy.
 
 Release 1.6.0 gallery, captured directly from the Emery and Gabbro emulators:
 

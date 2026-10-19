@@ -6,8 +6,9 @@ Prepared locally, not published. This release retains UUID
 and version code 17; the phone bridge reports the same version label.
 
 The upload-ready [store package](store/1.6.0/README.md) contains plain-text listing
-copy and release notes, five screenshots each for Time 2 and Round 2, and a native
-720×320 banner. Its manifest records image and bundle checksums.
+copy and release notes, five screenshots for each of the seven platforms, native
+80×80 and 144×144 icons, and a native 720×320 banner. Its manifest records image
+and bundle checksums.
 
 ## Release identity
 
@@ -69,8 +70,8 @@ failures while preserving your latest choices.
 Use fresh, unaltered emulator captures from the 1.6.0 bundle. Lead with benefits
 rather than a grid of nearly identical colour choices:
 
-1. **Time in words** — large, clear words on Pebble Time 2.
-2. **Make it yours** — an attractive colour preset on Pebble Round 2.
+1. **Time in words** — clear words at each platform's native resolution.
+2. **Make it yours** — row colours, or font/alignment/inversion on monochrome models.
 3. **A discreet date** — the corner date alongside the word clock.
 4. **Exact when needed** — digital time on demand.
 5. **Useful details, quietly** — optional status indicators alongside the date.
@@ -79,7 +80,7 @@ Additional verification captures should show long Catalan phrases and simultaneo
 date/status indicators on round and rectangular screens. Emulator captures do
 not establish physical watch contrast or battery life.
 
-The selected upload files are in `store/1.6.0/emery` and `store/1.6.0/gabbro`,
+The selected upload files are in seven platform folders under `store/1.6.0`,
 numbered in this order for each platform. The full verification captures are in
 `screenshots/release-1.6.0`.
 `scripts/capture_screenshots.py` records bundle/source hashes, settings and capture
@@ -91,7 +92,7 @@ the exact-time timeout and the disabled-gesture setting.
 The final SDK 4.33.1 build passes `make lint` for all seven targets. The
 `make misc_checks` run passes both host C suites and 20 Node configuration tests.
 The C suite includes 193,536 decorated layout combinations; its SDK model is
-complemented by actual Emery and Gabbro captures. Real-font regression cases
+complemented by actual captures from all seven emulators. Real-font regression cases
 cover Catalan “dos quarts” and round-screen “twelve”/“eleven”, which the previous
 width estimates allowed to truncate. A bounded 16-entry cache reuses recent font
 measurements.
@@ -101,10 +102,13 @@ with 70,932 bytes of resources. These linker figures are not peak runtime heap o
 battery measurements. The build checks bridge syntax with Node; optional JSHint
 is unavailable. No physical phone/webview or watch test has been completed.
 
-All 26 final Emery/Gabbro images have verified image, bundle and source hashes.
-The real emulated double-tap, timeout and gesture-off comparisons pass on both
-platforms. Visual inspection confirms complete long phrases and simultaneous
-date, Quiet Time, low-battery and phone-disconnection icons. The capture helper
+All 91 final images across seven platforms have verified image, bundle and source hashes.
+The real emulated double-tap, timeout and gesture-off comparisons pass on all seven
+platforms. Visual inspection confirms complete long phrases with date and status
+content. Emery, Flint and Gabbro show simultaneous date, Quiet Time, low-battery
+and phone-disconnection icons. Legacy emulator debug traffic requires a live
+connection, so Aplite, Basalt, Chalk and Diorite captures keep it connected and
+show battery and Quiet Time without the disconnected-phone icon. The capture helper
 waits 27 seconds for a disconnection, beyond PebbleOS's 25-second debounce;
 an earlier 1.5-second capture was too soon to show the icon.
 

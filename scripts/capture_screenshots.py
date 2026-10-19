@@ -2,7 +2,7 @@
 """Capture unmodified emulator pixels and provenance for the release gallery.
 
 Run with the Python interpreter from the installed pebble-tool environment.
-Only this checkout's build/emulator state and ports 12444/12445 are used.
+Only this checkout's build/emulator state and ports 12444–12450 are used.
 Emulators remain running; this helper never stops or restarts a process.
 Use --plan to inspect the shot settings without starting an emulator.
 """
@@ -21,11 +21,22 @@ import time
 import uuid
 import zipfile
 from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 
 
 ROOT = Path(__file__).resolve().parents[1]
 SDK = Path.home() / "Library/Application Support/Pebble SDK/SDKs/4.33.1"
-PORTS = {"emery": 12444, "gabbro": 12445}
+PORTS = {"aplite": 12446, "basalt": 12447, "chalk": 12448,
+         "diorite": 12449, "emery": 12444, "flint": 12450, "gabbro": 12445}
+BOARDS = {
+    "aplite": ("pebble-bb2", "cortex-m3", "mtd"),
+    "basalt": ("pebble-snowy-bb", "cortex-m4", "spi"),
+    "chalk": ("pebble-s4-bb", "cortex-m4", "spi"),
+    "diorite": ("pebble-silk-bb", "cortex-m4", "mtd"),
+    "emery": ("pebble-emery", "cortex-m33", "mtd"),
+    "flint": ("pebble-flint", "cortex-m4", "mtd"),
+    "gabbro": ("pebble-gabbro", "cortex-m33", "mtd"),
+}
 APP_UUID = "bf4b4493-24d6-49e1-9388-4100aa55d9ba"
 # PebbleOS debounced_connection_service hides disconnects for 25 seconds.
 # Allow two further seconds for the regular-timer callback and app redraw.
@@ -94,12 +105,15 @@ def ensure_emulator(platform, sdk):
     if not flash.exists():
         with bz2.open(seed, "rb") as source, flash.open("xb") as destination:
             shutil.copyfileobj(source, destination)
+    machine, cpu, flash_interface = BOARDS[platform]
+    flash_options = (f"if=none,id=spi-flash,file={flash},format=raw"
+                     if flash_interface == "spi" else f"if=mtd,format=raw,file={flash}")
     command = [str(qemu), "-rtc", "base=localtime", "-serial", "null",
                "-serial", f"tcp:127.0.0.1:{port},server=on,wait=off",
                "-serial", f"file:{state_dir / 'serial.log'}", "-kernel", str(kernel),
-               "-machine", f"pebble-{platform}", "-cpu", "cortex-m33",
-               "-drive", f"if=mtd,format=raw,file={flash}", "-display", "none"]
-    if platform == "emery":
+               "-machine", machine, "-cpu", cpu,
+               "-drive", flash_options, "-display", "none"]
+    if platform in ("emery", "flint"):
         command.extend(["-audio", "driver=none,id=audio0"])
     environment = os.environ.copy()
     environment["DYLD_LIBRARY_PATH"] = str(sdk / "toolchain/lib")
@@ -125,13 +139,21 @@ def capture(platform, pbw, output, sdk, metadata):
     from libpebble2.services.appmessage import AppMessageService, Int32
     from libpebble2.services.install import AppInstaller
     from libpebble2.services.screenshot import Screenshot
+    from libpebble2.protocol.system import TimeMessage, SetUTC
 
     session = ensure_emulator(platform, sdk)
     pebble = PebbleConnection(QemuTransport("127.0.0.1", PORTS[platform]))
     pebble.connect()
+    pebble.transport.send_packet(QemuBluetoothConnection(connected=True), MessageTargetQemu())
+    time.sleep(0.3)
     pebble.run_async()
     if pebble.watch_platform != platform:
         raise RuntimeError("Emulator platform does not match the requested target")
+    pebble.transport.send_packet(QemuBluetoothConnection(connected=True), MessageTargetQemu())
+    time.sleep(0.3)
+    local_time = datetime.now(ZoneInfo("Australia/Sydney"))
+    pebble.send_packet(TimeMessage(message=SetUTC(unix_time=int(local_time.timestamp()),
+        utc_offset=int(local_time.utcoffset().total_seconds() // 60), tz_name="Australia/Sydney")))
     AppInstaller(pebble, str(pbw)).install()
     time.sleep(2)
     service = AppMessageService(pebble)
@@ -139,7 +161,6 @@ def capture(platform, pbw, output, sdk, metadata):
     service.register_handler("ack", lambda transaction, app: acknowledgements.put((transaction, True)))
     service.register_handler("nack", lambda transaction, app: acknowledgements.put((transaction, False)))
     captures = []
-    previous_connected = None
 
     def save_capture(name, pixels, settings, battery, connected, note):
         """Save original framebuffer pixels together with their exact inputs."""
@@ -156,25 +177,36 @@ def capture(platform, pbw, output, sdk, metadata):
             dict(metadata, emulator=session, captures=captures), indent=2) + "\n")
 
     for name, overrides, battery, connected in SHOTS:
+        legacy_transport = platform in ("aplite", "basalt", "chalk", "diorite")
+        if legacy_transport:
+            # Legacy firmware also blocks screenshot/debug packets when disconnected.
+            # Showcase battery and Quiet Time while retaining the capture connection.
+            connected = True
         settings = dict(BASE)
         settings.update(overrides)
-        # The emulator connection transports packets even when simulated BT is off.
+        if platform in ("aplite", "diorite", "flint") and name == "02-colour-rows":
+            # Monochrome models showcase font/alignment and inversion, not colour.
+            settings.update({1: 1, 3: 1, 4: 0, 5: 0xFFFFFF})
+        # Older firmware rejects AppMessage traffic while simulated BT is off.
+        # Apply preferences while connected, then enter the requested state.
+        pebble.transport.send_packet(QemuBluetoothConnection(connected=True), MessageTargetQemu())
+        time.sleep(0.3)
         pebble.transport.send_packet(QemuBattery(percent=battery, charging=False), MessageTargetQemu())
-        pebble.transport.send_packet(QemuBluetoothConnection(connected=connected), MessageTargetQemu())
         transaction = service.send_message(uuid.UUID(APP_UUID),
                                            {key: Int32(value) for key, value in settings.items()})
         received, accepted = acknowledgements.get(timeout=10)
         if received != transaction or not accepted:
             raise RuntimeError(f"Settings not acknowledged for {platform}/{name}")
-        settle_seconds = (DISCONNECT_SETTLE_SECONDS
-                          if not connected and previous_connected is not False else 1.5)
+        pebble.transport.send_packet(QemuBluetoothConnection(connected=connected), MessageTargetQemu())
+        settle_seconds = DISCONNECT_SETTLE_SECONDS if not connected else 1.5
         time.sleep(settle_seconds)
-        previous_connected = connected
         pixels = Screenshot(pebble).grab_image()
         save_capture(name, pixels, settings, battery, connected,
                      "Raw emulator pixels; exact/quiet states use test keys where set. "
                      f"Date follows emulator clock. Settled for {settle_seconds}s after inputs; "
-                     "disconnect transitions wait beyond PebbleOS's 25-second debounce.")
+                     + ("Legacy transport stays connected for screenshots; no simulated disconnection."
+                        if legacy_transport else
+                        "disconnect transitions wait beyond PebbleOS's 25-second debounce."))
         if name in ("08-double-tap", "09-gesture-disabled"):
             pebble.transport.send_packet(QemuTap(axis=QemuTap.Axis.X, direction=1), MessageTargetQemu())
             time.sleep(0.2)

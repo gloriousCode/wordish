@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Prepare verified store screenshots and a banner drawn natively at 720×320.
+"""Prepare verified store screenshots, a native 720×320 banner and app icons.
 
 Requires Pillow. Run after capture_screenshots.py from this checkout.
-The screenshot pixels are copied unchanged; the banner is original typography,
-drawn directly at its final size with the repository's fonts. No image is resized.
+The screenshot pixels are copied unchanged; banner and icons use original
+typography drawn at their final sizes with the repository's fonts. Nothing is resized.
 """
 
 import hashlib
@@ -16,6 +16,9 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 DESTINATION = ROOT / "store/1.6.0"
+DIMENSIONS = {"aplite": (144, 168), "basalt": (144, 168), "chalk": (180, 180),
+              "diorite": (144, 168), "emery": (200, 228), "flint": (144, 168),
+              "gabbro": (260, 260)}
 SELECTION = [
     ("01-clear-words", "01-time-in-words", "Time in words"),
     ("02-colour-rows", "02-make-it-yours", "Make it yours"),
@@ -30,7 +33,7 @@ def main():
     DESTINATION.mkdir(parents=True, exist_ok=True)
     manifest = {"name": "Wordish", "version": "1.6.0", "screenshots": []}
     bundle_hash = None
-    for platform, dimensions in (("emery", (200, 228)), ("gabbro", (260, 260))):
+    for platform, dimensions in DIMENSIONS.items():
         capture_manifest = ROOT / f"screenshots/release-1.6.0/{platform}_manifest.json"
         source = json.loads(capture_manifest.read_text())
         metadata = source["bundle_metadata"]
@@ -90,11 +93,29 @@ def main():
         "sha256": hashlib.sha256(banner_path.read_bytes()).hexdigest(),
         "method": "Original typography drawn natively at 720x320; no resizing",
     }
-    for image in [banner_path, *DESTINATION.glob("*/*.png")]:
+    manifest["icons"] = []
+    for size in (80, 144):
+        icon = Image.new("RGB", (size, size), "#101114")
+        icon_draw = ImageDraw.Draw(icon)
+        font = ImageFont.truetype(str(bold), round(size * 0.72))
+        icon_draw.text((size // 2, round(size * 0.08)), "W", font=font,
+                       fill="#F7F4ED", anchor="mt")
+        radius = max(2, round(size * 0.038))
+        for fraction, colour in ((0.31, "#FF5B55"), (0.5, "#FFDA45"), (0.69, "#48D968")):
+            x, y = round(size * fraction), round(size * 0.83)
+            icon_draw.ellipse((x - radius, y - radius, x + radius, y + radius), fill=colour)
+        icon_path = DESTINATION / f"wordish-icon-{size}.png"
+        icon.save(icon_path, optimize=True)
+        manifest["icons"].append({
+            "file": icon_path.name, "width": size, "height": size,
+            "sha256": hashlib.sha256(icon_path.read_bytes()).hexdigest(),
+            "method": f"Original typography drawn natively at {size}x{size}; no resizing",
+        })
+    for image in [*DESTINATION.glob("*.png"), *DESTINATION.glob("*/*.png")]:
         if image.stat().st_size > 4_400_000:
             raise ValueError(f"Store image exceeds 4.4 MB: {image}")
     (DESTINATION / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    print("Prepared 10 unchanged screenshots and one native 720x320 banner")
+    print(f"Prepared {len(manifest['screenshots'])} unchanged screenshots, banner and two native icons")
 
 
 if __name__ == "__main__":

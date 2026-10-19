@@ -3,6 +3,206 @@
   "version": "1.6.0",
   "screenshots": [
     {
+      "platform": "aplite",
+      "file": "aplite/01-time-in-words.png",
+      "caption": "Time in words",
+      "source": "screenshots/release-1.6.0/aplite_01-clear-words.png",
+      "sha256": "f00c4f37d5d543ddd17d8ad3d31ca073d103a4653ed19668b83d935be4fca0d8",
+      "width": 144,
+      "height": 168,
+      "captured_utc": "2026-10-19T02:24:40.895537+00:00"
+    },
+    {
+      "platform": "aplite",
+      "file": "aplite/02-make-it-yours.png",
+      "caption": "Make it yours",
+      "source": "screenshots/release-1.6.0/aplite_02-colour-rows.png",
+      "sha256": "1001efdaf4b431e9f0e4c13deed23dee6d1aca49a1141afc08e74048e60aa467",
+      "width": 144,
+      "height": 168,
+      "captured_utc": "2026-10-19T02:24:42.745766+00:00"
+    },
+    {
+      "platform": "aplite",
+      "file": "aplite/03-corner-date.png",
+      "caption": "A discreet date",
+      "source": "screenshots/release-1.6.0/aplite_03-corner-date.png",
+      "sha256": "4b0194f11b97f3aca7af24ba602b113139fe713ead82eedd0fa702992d8fdc8c",
+      "width": 144,
+      "height": 168,
+      "captured_utc": "2026-10-19T02:24:44.602562+00:00"
+    },
+    {
+      "platform": "aplite",
+      "file": "aplite/04-exact-time.png",
+      "caption": "Exact when needed",
+      "source": "screenshots/release-1.6.0/aplite_04-exact-time.png",
+      "sha256": "2f9cd4fba4464361fb85e7f435649a07f27a3ca71a60b73d63ac340e8029c0e8",
+      "width": 144,
+      "height": 168,
+      "captured_utc": "2026-10-19T02:24:46.461522+00:00"
+    },
+    {
+      "platform": "aplite",
+      "file": "aplite/05-status-indicators.png",
+      "caption": "Useful details, quietly",
+      "source": "screenshots/release-1.6.0/aplite_05-status-proof.png",
+      "sha256": "10e240b02029808568cb1043d9be0dafc68719165f136664fc7218aa56399624",
+      "width": 144,
+      "height": 168,
+      "captured_utc": "2026-10-19T02:24:48.325715+00:00"
+    },
+    {
+      "platform": "basalt",
+      "file": "basalt/01-time-in-words.png",
+      "caption": "Time in words",
+      "source": "screenshots/release-1.6.0/basalt_01-clear-words.png",
+      "sha256": "f00c4f37d5d543ddd17d8ad3d31ca073d103a4653ed19668b83d935be4fca0d8",
+      "width": 144,
+      "height": 168,
+      "captured_utc": "2026-10-19T02:24:38.998756+00:00"
+    },
+    {
+      "platform": "basalt",
+      "file": "basalt/02-make-it-yours.png",
+      "caption": "Make it yours",
+      "source": "screenshots/release-1.6.0/basalt_02-colour-rows.png",
+      "sha256": "44c101869a8805f6f8d9aea127097869bb61dae216789c694554d9a0f958c070",
+      "width": 144,
+      "height": 168,
+      "captured_utc": "2026-10-19T02:24:40.879660+00:00"
+    },
+    {
+      "platform": "basalt",
+      "file": "basalt/03-corner-date.png",
+      "caption": "A discreet date",
+      "source": "screenshots/release-1.6.0/basalt_03-corner-date.png",
+      "sha256": "4b0194f11b97f3aca7af24ba602b113139fe713ead82eedd0fa702992d8fdc8c",
+      "width": 144,
+      "height": 168,
+      "captured_utc": "2026-10-19T02:24:42.742046+00:00"
+    },
+    {
+      "platform": "basalt",
+      "file": "basalt/04-exact-time.png",
+      "caption": "Exact when needed",
+      "source": "screenshots/release-1.6.0/basalt_04-exact-time.png",
+      "sha256": "2f9cd4fba4464361fb85e7f435649a07f27a3ca71a60b73d63ac340e8029c0e8",
+      "width": 144,
+      "height": 168,
+      "captured_utc": "2026-10-19T02:24:44.601587+00:00"
+    },
+    {
+      "platform": "basalt",
+      "file": "basalt/05-status-indicators.png",
+      "caption": "Useful details, quietly",
+      "source": "screenshots/release-1.6.0/basalt_05-status-proof.png",
+      "sha256": "dda8f29596c9f1c16967510281948e5bcebc0aa4149a64e7f172f8cfb977b8cb",
+      "width": 144,
+      "height": 168,
+      "captured_utc": "2026-10-19T02:24:46.466699+00:00"
+    },
+    {
+      "platform": "chalk",
+      "file": "chalk/01-time-in-words.png",
+      "caption": "Time in words",
+      "source": "screenshots/release-1.6.0/chalk_01-clear-words.png",
+      "sha256": "9351d35b3c206337fef547cd210a257bde47ca274a9640a05115cef5fecdabbe",
+      "width": 180,
+      "height": 180,
+      "captured_utc": "2026-10-19T02:24:39.660045+00:00"
+    },
+    {
+      "platform": "chalk",
+      "file": "chalk/02-make-it-yours.png",
+      "caption": "Make it yours",
+      "source": "screenshots/release-1.6.0/chalk_02-colour-rows.png",
+      "sha256": "ad1a7bf5caccb3b9ea1e9e1316cf3db077508eb268d73d8deeced72be0700778",
+      "width": 180,
+      "height": 180,
+      "captured_utc": "2026-10-19T02:24:41.535659+00:00"
+    },
+    {
+      "platform": "chalk",
+      "file": "chalk/03-corner-date.png",
+      "caption": "A discreet date",
+      "source": "screenshots/release-1.6.0/chalk_03-corner-date.png",
+      "sha256": "488454379f6f8436f4e4bf77790d6b58485cb129ff3de2d33f6f87900b309bf8",
+      "width": 180,
+      "height": 180,
+      "captured_utc": "2026-10-19T02:24:43.406414+00:00"
+    },
+    {
+      "platform": "chalk",
+      "file": "chalk/04-exact-time.png",
+      "caption": "Exact when needed",
+      "source": "screenshots/release-1.6.0/chalk_04-exact-time.png",
+      "sha256": "2024f19e8d20399b1b22555e70446c334b711a1a16fe43e445c2fa38bca49c8a",
+      "width": 180,
+      "height": 180,
+      "captured_utc": "2026-10-19T02:24:45.275625+00:00"
+    },
+    {
+      "platform": "chalk",
+      "file": "chalk/05-status-indicators.png",
+      "caption": "Useful details, quietly",
+      "source": "screenshots/release-1.6.0/chalk_05-status-proof.png",
+      "sha256": "c508f655708d1d537c9d35fe08fe7ed65ebd0f89f072b2a8a03b04c4dc4c1fb8",
+      "width": 180,
+      "height": 180,
+      "captured_utc": "2026-10-19T02:24:47.152845+00:00"
+    },
+    {
+      "platform": "diorite",
+      "file": "diorite/01-time-in-words.png",
+      "caption": "Time in words",
+      "source": "screenshots/release-1.6.0/diorite_01-clear-words.png",
+      "sha256": "f00c4f37d5d543ddd17d8ad3d31ca073d103a4653ed19668b83d935be4fca0d8",
+      "width": 144,
+      "height": 168,
+      "captured_utc": "2026-10-19T02:24:38.907033+00:00"
+    },
+    {
+      "platform": "diorite",
+      "file": "diorite/02-make-it-yours.png",
+      "caption": "Make it yours",
+      "source": "screenshots/release-1.6.0/diorite_02-colour-rows.png",
+      "sha256": "1001efdaf4b431e9f0e4c13deed23dee6d1aca49a1141afc08e74048e60aa467",
+      "width": 144,
+      "height": 168,
+      "captured_utc": "2026-10-19T02:24:40.738652+00:00"
+    },
+    {
+      "platform": "diorite",
+      "file": "diorite/03-corner-date.png",
+      "caption": "A discreet date",
+      "source": "screenshots/release-1.6.0/diorite_03-corner-date.png",
+      "sha256": "4b0194f11b97f3aca7af24ba602b113139fe713ead82eedd0fa702992d8fdc8c",
+      "width": 144,
+      "height": 168,
+      "captured_utc": "2026-10-19T02:24:42.571708+00:00"
+    },
+    {
+      "platform": "diorite",
+      "file": "diorite/04-exact-time.png",
+      "caption": "Exact when needed",
+      "source": "screenshots/release-1.6.0/diorite_04-exact-time.png",
+      "sha256": "2f9cd4fba4464361fb85e7f435649a07f27a3ca71a60b73d63ac340e8029c0e8",
+      "width": 144,
+      "height": 168,
+      "captured_utc": "2026-10-19T02:24:44.402876+00:00"
+    },
+    {
+      "platform": "diorite",
+      "file": "diorite/05-status-indicators.png",
+      "caption": "Useful details, quietly",
+      "source": "screenshots/release-1.6.0/diorite_05-status-proof.png",
+      "sha256": "10e240b02029808568cb1043d9be0dafc68719165f136664fc7218aa56399624",
+      "width": 144,
+      "height": 168,
+      "captured_utc": "2026-10-19T02:24:46.237218+00:00"
+    },
+    {
       "platform": "emery",
       "file": "emery/01-time-in-words.png",
       "caption": "Time in words",
@@ -51,6 +251,56 @@
       "width": 200,
       "height": 228,
       "captured_utc": "2026-10-19T01:45:31.448596+00:00"
+    },
+    {
+      "platform": "flint",
+      "file": "flint/01-time-in-words.png",
+      "caption": "Time in words",
+      "source": "screenshots/release-1.6.0/flint_01-clear-words.png",
+      "sha256": "f00c4f37d5d543ddd17d8ad3d31ca073d103a4653ed19668b83d935be4fca0d8",
+      "width": 144,
+      "height": 168,
+      "captured_utc": "2026-10-19T02:21:38.547640+00:00"
+    },
+    {
+      "platform": "flint",
+      "file": "flint/02-make-it-yours.png",
+      "caption": "Make it yours",
+      "source": "screenshots/release-1.6.0/flint_02-colour-rows.png",
+      "sha256": "1001efdaf4b431e9f0e4c13deed23dee6d1aca49a1141afc08e74048e60aa467",
+      "width": 144,
+      "height": 168,
+      "captured_utc": "2026-10-19T02:21:40.062808+00:00"
+    },
+    {
+      "platform": "flint",
+      "file": "flint/03-corner-date.png",
+      "caption": "A discreet date",
+      "source": "screenshots/release-1.6.0/flint_03-corner-date.png",
+      "sha256": "4b0194f11b97f3aca7af24ba602b113139fe713ead82eedd0fa702992d8fdc8c",
+      "width": 144,
+      "height": 168,
+      "captured_utc": "2026-10-19T02:21:41.583900+00:00"
+    },
+    {
+      "platform": "flint",
+      "file": "flint/04-exact-time.png",
+      "caption": "Exact when needed",
+      "source": "screenshots/release-1.6.0/flint_04-exact-time.png",
+      "sha256": "2f9cd4fba4464361fb85e7f435649a07f27a3ca71a60b73d63ac340e8029c0e8",
+      "width": 144,
+      "height": 168,
+      "captured_utc": "2026-10-19T02:21:43.104822+00:00"
+    },
+    {
+      "platform": "flint",
+      "file": "flint/05-status-indicators.png",
+      "caption": "Useful details, quietly",
+      "source": "screenshots/release-1.6.0/flint_05-status-proof.png",
+      "sha256": "58fe7ef6c5c866053aa2e3b9447c634baa5f5c1ff876a9f66a36e4357cefc28a",
+      "width": 144,
+      "height": 168,
+      "captured_utc": "2026-10-19T02:22:10.123327+00:00"
     },
     {
       "platform": "gabbro",
@@ -113,5 +363,21 @@
     "height": 320,
     "sha256": "5d21ba4d9ab577fca841a9645dd849ceb6f7f219c12493d636a1cc8960ba5a3c",
     "method": "Original typography drawn natively at 720x320; no resizing"
-  }
+  },
+  "icons": [
+    {
+      "file": "wordish-icon-80.png",
+      "width": 80,
+      "height": 80,
+      "sha256": "bf52815ff1c3d7f9cd284faf0e3a21613ba58de1a774609568bbaa9a1131c1f5",
+      "method": "Original typography drawn natively at 80x80; no resizing"
+    },
+    {
+      "file": "wordish-icon-144.png",
+      "width": 144,
+      "height": 144,
+      "sha256": "5c12e5b31ce2c03ae71b31ee42760a03a0a6aa65af92e9865e7c849a73144548",
+      "method": "Original typography drawn natively at 144x144; no resizing"
+    }
+  ]
 }
