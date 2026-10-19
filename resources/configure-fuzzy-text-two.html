@@ -17,75 +17,60 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<style>
-		body {
-			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-			margin: 0;
-			padding: 16px;
-			color: #111;
-			background: #f6f4ef;
-		}
-		.container {
-			max-width: 760px;
-			margin: 0 auto;
-		}
-		.hidden {
-			display: none;
-		}
-		fieldset {
-			margin: 14px 0;
-			padding: 12px 14px;
-			border: 1px solid #b8b5ad;
-			background: #fff;
-		}
-		legend {
-			padding: 0 6px;
-			font-weight: 700;
-		}
-		label {
-			display: block;
-			margin: 8px 0;
-		}
-		select {
-			margin: 4px 0 10px;
-			padding: 6px;
-			min-width: 160px;
-		}
-		.btn,
-		button {
-			display: inline-block;
-			margin-right: 8px;
-			padding: 8px 14px;
-			border-radius: 4px;
-			border: 1px solid #777;
-			background: #eee;
-			color: #111;
-			text-decoration: none;
-			font-size: 16px;
-		}
-		.preview-panel { text-align: center; }
-		#colour-preview {
-			width: 180px;
-			min-height: 210px;
-			box-sizing: border-box;
-			margin: 12px auto;
-			padding: 12px;
-			border-radius: 12px;
-			border: 3px solid #777;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-		}
-		.preview-row { font-size: 28px; line-height: 1.1; }
-		.preview-date { font-size: 14px; padding: 6px 0; }
-		.help { font-size: 14px; color: #555; }
-		#contrast-warning { color: #843d00; font-weight: 600; }
-		select:disabled { opacity: 0.55; }
-		.btn-primary {
-			background: #2f6fda;
-			border-color: #2558ad;
-			color: #fff;
-		}
-	</style>
+        * { box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            margin: 0; padding: 20px 16px 0; color: #243634; background: #f4f3ed;
+            font-size: 16px; line-height: 1.5; }
+        .container { max-width: 720px; margin: 0 auto; }
+        h1 { font-size: 30px; letter-spacing: -1px; margin: 0; }
+        header .help { margin-top: 4px; }
+        .hidden { display: none !important; }
+        fieldset, details { min-width: 0; margin: 18px 0; padding: 16px;
+            border: 1px solid #d5ddd5; border-radius: 16px; background: #fff; }
+        legend { padding: 0 8px; font-weight: 700; font-size: 18px; }
+        summary { cursor: pointer; font-weight: 700; min-height: 44px;
+            padding: 8px 0; }
+        details fieldset { margin-bottom: 0; border-radius: 10px; }
+        .detail-note { display: block; font-size: 14px; font-weight: 400; color: #586963; }
+        label { display: block; margin: 10px 0 4px; font-weight: 600; }
+        select { display: block; width: 100%; min-width: 0; min-height: 48px;
+            margin: 4px 0 14px; padding: 10px 12px; font: inherit;
+            color: #243634; background: #fafbf8; border: 1px solid #9caea5; border-radius: 8px; }
+        input { accent-color: #005555; margin-right: 8px; }
+        .radio label, .radio-inline label, .toggle { min-height: 44px;
+            margin: 2px 0; padding: 10px 8px; border-radius: 8px; font-weight: 400; }
+        .radio label:hover, .radio-inline label:hover, .toggle:hover { background: #f0f5ef; }
+        .choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; }
+        .btn, button { display: inline-block; min-height: 44px; padding: 10px 16px;
+            border-radius: 9px; border: 1px solid #9caea5; background: #fff;
+            color: #243634; text-decoration: none; font: inherit; cursor: pointer; }
+        .btn-primary { background: #005555; border-color: #005555; color: #fff; font-weight: 700; }
+        :focus-visible { outline: 3px solid #b45b00; outline-offset: 3px; }
+        button:disabled, select:disabled { opacity: .55; cursor: default; }
+        .help { font-size: 14px; color: #586963; margin: 6px 0 12px; }
+        .preview-panel { text-align: center; margin: 20px 0; }
+        #colour-preview { width: 164px; height: 188px; margin: 0 auto 12px;
+            padding: 12px; border-radius: 20px; border: 5px solid #243634;
+            display: flex; flex-direction: column; justify-content: center; }
+        .preview-row { font-size: 27px; line-height: 1.1; }
+        #preview-row-three { font-weight: 700; }
+        .preview-date { font-size: 12px; padding: 7px 0; }
+        .preview-panel .help { max-width: 400px; margin: 8px auto; }
+        #contrast-warning { color: #783900; font-weight: 600; background: #fff1d5;
+            border-radius: 8px; padding: 10px; }
+        .action-bar { position: sticky; bottom: 0; z-index: 2; margin: 20px -16px 0;
+            padding: 10px 16px; padding-bottom: max(12px, env(safe-area-inset-bottom));
+            background: #f4f3ed; border-top: 1px solid #c4d0c7; }
+        .action-buttons { display: flex; gap: 10px; }
+        .action-buttons .btn-primary { flex: 1; }
+        #edit-status { font-size: 13px; margin: 0 0 8px; color: #586963; }
+        .section-tools { margin-top: 12px; }
+        @media (min-width: 560px) {
+            body { padding-top: 32px; }
+            .choice-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+            .colour-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; }
+        }
+    </style>
 
 </head>
 <body>
@@ -95,7 +80,8 @@
 
 	<div class="container">
 		<header>
-			<h1>Configure Wordish</h1>
+			<h1>Make Wordish yours</h1>
+			<p class="help">Start with a style, then adjust the details. Changes reach your watch when you save.</p>
 		</header>
 
 		<section class="preview-panel" aria-label="Colour preview">
@@ -110,347 +96,24 @@
 			<p id="contrast-warning" role="status" class="hidden">Some text may be difficult to read against this background. Try contrasting colours.</p>
 		</section>
 
-		<form id="config" role="form" class="input-lg">
-
-			<fieldset>
-				<legend>Preset:</legend>
+<form id="config" role="form"><fieldset>
+				<legend>Choose a style</legend>
 				<div class="form-group">
-					<label for="preset">style</label>
+					<label for="preset">Colour palette</label>
 					<select class="form-control" id="preset" name="preset">
-						<option value="custom">custom</option>
-						<option value="classic" selected>classic</option>
-						<option value="paper">paper</option>
-						<option value="quiet">quiet</option>
-						<option value="lagoon">lagoon</option>
-						<option value="ember">ember</option>
-						<option value="orchid">orchid</option>
-						<option value="grove">grove</option>
-						<option value="sand">sand</option>
+						<option value="custom">Custom — your own mix</option>
+						<option value="classic" selected>Classic — white on black</option>
+						<option value="paper">Paper — black on white</option>
+						<option value="quiet">Quiet — compact and simple</option>
+						<option value="lagoon">Lagoon — teal and cream</option>
+						<option value="ember">Ember — peach and maroon</option>
+						<option value="orchid">Orchid — lavender and rose</option>
+						<option value="grove">Grove — mint and forest</option>
+						<option value="sand">Sand — cream and slate</option>
 					</select>
 				</div>
-			</fieldset>
-
-			<fieldset>
-				<legend>Fonts:</legend>
-				<div class="radio">
-					<label>
-						<input type="radio" name="font" value="classic" checked />
-						classic Bitham
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio" name="font" value="sharp" />
-						sharp Gothic
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio" name="font" value="compact" />
-						compact Gothic
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio" name="font" value="tall" />
-						tall Bitham
-					</label>
-				</div>
-			</fieldset>
-
-			<fieldset>
-				<legend>Colours:</legend>
-				<div class="form-group">
-					<label for="foreground-colour">foreground</label>
-					<select class="form-control" id="foreground-colour" name="foreground_colour">
-						<option value="white" selected>white</option>
-						<option value="black">black</option>
-						<option value="red">red</option>
-						<option value="orange">orange</option>
-						<option value="yellow">yellow</option>
-						<option value="green">green</option>
-						<option value="mint">mint</option>
-						<option value="cyan">cyan</option>
-						<option value="blue">blue</option>
-						<option value="navy">navy</option>
-						<option value="plum">plum</option>
-						<option value="deep_teal">deep teal</option>
-						<option value="maroon">maroon</option>
-						<option value="forest">forest</option>
-						<option value="cream">cream</option>
-						<option value="peach">peach</option>
-						<option value="lavender">lavender</option>
-						<option value="rose">soft rose</option>
-						<option value="ice">ice</option>
-						<option value="slate">slate</option>
-						<option value="purple">purple</option>
-						<option value="magenta">magenta</option>
-					</select>
-				</div>
-				<div class="form-group">
-					<label for="background-colour">background</label>
-					<select class="form-control" id="background-colour" name="background_colour">
-						<option value="black" selected>black</option>
-						<option value="white">white</option>
-						<option value="red">red</option>
-						<option value="orange">orange</option>
-						<option value="yellow">yellow</option>
-						<option value="green">green</option>
-						<option value="mint">mint</option>
-						<option value="cyan">cyan</option>
-						<option value="blue">blue</option>
-						<option value="navy">navy</option>
-						<option value="plum">plum</option>
-						<option value="deep_teal">deep teal</option>
-						<option value="maroon">maroon</option>
-						<option value="forest">forest</option>
-						<option value="cream">cream</option>
-						<option value="peach">peach</option>
-						<option value="lavender">lavender</option>
-						<option value="rose">soft rose</option>
-						<option value="ice">ice</option>
-						<option value="slate">slate</option>
-						<option value="purple">purple</option>
-						<option value="magenta">magenta</option>
-					</select>
-				</div>
-				<div class="form-group">
-					<label for="row-one-colour">minute row one</label>
-					<select class="form-control" id="row-one-colour" name="row_one_colour">
-						<option value="match" selected>match foreground</option>
-						<option value="white">white</option>
-						<option value="black">black</option>
-						<option value="red">red</option>
-						<option value="orange">orange</option>
-						<option value="yellow">yellow</option>
-						<option value="green">green</option>
-						<option value="mint">mint</option>
-						<option value="cyan">cyan</option>
-						<option value="blue">blue</option>
-						<option value="navy">navy</option>
-						<option value="plum">plum</option>
-						<option value="deep_teal">deep teal</option>
-						<option value="maroon">maroon</option>
-						<option value="forest">forest</option>
-						<option value="cream">cream</option>
-						<option value="peach">peach</option>
-						<option value="lavender">lavender</option>
-						<option value="rose">soft rose</option>
-						<option value="ice">ice</option>
-						<option value="slate">slate</option>
-						<option value="purple">purple</option>
-						<option value="magenta">magenta</option>
-					</select>
-				</div>
-				<div class="form-group">
-					<label for="row-two-colour">minute row two</label>
-					<select class="form-control" id="row-two-colour" name="row_two_colour">
-						<option value="match" selected>match foreground</option>
-						<option value="white">white</option>
-						<option value="black">black</option>
-						<option value="red">red</option>
-						<option value="orange">orange</option>
-						<option value="yellow">yellow</option>
-						<option value="green">green</option>
-						<option value="mint">mint</option>
-						<option value="cyan">cyan</option>
-						<option value="blue">blue</option>
-						<option value="navy">navy</option>
-						<option value="plum">plum</option>
-						<option value="deep_teal">deep teal</option>
-						<option value="maroon">maroon</option>
-						<option value="forest">forest</option>
-						<option value="cream">cream</option>
-						<option value="peach">peach</option>
-						<option value="lavender">lavender</option>
-						<option value="rose">soft rose</option>
-						<option value="ice">ice</option>
-						<option value="slate">slate</option>
-						<option value="purple">purple</option>
-						<option value="magenta">magenta</option>
-					</select>
-				</div>
-				<div class="form-group">
-					<label for="row-three-colour">hour row</label>
-					<select class="form-control" id="row-three-colour" name="row_three_colour">
-						<option value="match" selected>match foreground</option>
-						<option value="white">white</option>
-						<option value="black">black</option>
-						<option value="red">red</option>
-						<option value="orange">orange</option>
-						<option value="yellow">yellow</option>
-						<option value="green">green</option>
-						<option value="mint">mint</option>
-						<option value="cyan">cyan</option>
-						<option value="blue">blue</option>
-						<option value="navy">navy</option>
-						<option value="plum">plum</option>
-						<option value="deep_teal">deep teal</option>
-						<option value="maroon">maroon</option>
-						<option value="forest">forest</option>
-						<option value="cream">cream</option>
-						<option value="peach">peach</option>
-						<option value="lavender">lavender</option>
-						<option value="rose">soft rose</option>
-						<option value="ice">ice</option>
-						<option value="slate">slate</option>
-						<option value="purple">purple</option>
-						<option value="magenta">magenta</option>
-					</select>
-				</div>
-				<div class="form-group">
-					<label for="date-part-one-colour">date first section</label>
-					<select class="form-control" id="date-part-one-colour" name="date_part_one_colour">
-						<option value="match" selected>match foreground</option>
-						<option value="white">white</option>
-						<option value="black">black</option>
-						<option value="red">red</option>
-						<option value="orange">orange</option>
-						<option value="yellow">yellow</option>
-						<option value="green">green</option>
-						<option value="mint">mint</option>
-						<option value="cyan">cyan</option>
-						<option value="blue">blue</option>
-						<option value="navy">navy</option>
-						<option value="plum">plum</option>
-						<option value="deep_teal">deep teal</option>
-						<option value="maroon">maroon</option>
-						<option value="forest">forest</option>
-						<option value="cream">cream</option>
-						<option value="peach">peach</option>
-						<option value="lavender">lavender</option>
-						<option value="rose">soft rose</option>
-						<option value="ice">ice</option>
-						<option value="slate">slate</option>
-						<option value="purple">purple</option>
-						<option value="magenta">magenta</option>
-					</select>
-				</div>
-				<div class="form-group">
-					<label for="date-part-two-colour">date second section</label>
-					<select class="form-control" id="date-part-two-colour" name="date_part_two_colour">
-						<option value="match" selected>match foreground</option>
-						<option value="white">white</option>
-						<option value="black">black</option>
-						<option value="red">red</option>
-						<option value="orange">orange</option>
-						<option value="yellow">yellow</option>
-						<option value="green">green</option>
-						<option value="mint">mint</option>
-						<option value="cyan">cyan</option>
-						<option value="blue">blue</option>
-						<option value="navy">navy</option>
-						<option value="plum">plum</option>
-						<option value="deep_teal">deep teal</option>
-						<option value="maroon">maroon</option>
-						<option value="forest">forest</option>
-						<option value="cream">cream</option>
-						<option value="peach">peach</option>
-						<option value="lavender">lavender</option>
-						<option value="rose">soft rose</option>
-						<option value="ice">ice</option>
-						<option value="slate">slate</option>
-						<option value="purple">purple</option>
-						<option value="magenta">magenta</option>
-					</select>
-				</div>
-				<div class="form-group">
-					<label for="date-part-three-colour">date third section</label>
-					<select class="form-control" id="date-part-three-colour" name="date_part_three_colour">
-						<option value="match" selected>match foreground</option>
-						<option value="white">white</option>
-						<option value="black">black</option>
-						<option value="red">red</option>
-						<option value="orange">orange</option>
-						<option value="yellow">yellow</option>
-						<option value="green">green</option>
-						<option value="mint">mint</option>
-						<option value="cyan">cyan</option>
-						<option value="blue">blue</option>
-						<option value="navy">navy</option>
-						<option value="plum">plum</option>
-						<option value="deep_teal">deep teal</option>
-						<option value="maroon">maroon</option>
-						<option value="forest">forest</option>
-						<option value="cream">cream</option>
-						<option value="peach">peach</option>
-						<option value="lavender">lavender</option>
-						<option value="rose">soft rose</option>
-						<option value="ice">ice</option>
-						<option value="slate">slate</option>
-						<option value="purple">purple</option>
-						<option value="magenta">magenta</option>
-					</select>
-				</div>
-			</fieldset>
-
-			<fieldset>
-				<legend>Text align:</legend>
-				<div class="radio-inline">
-					<label>
-						<input type="radio" name="align" value="left" />
-						left
-					</label>
-				</div>
-				<div class="radio-inline">
-					<label>
-						<input type="radio" name="align" value="center" checked />
-						centre
-					</label>
-				</div>
-				<div class="radio-inline">
-					<label>
-						<input type="radio" name="align" value="right" />
-						right
-					</label>
-				</div>
-			</fieldset>
-
-			<fieldset>
-				<legend>Corner date:</legend>
-				<div class="form-group">
-					<label for="date-position">placement</label>
-					<select class="form-control" id="date-position" name="date_position">
-						<option value="off" selected>off</option>
-						<option value="top">top</option>
-						<option value="bottom">bottom</option>
-					</select>
-				</div>
-				<div class="form-group">
-					<label for="date-format">format</label>
-					<select class="form-control" id="date-format" name="date_format">
-						<option value="dd_mm_yy" selected>dd-mm-yy</option>
-						<option value="mm_dd_yyyy">mm-dd-yyyy</option>
-						<option value="mon_d_aug">Mon 3 Aug</option>
-						<option value="dd_slash_mm">dd/mm</option>
-						<option value="mm_slash_dd">mm/dd</option>
-					</select>
-				</div>
-			</fieldset>
-
-			<fieldset>
-				<legend>Movement and exact time</legend>
-				<label><input type="checkbox" name="animations_enabled" value="true" checked /> Animate time changes</label>
-				<p class="help">Turn off movement for a still watchface.</p>
-				<label><input type="checkbox" name="gesture_enabled" value="true" checked /> Double tap to show exact time</label>
-				<label for="exact-time-seconds">Exact time display duration</label>
-				<select id="exact-time-seconds" name="exact_time_seconds">
-					<option value="3" selected>3 seconds</option>
-					<option value="5">5 seconds</option>
-					<option value="10">10 seconds</option>
-				</select>
-			</fieldset>
-
-			<fieldset>
-				<legend>Optional indicators</legend>
-				<label><input type="checkbox" name="low_battery_enabled" value="true" /> Show a low battery indicator</label>
-				<p class="help">The battery indicator appears at 20% or less when the watch is not charging.</p>
-				<label><input type="checkbox" name="disconnect_enabled" value="true" /> Show when the phone is disconnected</label>
-				<p class="help">Keep these off for a clean display. Indicators do not vibrate. Style presets preserve these preferences.</p>
-			</fieldset>
-
-			<fieldset>
-				<legend>Language:</legend>
+			<p class="help">Styles set colours, text and date placement. Your language, gestures and indicators stay as you chose them.</p></fieldset><fieldset>
+				<legend>Language</legend><div class="choice-grid">
 				<div class="radio">
 					<label>
 						<input type="radio" name="lang" value="ca" />
@@ -468,14 +131,14 @@
 				<div class="radio">
 					<label>
 						<input type="radio" name="lang" value="en_GB" checked />
-						English (Great Britain)
+						English (UK)
 					</label>
 				</div>
 
 				<div class="radio">
 					<label>
 						<input type="radio" name="lang" value="en_US" />
-						English (United States)
+						English (US)
 					</label>
 				</div>
 
@@ -506,13 +169,305 @@
 						Svenska
 					</label>
 				</div>
-			</fieldset>
-
-			<fieldset>
-				<a href="pebblejs://close" class="btn btn-lg btn-default" role="button">Cancel</a>
-				<button type="button" class="btn btn-lg btn-primary" id="b-submit">Save</button>
-			</fieldset>
-		</form>
+			</div></fieldset><fieldset>
+				<legend>Date</legend>
+				<div class="form-group">
+					<label for="date-position">Show date</label>
+					<select class="form-control" id="date-position" name="date_position">
+						<option value="off" selected>Hidden</option>
+						<option value="top">At the top</option>
+						<option value="bottom">At the bottom</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="date-format">Date format</label>
+					<select class="form-control" id="date-format" name="date_format">
+						<option value="dd_mm_yy" selected>03-08-26 — day first</option>
+						<option value="mm_dd_yyyy">08-03-2026 — month first</option>
+						<option value="mon_d_aug">Mon 3 Aug — written date</option>
+						<option value="dd_slash_mm">03/08 — day/month</option>
+						<option value="mm_slash_dd">08/03 — month/day</option>
+					</select>
+				</div>
+			<details><summary>Date colours<span class="detail-note">Optional colours for each part of the date</span></summary><div class="form-group">
+					<label for="date-part-one-colour">date first section</label>
+					<select class="form-control" id="date-part-one-colour" name="date_part_one_colour">
+						<option value="match" selected>Match default text</option>
+						<option value="white">white</option>
+						<option value="black">black</option>
+						<option value="red">red</option>
+						<option value="orange">orange</option>
+						<option value="yellow">yellow</option>
+						<option value="green">green</option>
+						<option value="mint">mint</option>
+						<option value="cyan">cyan</option>
+						<option value="blue">blue</option>
+						<option value="navy">navy</option>
+						<option value="plum">plum</option>
+						<option value="deep_teal">deep teal</option>
+						<option value="maroon">maroon</option>
+						<option value="forest">forest</option>
+						<option value="cream">cream</option>
+						<option value="peach">peach</option>
+						<option value="lavender">lavender</option>
+						<option value="rose">soft rose</option>
+						<option value="ice">ice</option>
+						<option value="slate">slate</option>
+						<option value="purple">purple</option>
+						<option value="magenta">magenta</option>
+					</select>
+				</div><div class="form-group">
+					<label for="date-part-two-colour">date second section</label>
+					<select class="form-control" id="date-part-two-colour" name="date_part_two_colour">
+						<option value="match" selected>Match default text</option>
+						<option value="white">white</option>
+						<option value="black">black</option>
+						<option value="red">red</option>
+						<option value="orange">orange</option>
+						<option value="yellow">yellow</option>
+						<option value="green">green</option>
+						<option value="mint">mint</option>
+						<option value="cyan">cyan</option>
+						<option value="blue">blue</option>
+						<option value="navy">navy</option>
+						<option value="plum">plum</option>
+						<option value="deep_teal">deep teal</option>
+						<option value="maroon">maroon</option>
+						<option value="forest">forest</option>
+						<option value="cream">cream</option>
+						<option value="peach">peach</option>
+						<option value="lavender">lavender</option>
+						<option value="rose">soft rose</option>
+						<option value="ice">ice</option>
+						<option value="slate">slate</option>
+						<option value="purple">purple</option>
+						<option value="magenta">magenta</option>
+					</select>
+				</div><div class="form-group">
+					<label for="date-part-three-colour">date third section</label>
+					<select class="form-control" id="date-part-three-colour" name="date_part_three_colour">
+						<option value="match" selected>Match default text</option>
+						<option value="white">white</option>
+						<option value="black">black</option>
+						<option value="red">red</option>
+						<option value="orange">orange</option>
+						<option value="yellow">yellow</option>
+						<option value="green">green</option>
+						<option value="mint">mint</option>
+						<option value="cyan">cyan</option>
+						<option value="blue">blue</option>
+						<option value="navy">navy</option>
+						<option value="plum">plum</option>
+						<option value="deep_teal">deep teal</option>
+						<option value="maroon">maroon</option>
+						<option value="forest">forest</option>
+						<option value="cream">cream</option>
+						<option value="peach">peach</option>
+						<option value="lavender">lavender</option>
+						<option value="rose">soft rose</option>
+						<option value="ice">ice</option>
+						<option value="slate">slate</option>
+						<option value="purple">purple</option>
+						<option value="magenta">magenta</option>
+					</select>
+				</div><p class="help">Only the parts used by your chosen date format can be edited.</p></details></fieldset><fieldset>
+				<legend>Movement and exact time</legend>
+				<label class="toggle"><input type="checkbox" name="animations_enabled" value="true" checked /> Animate time changes</label>
+				<p class="help">Turn off movement for a still watchface.</p>
+				<label class="toggle"><input type="checkbox" name="gesture_enabled" value="true" checked /> Double tap to show exact time</label>
+				<label for="exact-time-seconds">Exact time display duration</label>
+				<select id="exact-time-seconds" name="exact_time_seconds">
+					<option value="3" selected>3 seconds</option>
+					<option value="5">5 seconds</option>
+					<option value="10">10 seconds</option>
+				</select>
+			</fieldset><fieldset>
+				<legend>Optional indicators</legend>
+				<label class="toggle"><input type="checkbox" name="low_battery_enabled" value="true" /> Show a low battery indicator</label>
+				<p class="help">The battery indicator appears at 20% or less when the watch is not charging.</p>
+				<label class="toggle"><input type="checkbox" name="disconnect_enabled" value="true" /> Show when the phone is disconnected</label>
+				<p class="help">Keep these off for a clean display. Indicators do not vibrate. Style presets preserve these preferences.</p>
+			</fieldset><details id="customise-style"><summary>Fine-tune your style<span class="detail-note">Fonts, alignment and individual colours</span></summary><fieldset>
+				<legend>Text style</legend><div class="choice-grid">
+				<div class="radio">
+					<label>
+						<input type="radio" name="font" value="classic" checked />
+						Classic
+					</label>
+				</div>
+				<div class="radio">
+					<label>
+						<input type="radio" name="font" value="sharp" />
+						Clean
+					</label>
+				</div>
+				<div class="radio">
+					<label>
+						<input type="radio" name="font" value="compact" />
+						Compact
+					</label>
+				</div>
+				<div class="radio">
+					<label>
+						<input type="radio" name="font" value="tall" />
+						Tall
+					</label>
+				</div>
+			<p class="help">Text automatically shrinks to fit. The available font appearance varies by watch model.</p></div></fieldset><fieldset>
+				<legend>Text align:</legend><div class="choice-grid">
+				<div class="radio-inline">
+					<label>
+						<input type="radio" name="align" value="left" />
+						left
+					</label>
+				</div>
+				<div class="radio-inline">
+					<label>
+						<input type="radio" name="align" value="center" checked />
+						centre
+					</label>
+				</div>
+				<div class="radio-inline">
+					<label>
+						<input type="radio" name="align" value="right" />
+						right
+					</label>
+				</div>
+			</div></fieldset><fieldset><legend>Colours</legend><div class="colour-grid"><div class="form-group">
+					<label for="foreground-colour">Default text colour</label>
+					<select class="form-control" id="foreground-colour" name="foreground_colour">
+						<option value="white" selected>white</option>
+						<option value="black">black</option>
+						<option value="red">red</option>
+						<option value="orange">orange</option>
+						<option value="yellow">yellow</option>
+						<option value="green">green</option>
+						<option value="mint">mint</option>
+						<option value="cyan">cyan</option>
+						<option value="blue">blue</option>
+						<option value="navy">navy</option>
+						<option value="plum">plum</option>
+						<option value="deep_teal">deep teal</option>
+						<option value="maroon">maroon</option>
+						<option value="forest">forest</option>
+						<option value="cream">cream</option>
+						<option value="peach">peach</option>
+						<option value="lavender">lavender</option>
+						<option value="rose">soft rose</option>
+						<option value="ice">ice</option>
+						<option value="slate">slate</option>
+						<option value="purple">purple</option>
+						<option value="magenta">magenta</option>
+					</select>
+				</div><div class="form-group">
+					<label for="background-colour">Background colour</label>
+					<select class="form-control" id="background-colour" name="background_colour">
+						<option value="black" selected>black</option>
+						<option value="white">white</option>
+						<option value="red">red</option>
+						<option value="orange">orange</option>
+						<option value="yellow">yellow</option>
+						<option value="green">green</option>
+						<option value="mint">mint</option>
+						<option value="cyan">cyan</option>
+						<option value="blue">blue</option>
+						<option value="navy">navy</option>
+						<option value="plum">plum</option>
+						<option value="deep_teal">deep teal</option>
+						<option value="maroon">maroon</option>
+						<option value="forest">forest</option>
+						<option value="cream">cream</option>
+						<option value="peach">peach</option>
+						<option value="lavender">lavender</option>
+						<option value="rose">soft rose</option>
+						<option value="ice">ice</option>
+						<option value="slate">slate</option>
+						<option value="purple">purple</option>
+						<option value="magenta">magenta</option>
+					</select>
+				</div></div><p class="help">Row colours can override the default text colour. Choose “Match default text” to follow it.</p><button type="button" id="b-match-colours">Use default colour for all text</button><details><summary>Individual word colours<span class="detail-note">Adjust minute rows and the hour separately</span></summary><div class="form-group">
+					<label for="row-one-colour">First minute row</label>
+					<select class="form-control" id="row-one-colour" name="row_one_colour">
+						<option value="match" selected>Match default text</option>
+						<option value="white">white</option>
+						<option value="black">black</option>
+						<option value="red">red</option>
+						<option value="orange">orange</option>
+						<option value="yellow">yellow</option>
+						<option value="green">green</option>
+						<option value="mint">mint</option>
+						<option value="cyan">cyan</option>
+						<option value="blue">blue</option>
+						<option value="navy">navy</option>
+						<option value="plum">plum</option>
+						<option value="deep_teal">deep teal</option>
+						<option value="maroon">maroon</option>
+						<option value="forest">forest</option>
+						<option value="cream">cream</option>
+						<option value="peach">peach</option>
+						<option value="lavender">lavender</option>
+						<option value="rose">soft rose</option>
+						<option value="ice">ice</option>
+						<option value="slate">slate</option>
+						<option value="purple">purple</option>
+						<option value="magenta">magenta</option>
+					</select>
+				</div><div class="form-group">
+					<label for="row-two-colour">Second minute row</label>
+					<select class="form-control" id="row-two-colour" name="row_two_colour">
+						<option value="match" selected>Match default text</option>
+						<option value="white">white</option>
+						<option value="black">black</option>
+						<option value="red">red</option>
+						<option value="orange">orange</option>
+						<option value="yellow">yellow</option>
+						<option value="green">green</option>
+						<option value="mint">mint</option>
+						<option value="cyan">cyan</option>
+						<option value="blue">blue</option>
+						<option value="navy">navy</option>
+						<option value="plum">plum</option>
+						<option value="deep_teal">deep teal</option>
+						<option value="maroon">maroon</option>
+						<option value="forest">forest</option>
+						<option value="cream">cream</option>
+						<option value="peach">peach</option>
+						<option value="lavender">lavender</option>
+						<option value="rose">soft rose</option>
+						<option value="ice">ice</option>
+						<option value="slate">slate</option>
+						<option value="purple">purple</option>
+						<option value="magenta">magenta</option>
+					</select>
+				</div><div class="form-group">
+					<label for="row-three-colour">Hour</label>
+					<select class="form-control" id="row-three-colour" name="row_three_colour">
+						<option value="match" selected>Match default text</option>
+						<option value="white">white</option>
+						<option value="black">black</option>
+						<option value="red">red</option>
+						<option value="orange">orange</option>
+						<option value="yellow">yellow</option>
+						<option value="green">green</option>
+						<option value="mint">mint</option>
+						<option value="cyan">cyan</option>
+						<option value="blue">blue</option>
+						<option value="navy">navy</option>
+						<option value="plum">plum</option>
+						<option value="deep_teal">deep teal</option>
+						<option value="maroon">maroon</option>
+						<option value="forest">forest</option>
+						<option value="cream">cream</option>
+						<option value="peach">peach</option>
+						<option value="lavender">lavender</option>
+						<option value="rose">soft rose</option>
+						<option value="ice">ice</option>
+						<option value="slate">slate</option>
+						<option value="purple">purple</option>
+						<option value="magenta">magenta</option>
+					</select>
+				</div></details></fieldset></details><div class="section-tools"><button type="button" id="b-undo" disabled>Undo changes</button><p class="help">Restore the settings you opened this page with.</p></div>
+<div class="action-bar"><p id="edit-status" role="status" aria-live="polite">No unsaved changes</p><div class="action-buttons"><a href="pebblejs://close" class="btn" role="button">Cancel</a><button type="button" class="btn btn-primary" id="b-submit">Save to watch</button></div></div>		</form>
 
 	</div><!-- container -->
 
@@ -713,6 +668,10 @@
 			if (!opts || typeof opts !== 'object' || Array.isArray(opts)) {
 				opts = {};
 			}
+			restoreOptions(opts);
+		}
+
+		function restoreOptions(opts) {
 			setChecked('align', opts.text_align);
 			setChecked('lang', opts.lang);
 			setChecked('font', opts.font);
@@ -867,14 +826,33 @@
 			document.getElementById('contrast-warning').className = lowContrast ? '' : 'hidden';
 		}
 
-		document.getElementById('config').addEventListener('change', function() {
-			updatePreset();
-			updatePreview();
-		});
+        var initialOptions;
+        function refreshEditor() {
+            updatePreset();
+            updatePreview();
+            var changed = JSON.stringify(saveOptions()) !== JSON.stringify(initialOptions);
+            document.getElementById('b-undo').disabled = !changed;
+            document.getElementById('edit-status').textContent = changed
+                ? 'Unsaved changes — save to update your watch' : 'No unsaved changes';
+        }
+        document.getElementById('config').addEventListener('change', refreshEditor);
+        document.getElementById('b-undo').addEventListener('click', function() {
+            restoreOptions(initialOptions);
+            refreshEditor();
+        });
+        document.getElementById('b-match-colours').addEventListener('click', function() {
+            ['row_one_colour', 'row_two_colour', 'row_three_colour',
+             'date_part_one_colour', 'date_part_two_colour', 'date_part_three_colour'].forEach(function(name) {
+                setSelectValue(name, 'match');
+            });
+            refreshEditor();
+        });
 
 		applyOptions();
 		updatePreset();
 		updatePreview();
+        initialOptions = saveOptions();
+        refreshEditor();
    </script>
 
 </body>
