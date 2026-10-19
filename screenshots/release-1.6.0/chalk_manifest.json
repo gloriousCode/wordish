@@ -266,7 +266,7 @@
     "resources/CHANGES.html": "4bf7fa61fc73cb9586d649d6d68c9b867bc52306db3abc8dc9f03f9ee754eb76",
     "resources/banner.png": "bb3372c648976a5fe4c7d87d1749a8532333b5735e9740af923d63d3a11a77d1",
     "resources/banner.xcf": "0498ca9772187681791a833193c8cd89881dbf50f11d722c11680f012244426b",
-    "resources/configure-fuzzy-text-two.html": "219c18728ac19a73e50fd1138862b3dc2c8d6ec1c784980ddd1d076983288948",
+    "resources/configure-fuzzy-text-two.html": "0e61d1f170990ecdd033048fdca267434900714a83c3bfa739496513d326f076",
     "resources/fonts/Roboto-Bold.ttf": "deb990e241954e1af87c6033d40a76cf0f48e0d112541794526051ac4a3ee2c8",
     "resources/fonts/Roboto-Condensed.ttf": "2af71369b6e1ab597407c5d720ca6e3fcf33554762c14953aa21dbb8667c55f0",
     "resources/fonts/smooth/Roboto-Bold-48-1.pbf": "7a40f3bfe943806ef72e25eb664e3c7202a4014b8e9437aa0a71e242d74df5ff",
@@ -288,8 +288,8 @@
     "resources/pebble-screenshot-swedish.png": "e502457255c242d49b3f605bc5cfa5097705b466a6323d33ded193be362ffe0f"
   },
   "sdk": "/Users/scottg/Library/Application Support/Pebble SDK/SDKs/4.33.1",
-  "git_head": "119fb6937ef1ef348d9ef36c3b0f56d24fa50cb6",
-  "git_status": " M CHANGES.markdown\n M README.md\n M RELEASE_1.6.0.md\n M appinfo.json\n M makefile\n M resources/CHANGES.html\n M resources/configure-fuzzy-text-two.html\n M screenshots/release-1.6.0/aplite_manifest.json\n M screenshots/release-1.6.0/basalt_manifest.json\n M screenshots/release-1.6.0/chalk_manifest.json\n M screenshots/release-1.6.0/diorite_manifest.json\n M screenshots/release-1.6.0/emery_01-clear-words.png\n M screenshots/release-1.6.0/emery_02-colour-rows.png\n M screenshots/release-1.6.0/emery_03-corner-date.png\n M screenshots/release-1.6.0/emery_04-exact-time.png\n M screenshots/release-1.6.0/emery_05-status-proof.png\n M screenshots/release-1.6.0/emery_07-long-phrase.png\n M screenshots/release-1.6.0/emery_08-double-tap-restored.png\n M screenshots/release-1.6.0/emery_08-double-tap-triggered.png\n M screenshots/release-1.6.0/emery_08-double-tap.png\n M screenshots/release-1.6.0/emery_09-gesture-disabled-restored.png\n M screenshots/release-1.6.0/emery_09-gesture-disabled-triggered.png\n M screenshots/release-1.6.0/emery_09-gesture-disabled.png\n M screenshots/release-1.6.0/emery_manifest.json\n M screenshots/release-1.6.0/flint_manifest.json\n M screenshots/release-1.6.0/gabbro_01-clear-words.png\n M screenshots/release-1.6.0/gabbro_02-colour-rows.png\n M screenshots/release-1.6.0/gabbro_03-corner-date.png\n M screenshots/release-1.6.0/gabbro_04-exact-time.png\n M screenshots/release-1.6.0/gabbro_05-status-proof.png\n M screenshots/release-1.6.0/gabbro_07-long-phrase.png\n M screenshots/release-1.6.0/gabbro_08-double-tap-restored.png\n M screenshots/release-1.6.0/gabbro_08-double-tap-triggered.png\n M screenshots/release-1.6.0/gabbro_08-double-tap.png\n M screenshots/release-1.6.0/gabbro_09-gesture-disabled-restored.png\n M screenshots/release-1.6.0/gabbro_09-gesture-disabled-triggered.png\n M screenshots/release-1.6.0/gabbro_09-gesture-disabled.png\n M screenshots/release-1.6.0/gabbro_manifest.json\n M scripts/capture_screenshots.py\n M src/TextWatch.c\n M src/js/pebble-js-app.js\n M store/1.6.0/release-notes.txt\n M tests/configuration_test.js\n?? resources/fonts/smooth/\n?? screenshots/preset-audit-1.6.0/\n?? scripts/generate_smooth_fonts.py\n?? scripts/screenshot_presets.js\n?? src/smooth_fonts.c\n?? src/smooth_fonts.h\n?? tests/smooth_font_renderer_test.c\n?? tests/smooth_font_stubs/\n?? tests/smooth_fonts_test.py\n",
+  "git_head": "66d7dcbece976188c269216a4d2369dda4750f25",
+  "git_status": " M CHANGES.markdown\n M README.md\n M RELEASE_1.6.0.md\n M resources/configure-fuzzy-text-two.html\n M tests/configuration_test.js\n",
   "emulator": {
     "pid": 20811,
     "platform": "chalk",
@@ -321,7 +321,7 @@
     {
       "file": "screenshots/release-1.6.0/chalk_01-clear-words.png",
       "sha256": "9351d35b3c206337fef547cd210a257bde47ca274a9640a05115cef5fecdabbe",
-      "captured_utc": "2026-10-19T02:54:36.823093+00:00",
+      "captured_utc": "2026-10-19T03:07:32.706236+00:00",
       "width": 180,
       "height": 180,
       "settings": {
@@ -356,7 +356,7 @@
     {
       "file": "screenshots/release-1.6.0/chalk_02-colour-rows.png",
       "sha256": "ad1a7bf5caccb3b9ea1e9e1316cf3db077508eb268d73d8deeced72be0700778",
-      "captured_utc": "2026-10-19T02:54:38.705248+00:00",
+      "captured_utc": "2026-10-19T03:07:34.583421+00:00",
       "width": 180,
       "height": 180,
       "settings": {
@@ -391,7 +391,7 @@
     {
       "file": "screenshots/release-1.6.0/chalk_03-corner-date.png",
       "sha256": "488454379f6f8436f4e4bf77790d6b58485cb129ff3de2d33f6f87900b309bf8",
-      "captured_utc": "2026-10-19T02:54:40.589639+00:00",
+      "captured_utc": "2026-10-19T03:07:36.460155+00:00",
       "width": 180,
       "height": 180,
       "settings": {
@@ -426,7 +426,7 @@
     {
       "file": "screenshots/release-1.6.0/chalk_04-exact-time.png",
       "sha256": "2024f19e8d20399b1b22555e70446c334b711a1a16fe43e445c2fa38bca49c8a",
-      "captured_utc": "2026-10-19T02:54:42.467660+00:00",
+      "captured_utc": "2026-10-19T03:07:38.338830+00:00",
       "width": 180,
       "height": 180,
       "settings": {
@@ -461,7 +461,7 @@
     {
       "file": "screenshots/release-1.6.0/chalk_05-status-proof.png",
       "sha256": "c508f655708d1d537c9d35fe08fe7ed65ebd0f89f072b2a8a03b04c4dc4c1fb8",
-      "captured_utc": "2026-10-19T02:54:44.340963+00:00",
+      "captured_utc": "2026-10-19T03:07:40.249923+00:00",
       "width": 180,
       "height": 180,
       "settings": {
@@ -496,7 +496,7 @@
     {
       "file": "screenshots/release-1.6.0/chalk_06-catalan-status.png",
       "sha256": "0d0c230ec27a909892d18469fae0ae7b4eab3ba62277d6ab9e8f34407eefd14e",
-      "captured_utc": "2026-10-19T02:54:46.235613+00:00",
+      "captured_utc": "2026-10-19T03:07:42.158891+00:00",
       "width": 180,
       "height": 180,
       "settings": {
@@ -531,7 +531,7 @@
     {
       "file": "screenshots/release-1.6.0/chalk_07-long-phrase.png",
       "sha256": "57306f3575edba9c4b1439a31d87eac7ea572db1e76630372c46a08029b6d949",
-      "captured_utc": "2026-10-19T02:54:48.116714+00:00",
+      "captured_utc": "2026-10-19T03:07:44.073750+00:00",
       "width": 180,
       "height": 180,
       "settings": {
@@ -566,7 +566,7 @@
     {
       "file": "screenshots/release-1.6.0/chalk_08-double-tap.png",
       "sha256": "8d339e2fd795194663eee5ec9315620813ee5e6202425430e71318e00ff5e95c",
-      "captured_utc": "2026-10-19T02:54:49.994628+00:00",
+      "captured_utc": "2026-10-19T03:07:45.968824+00:00",
       "width": 180,
       "height": 180,
       "settings": {
@@ -601,7 +601,7 @@
     {
       "file": "screenshots/release-1.6.0/chalk_08-double-tap-triggered.png",
       "sha256": "a8d9c0203afd05fa0817407775b7eef54a52423c186e1ca5e062e94dce28808e",
-      "captured_utc": "2026-10-19T02:54:50.444708+00:00",
+      "captured_utc": "2026-10-19T03:07:46.436169+00:00",
       "width": 180,
       "height": 180,
       "settings": {
@@ -636,7 +636,7 @@
     {
       "file": "screenshots/release-1.6.0/chalk_08-double-tap-restored.png",
       "sha256": "8d339e2fd795194663eee5ec9315620813ee5e6202425430e71318e00ff5e95c",
-      "captured_utc": "2026-10-19T02:54:54.020851+00:00",
+      "captured_utc": "2026-10-19T03:07:49.983011+00:00",
       "width": 180,
       "height": 180,
       "settings": {
@@ -671,7 +671,7 @@
     {
       "file": "screenshots/release-1.6.0/chalk_09-gesture-disabled.png",
       "sha256": "8d339e2fd795194663eee5ec9315620813ee5e6202425430e71318e00ff5e95c",
-      "captured_utc": "2026-10-19T02:54:55.919156+00:00",
+      "captured_utc": "2026-10-19T03:07:51.868047+00:00",
       "width": 180,
       "height": 180,
       "settings": {
@@ -706,7 +706,7 @@
     {
       "file": "screenshots/release-1.6.0/chalk_09-gesture-disabled-triggered.png",
       "sha256": "8d339e2fd795194663eee5ec9315620813ee5e6202425430e71318e00ff5e95c",
-      "captured_utc": "2026-10-19T02:54:56.385194+00:00",
+      "captured_utc": "2026-10-19T03:07:52.332189+00:00",
       "width": 180,
       "height": 180,
       "settings": {
@@ -741,7 +741,7 @@
     {
       "file": "screenshots/release-1.6.0/chalk_09-gesture-disabled-restored.png",
       "sha256": "8d339e2fd795194663eee5ec9315620813ee5e6202425430e71318e00ff5e95c",
-      "captured_utc": "2026-10-19T02:54:59.943237+00:00",
+      "captured_utc": "2026-10-19T03:07:55.892276+00:00",
       "width": 180,
       "height": 180,
       "settings": {

@@ -266,7 +266,7 @@
     "resources/CHANGES.html": "4bf7fa61fc73cb9586d649d6d68c9b867bc52306db3abc8dc9f03f9ee754eb76",
     "resources/banner.png": "bb3372c648976a5fe4c7d87d1749a8532333b5735e9740af923d63d3a11a77d1",
     "resources/banner.xcf": "0498ca9772187681791a833193c8cd89881dbf50f11d722c11680f012244426b",
-    "resources/configure-fuzzy-text-two.html": "219c18728ac19a73e50fd1138862b3dc2c8d6ec1c784980ddd1d076983288948",
+    "resources/configure-fuzzy-text-two.html": "0e61d1f170990ecdd033048fdca267434900714a83c3bfa739496513d326f076",
     "resources/fonts/Roboto-Bold.ttf": "deb990e241954e1af87c6033d40a76cf0f48e0d112541794526051ac4a3ee2c8",
     "resources/fonts/Roboto-Condensed.ttf": "2af71369b6e1ab597407c5d720ca6e3fcf33554762c14953aa21dbb8667c55f0",
     "resources/fonts/smooth/Roboto-Bold-48-1.pbf": "7a40f3bfe943806ef72e25eb664e3c7202a4014b8e9437aa0a71e242d74df5ff",
@@ -288,8 +288,8 @@
     "resources/pebble-screenshot-swedish.png": "e502457255c242d49b3f605bc5cfa5097705b466a6323d33ded193be362ffe0f"
   },
   "sdk": "/Users/scottg/Library/Application Support/Pebble SDK/SDKs/4.33.1",
-  "git_head": "119fb6937ef1ef348d9ef36c3b0f56d24fa50cb6",
-  "git_status": " M CHANGES.markdown\n M README.md\n M RELEASE_1.6.0.md\n M appinfo.json\n M makefile\n M resources/CHANGES.html\n M resources/configure-fuzzy-text-two.html\n M screenshots/release-1.6.0/aplite_manifest.json\n M screenshots/release-1.6.0/basalt_manifest.json\n M screenshots/release-1.6.0/chalk_manifest.json\n M screenshots/release-1.6.0/diorite_manifest.json\n M screenshots/release-1.6.0/emery_01-clear-words.png\n M screenshots/release-1.6.0/emery_02-colour-rows.png\n M screenshots/release-1.6.0/emery_03-corner-date.png\n M screenshots/release-1.6.0/emery_04-exact-time.png\n M screenshots/release-1.6.0/emery_05-status-proof.png\n M screenshots/release-1.6.0/emery_07-long-phrase.png\n M screenshots/release-1.6.0/emery_08-double-tap-restored.png\n M screenshots/release-1.6.0/emery_08-double-tap-triggered.png\n M screenshots/release-1.6.0/emery_08-double-tap.png\n M screenshots/release-1.6.0/emery_09-gesture-disabled-restored.png\n M screenshots/release-1.6.0/emery_09-gesture-disabled-triggered.png\n M screenshots/release-1.6.0/emery_09-gesture-disabled.png\n M screenshots/release-1.6.0/emery_manifest.json\n M screenshots/release-1.6.0/flint_manifest.json\n M screenshots/release-1.6.0/gabbro_01-clear-words.png\n M screenshots/release-1.6.0/gabbro_02-colour-rows.png\n M screenshots/release-1.6.0/gabbro_03-corner-date.png\n M screenshots/release-1.6.0/gabbro_04-exact-time.png\n M screenshots/release-1.6.0/gabbro_05-status-proof.png\n M screenshots/release-1.6.0/gabbro_07-long-phrase.png\n M screenshots/release-1.6.0/gabbro_08-double-tap-restored.png\n M screenshots/release-1.6.0/gabbro_08-double-tap-triggered.png\n M screenshots/release-1.6.0/gabbro_08-double-tap.png\n M screenshots/release-1.6.0/gabbro_09-gesture-disabled-restored.png\n M screenshots/release-1.6.0/gabbro_09-gesture-disabled-triggered.png\n M screenshots/release-1.6.0/gabbro_09-gesture-disabled.png\n M screenshots/release-1.6.0/gabbro_manifest.json\n M scripts/capture_screenshots.py\n M src/TextWatch.c\n M src/js/pebble-js-app.js\n M store/1.6.0/release-notes.txt\n M tests/configuration_test.js\n?? resources/fonts/smooth/\n?? screenshots/preset-audit-1.6.0/\n?? scripts/generate_smooth_fonts.py\n?? scripts/screenshot_presets.js\n?? src/smooth_fonts.c\n?? src/smooth_fonts.h\n?? tests/smooth_font_renderer_test.c\n?? tests/smooth_font_stubs/\n?? tests/smooth_fonts_test.py\n",
+  "git_head": "66d7dcbece976188c269216a4d2369dda4750f25",
+  "git_status": " M CHANGES.markdown\n M README.md\n M RELEASE_1.6.0.md\n M resources/configure-fuzzy-text-two.html\n M tests/configuration_test.js\n",
   "emulator": {
     "pid": 20846,
     "platform": "flint",
@@ -323,7 +323,7 @@
     {
       "file": "screenshots/release-1.6.0/flint_01-clear-words.png",
       "sha256": "f00c4f37d5d543ddd17d8ad3d31ca073d103a4653ed19668b83d935be4fca0d8",
-      "captured_utc": "2026-10-19T02:54:36.900080+00:00",
+      "captured_utc": "2026-10-19T03:07:31.479281+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -358,7 +358,7 @@
     {
       "file": "screenshots/release-1.6.0/flint_02-colour-rows.png",
       "sha256": "1001efdaf4b431e9f0e4c13deed23dee6d1aca49a1141afc08e74048e60aa467",
-      "captured_utc": "2026-10-19T02:54:38.726666+00:00",
+      "captured_utc": "2026-10-19T03:07:33.303539+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -393,7 +393,7 @@
     {
       "file": "screenshots/release-1.6.0/flint_03-corner-date.png",
       "sha256": "4b0194f11b97f3aca7af24ba602b113139fe713ead82eedd0fa702992d8fdc8c",
-      "captured_utc": "2026-10-19T02:54:40.555006+00:00",
+      "captured_utc": "2026-10-19T03:07:35.128476+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -428,7 +428,7 @@
     {
       "file": "screenshots/release-1.6.0/flint_04-exact-time.png",
       "sha256": "2f9cd4fba4464361fb85e7f435649a07f27a3ca71a60b73d63ac340e8029c0e8",
-      "captured_utc": "2026-10-19T02:54:42.374507+00:00",
+      "captured_utc": "2026-10-19T03:07:36.951629+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -463,7 +463,7 @@
     {
       "file": "screenshots/release-1.6.0/flint_05-status-proof.png",
       "sha256": "58fe7ef6c5c866053aa2e3b9447c634baa5f5c1ff876a9f66a36e4357cefc28a",
-      "captured_utc": "2026-10-19T02:55:09.710612+00:00",
+      "captured_utc": "2026-10-19T03:08:04.294292+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -498,7 +498,7 @@
     {
       "file": "screenshots/release-1.6.0/flint_06-catalan-status.png",
       "sha256": "03f32cea12e3cdc137728969f4175a46c29819600ed5e4849be6cf763ab236de",
-      "captured_utc": "2026-10-19T02:55:37.067136+00:00",
+      "captured_utc": "2026-10-19T03:08:31.649365+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -533,7 +533,7 @@
     {
       "file": "screenshots/release-1.6.0/flint_07-long-phrase.png",
       "sha256": "20935430708933cf079f2d83bc9cb768351d326575290bfbbb872870f7ad5d13",
-      "captured_utc": "2026-10-19T02:55:38.920042+00:00",
+      "captured_utc": "2026-10-19T03:08:33.493368+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -568,7 +568,7 @@
     {
       "file": "screenshots/release-1.6.0/flint_08-double-tap.png",
       "sha256": "66bb07f17fffecb12afcfc953e4b05e751be3add27008103e5f9e489685de555",
-      "captured_utc": "2026-10-19T02:55:40.755334+00:00",
+      "captured_utc": "2026-10-19T03:08:35.330328+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -603,7 +603,7 @@
     {
       "file": "screenshots/release-1.6.0/flint_08-double-tap-triggered.png",
       "sha256": "b279e9ca0d88879bd3f740b68dd4b99adfb33e039512e248d670111e6cb626fa",
-      "captured_utc": "2026-10-19T02:55:41.173912+00:00",
+      "captured_utc": "2026-10-19T03:08:35.744915+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -638,7 +638,7 @@
     {
       "file": "screenshots/release-1.6.0/flint_08-double-tap-restored.png",
       "sha256": "66bb07f17fffecb12afcfc953e4b05e751be3add27008103e5f9e489685de555",
-      "captured_utc": "2026-10-19T02:55:44.688754+00:00",
+      "captured_utc": "2026-10-19T03:08:39.260257+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -673,7 +673,7 @@
     {
       "file": "screenshots/release-1.6.0/flint_09-gesture-disabled.png",
       "sha256": "66bb07f17fffecb12afcfc953e4b05e751be3add27008103e5f9e489685de555",
-      "captured_utc": "2026-10-19T02:55:46.532735+00:00",
+      "captured_utc": "2026-10-19T03:08:41.085463+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -708,7 +708,7 @@
     {
       "file": "screenshots/release-1.6.0/flint_09-gesture-disabled-triggered.png",
       "sha256": "66bb07f17fffecb12afcfc953e4b05e751be3add27008103e5f9e489685de555",
-      "captured_utc": "2026-10-19T02:55:46.955550+00:00",
+      "captured_utc": "2026-10-19T03:08:41.505495+00:00",
       "width": 144,
       "height": 168,
       "settings": {
@@ -743,7 +743,7 @@
     {
       "file": "screenshots/release-1.6.0/flint_09-gesture-disabled-restored.png",
       "sha256": "66bb07f17fffecb12afcfc953e4b05e751be3add27008103e5f9e489685de555",
-      "captured_utc": "2026-10-19T02:55:50.478157+00:00",
+      "captured_utc": "2026-10-19T03:08:45.023449+00:00",
       "width": 144,
       "height": 168,
       "settings": {

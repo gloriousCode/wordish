@@ -266,7 +266,7 @@
     "resources/CHANGES.html": "4bf7fa61fc73cb9586d649d6d68c9b867bc52306db3abc8dc9f03f9ee754eb76",
     "resources/banner.png": "bb3372c648976a5fe4c7d87d1749a8532333b5735e9740af923d63d3a11a77d1",
     "resources/banner.xcf": "0498ca9772187681791a833193c8cd89881dbf50f11d722c11680f012244426b",
-    "resources/configure-fuzzy-text-two.html": "219c18728ac19a73e50fd1138862b3dc2c8d6ec1c784980ddd1d076983288948",
+    "resources/configure-fuzzy-text-two.html": "0e61d1f170990ecdd033048fdca267434900714a83c3bfa739496513d326f076",
     "resources/fonts/Roboto-Bold.ttf": "deb990e241954e1af87c6033d40a76cf0f48e0d112541794526051ac4a3ee2c8",
     "resources/fonts/Roboto-Condensed.ttf": "2af71369b6e1ab597407c5d720ca6e3fcf33554762c14953aa21dbb8667c55f0",
     "resources/fonts/smooth/Roboto-Bold-48-1.pbf": "7a40f3bfe943806ef72e25eb664e3c7202a4014b8e9437aa0a71e242d74df5ff",
@@ -288,8 +288,8 @@
     "resources/pebble-screenshot-swedish.png": "e502457255c242d49b3f605bc5cfa5097705b466a6323d33ded193be362ffe0f"
   },
   "sdk": "/Users/scottg/Library/Application Support/Pebble SDK/SDKs/4.33.1",
-  "git_head": "119fb6937ef1ef348d9ef36c3b0f56d24fa50cb6",
-  "git_status": " M CHANGES.markdown\n M README.md\n M RELEASE_1.6.0.md\n M appinfo.json\n M makefile\n M resources/CHANGES.html\n M resources/configure-fuzzy-text-two.html\n M screenshots/release-1.6.0/aplite_manifest.json\n M screenshots/release-1.6.0/basalt_manifest.json\n M screenshots/release-1.6.0/chalk_manifest.json\n M screenshots/release-1.6.0/diorite_manifest.json\n M screenshots/release-1.6.0/emery_01-clear-words.png\n M screenshots/release-1.6.0/emery_02-colour-rows.png\n M screenshots/release-1.6.0/emery_03-corner-date.png\n M screenshots/release-1.6.0/emery_04-exact-time.png\n M screenshots/release-1.6.0/emery_05-status-proof.png\n M screenshots/release-1.6.0/emery_07-long-phrase.png\n M screenshots/release-1.6.0/emery_08-double-tap-restored.png\n M screenshots/release-1.6.0/emery_08-double-tap-triggered.png\n M screenshots/release-1.6.0/emery_08-double-tap.png\n M screenshots/release-1.6.0/emery_09-gesture-disabled-restored.png\n M screenshots/release-1.6.0/emery_09-gesture-disabled-triggered.png\n M screenshots/release-1.6.0/emery_09-gesture-disabled.png\n M screenshots/release-1.6.0/emery_manifest.json\n M screenshots/release-1.6.0/flint_manifest.json\n M screenshots/release-1.6.0/gabbro_01-clear-words.png\n M screenshots/release-1.6.0/gabbro_02-colour-rows.png\n M screenshots/release-1.6.0/gabbro_03-corner-date.png\n M screenshots/release-1.6.0/gabbro_04-exact-time.png\n M screenshots/release-1.6.0/gabbro_05-status-proof.png\n M screenshots/release-1.6.0/gabbro_07-long-phrase.png\n M screenshots/release-1.6.0/gabbro_08-double-tap-restored.png\n M screenshots/release-1.6.0/gabbro_08-double-tap-triggered.png\n M screenshots/release-1.6.0/gabbro_08-double-tap.png\n M screenshots/release-1.6.0/gabbro_09-gesture-disabled-restored.png\n M screenshots/release-1.6.0/gabbro_09-gesture-disabled-triggered.png\n M screenshots/release-1.6.0/gabbro_09-gesture-disabled.png\n M screenshots/release-1.6.0/gabbro_manifest.json\n M scripts/capture_screenshots.py\n M scripts/prepare_store_assets.py\n M src/TextWatch.c\n M src/js/pebble-js-app.js\n M store/1.6.0/release-notes.txt\n M tests/configuration_test.js\n?? resources/fonts/smooth/\n?? screenshots/preset-audit-1.6.0/\n?? scripts/generate_smooth_fonts.py\n?? scripts/screenshot_presets.js\n?? src/smooth_fonts.c\n?? src/smooth_fonts.h\n?? tests/capture_presets_test.py\n?? tests/smooth_font_renderer_test.c\n?? tests/smooth_font_stubs/\n?? tests/smooth_fonts_test.py\n",
+  "git_head": "66d7dcbece976188c269216a4d2369dda4750f25",
+  "git_status": " M CHANGES.markdown\n M README.md\n M RELEASE_1.6.0.md\n M resources/configure-fuzzy-text-two.html\n M tests/configuration_test.js\n",
   "emulator": {
     "pid": 88733,
     "platform": "emery",
@@ -323,7 +323,7 @@
     {
       "file": "screenshots/release-1.6.0/emery_01-clear-words.png",
       "sha256": "b744541356753f27d148c39de3b8b0f9da29eebe1991f2071d9967763150fbee",
-      "captured_utc": "2026-10-19T02:55:57.751917+00:00",
+      "captured_utc": "2026-10-19T03:07:32.458535+00:00",
       "width": 200,
       "height": 228,
       "settings": {
@@ -358,7 +358,7 @@
     {
       "file": "screenshots/release-1.6.0/emery_02-colour-rows.png",
       "sha256": "3c9fe556ba0cf385de7e4fd59ff2a2a1dfa74adcce0775eff09728058bbe5fd4",
-      "captured_utc": "2026-10-19T02:55:59.668450+00:00",
+      "captured_utc": "2026-10-19T03:07:34.359293+00:00",
       "width": 200,
       "height": 228,
       "settings": {
@@ -393,7 +393,7 @@
     {
       "file": "screenshots/release-1.6.0/emery_03-corner-date.png",
       "sha256": "e970478927daf74bd50a9b3fc72bad19c6a9d7e2c4b31cd6622e297a8af8c613",
-      "captured_utc": "2026-10-19T02:56:01.584783+00:00",
+      "captured_utc": "2026-10-19T03:07:36.263730+00:00",
       "width": 200,
       "height": 228,
       "settings": {
@@ -428,7 +428,7 @@
     {
       "file": "screenshots/release-1.6.0/emery_04-exact-time.png",
       "sha256": "34c99851c76e32578d8edee5e1e92369ddf763f689f44e67afdb16108224660b",
-      "captured_utc": "2026-10-19T02:56:03.497470+00:00",
+      "captured_utc": "2026-10-19T03:07:38.158779+00:00",
       "width": 200,
       "height": 228,
       "settings": {
@@ -463,7 +463,7 @@
     {
       "file": "screenshots/release-1.6.0/emery_05-status-proof.png",
       "sha256": "acf5f086ae1873f1b981f222e02ca6073c4e74eb8b0dfbfe2daa7309d74e4016",
-      "captured_utc": "2026-10-19T02:56:30.901909+00:00",
+      "captured_utc": "2026-10-19T03:08:05.551104+00:00",
       "width": 200,
       "height": 228,
       "settings": {
@@ -498,7 +498,7 @@
     {
       "file": "screenshots/release-1.6.0/emery_06-catalan-status.png",
       "sha256": "56fa3e4b8af4bca616b20658b129b809847e22434f8df977b2b925e2afeae46b",
-      "captured_utc": "2026-10-19T02:56:58.304143+00:00",
+      "captured_utc": "2026-10-19T03:08:32.956468+00:00",
       "width": 200,
       "height": 228,
       "settings": {
@@ -533,7 +533,7 @@
     {
       "file": "screenshots/release-1.6.0/emery_07-long-phrase.png",
       "sha256": "cc896722610bc87d7aa7572b5bfd0232951815e25d5c7fcfa177081615969b93",
-      "captured_utc": "2026-10-19T02:57:00.210033+00:00",
+      "captured_utc": "2026-10-19T03:08:34.862094+00:00",
       "width": 200,
       "height": 228,
       "settings": {
@@ -568,7 +568,7 @@
     {
       "file": "screenshots/release-1.6.0/emery_08-double-tap.png",
       "sha256": "bdc522b4de74119d83c77eeb253568b537acc300adfbe8f00cd292375cb9df75",
-      "captured_utc": "2026-10-19T02:57:02.112007+00:00",
+      "captured_utc": "2026-10-19T03:08:36.759203+00:00",
       "width": 200,
       "height": 228,
       "settings": {
@@ -603,7 +603,7 @@
     {
       "file": "screenshots/release-1.6.0/emery_08-double-tap-triggered.png",
       "sha256": "e917156b9c134471fab196ab75fd441e55f75bd81f4fb6082dff95e2febd0d30",
-      "captured_utc": "2026-10-19T02:57:02.587444+00:00",
+      "captured_utc": "2026-10-19T03:08:37.225704+00:00",
       "width": 200,
       "height": 228,
       "settings": {
@@ -638,7 +638,7 @@
     {
       "file": "screenshots/release-1.6.0/emery_08-double-tap-restored.png",
       "sha256": "bdc522b4de74119d83c77eeb253568b537acc300adfbe8f00cd292375cb9df75",
-      "captured_utc": "2026-10-19T02:57:06.165865+00:00",
+      "captured_utc": "2026-10-19T03:08:40.808649+00:00",
       "width": 200,
       "height": 228,
       "settings": {
@@ -673,7 +673,7 @@
     {
       "file": "screenshots/release-1.6.0/emery_09-gesture-disabled.png",
       "sha256": "bdc522b4de74119d83c77eeb253568b537acc300adfbe8f00cd292375cb9df75",
-      "captured_utc": "2026-10-19T02:57:08.065177+00:00",
+      "captured_utc": "2026-10-19T03:08:42.708340+00:00",
       "width": 200,
       "height": 228,
       "settings": {
@@ -708,7 +708,7 @@
     {
       "file": "screenshots/release-1.6.0/emery_09-gesture-disabled-triggered.png",
       "sha256": "bdc522b4de74119d83c77eeb253568b537acc300adfbe8f00cd292375cb9df75",
-      "captured_utc": "2026-10-19T02:57:08.540231+00:00",
+      "captured_utc": "2026-10-19T03:08:43.175201+00:00",
       "width": 200,
       "height": 228,
       "settings": {
@@ -743,7 +743,7 @@
     {
       "file": "screenshots/release-1.6.0/emery_09-gesture-disabled-restored.png",
       "sha256": "bdc522b4de74119d83c77eeb253568b537acc300adfbe8f00cd292375cb9df75",
-      "captured_utc": "2026-10-19T02:57:12.116425+00:00",
+      "captured_utc": "2026-10-19T03:08:46.756472+00:00",
       "width": 200,
       "height": 228,
       "settings": {

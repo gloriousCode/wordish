@@ -18,6 +18,8 @@ version 1.6.0 (unreleased)
   for exact time.
 - Adds optional, silent low-battery and phone-disconnection indicators.
 - Adds a settings colour preview, contrast warning and accurate custom-style label.
+- Groups everyday settings separately from optional colour editing, keeps Save
+  accessible, and lets users undo changes before sending them to the watch.
 - Preserves legacy inverted colours and existing settings during partial updates.
 - Retries failed settings delivery twice, without letting stale saves override new ones.
 - Fixes missing digital-time glyphs, truncated translated phrases, small-buffer

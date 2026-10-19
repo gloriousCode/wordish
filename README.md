@@ -34,6 +34,7 @@ old watchface forward for current Rebble/PebbleOS development.
 
 Features:
 
+ - Mobile-friendly settings with live colour previews, optional fine-tuning and undo
  - Fuzzy time in natural language
  - Modern PebbleOS target support, including Emery and Gabbro
  - Smoothed Roboto word rendering on Pebble Time 2 and Pebble Round 2

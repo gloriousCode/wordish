@@ -40,6 +40,9 @@
         .radio label, .radio-inline label, .toggle { min-height: 44px;
             margin: 2px 0; padding: 10px 8px; border-radius: 8px; font-weight: 400; }
         .radio label:hover, .radio-inline label:hover, .toggle:hover { background: #f0f5ef; }
+        .choice-grid > .help { grid-column: 1 / -1; }
+        #detail-colour-preview { position: sticky; top: 8px; z-index: 1; padding: 16px;
+            border: 1px solid #9caea5; border-radius: 10px; font-size: 22px; }
         .choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; }
         .btn, button { display: inline-block; min-height: 44px; padding: 10px 16px;
             border-radius: 9px; border: 1px solid #9caea5; background: #fff;
@@ -287,7 +290,7 @@
 				<p class="help">The battery indicator appears at 20% or less when the watch is not charging.</p>
 				<label class="toggle"><input type="checkbox" name="disconnect_enabled" value="true" /> Show when the phone is disconnected</label>
 				<p class="help">Keep these off for a clean display. Indicators do not vibrate. Style presets preserve these preferences.</p>
-			</fieldset><details id="customise-style"><summary>Fine-tune your style<span class="detail-note">Fonts, alignment and individual colours</span></summary><fieldset>
+			</fieldset><details id="customise-style"><summary>Fine-tune your style<span class="detail-note">Fonts, alignment and individual colours</span></summary><div id="detail-colour-preview" aria-label="Colour preview"><span id="detail-row-one">quarter</span> <span id="detail-row-two">past</span> <strong id="detail-row-three">three</strong></div><p class="help">This colour sample stays visible while you edit. Watch fonts and line breaks may differ.</p><fieldset>
 				<legend>Text style</legend><div class="choice-grid">
 				<div class="radio">
 					<label>
@@ -314,7 +317,7 @@
 					</label>
 				</div>
 			<p class="help">Text automatically shrinks to fit. The available font appearance varies by watch model.</p></div></fieldset><fieldset>
-				<legend>Text align:</legend><div class="choice-grid">
+				<legend>Text alignment</legend><div class="choice-grid">
 				<div class="radio-inline">
 					<label>
 						<input type="radio" name="align" value="left" />
@@ -787,6 +790,9 @@
 			var background = previewColours[options.background_colour];
 			preview.style.backgroundColor = background;
 			preview.style.textAlign = options.text_align;
+            var detailPreview = document.getElementById('detail-colour-preview');
+            detailPreview.style.backgroundColor = background;
+            detailPreview.style.textAlign = options.text_align;
 			var backgroundLuminance = luminance(background);
 			var lowContrast = false;
 			function applyColour(element, colour, minimumContrast) {
@@ -799,6 +805,7 @@
 			}
 			['one', 'two', 'three'].forEach(function(row) {
 				applyColour(document.getElementById('preview-row-' + row), options['row_' + row + '_colour']);
+                applyColour(document.getElementById('detail-row-' + row), options['row_' + row + '_colour']);
 			});
 			var dateParts = {
 				dd_mm_yy: ['03-', '08-', '26'], mm_dd_yyyy: ['08-', '03-', '2026'],

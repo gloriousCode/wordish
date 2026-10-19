@@ -370,7 +370,7 @@ test('manifest, bridge and configuration page agree on release identity and ever
   assert.equal(context.VERSION, manifest.versionLabel);
   assert.equal(manifest.shortName, manifest.longName);
   assert.ok(html.includes('<title>Configure ' + manifest.longName + '</title>'));
-  assert.ok(html.includes('<h1>Configure ' + manifest.longName + '</h1>'));
+  assert.ok(html.includes('<h1>Make ' + manifest.longName + ' yours</h1>'));
   const expected = {
     INVERT: [0, 0], TEXT_ALIGN: [1, 0], LANGUAGE: [2, 2], FONT_CHOICE: [3, 0],
     FOREGROUND_COLOR: [4, 0xffffff], BACKGROUND_COLOR: [5, 0],
@@ -477,4 +477,47 @@ test('every preset has readable word and date contrast and valid bridge colours'
     assert.equal(saved.date_part_one_colour, colour);
     assert.equal(bridgeState.context.colourValues[colour], bridgeState.context.optionalColourValues[colour]);
   }
+});
+
+test('undo restores the complete opened settings after preset and behaviour edits', () => {
+  const { context, field, document } = page({ lang: 'fr', font: 'compact', text_align: 'right',
+    foreground_colour: 'cream', background_colour: 'forest', row_one_colour: 'mint',
+    date_position: 'off', date_format: 'mm_dd_yyyy', date_part_one_colour: 'rose',
+    gesture_enabled: false, exact_time_seconds: 10, animations_enabled: false,
+    low_battery_enabled: true, disconnect_enabled: true });
+  const opened = JSON.stringify(context.saveOptions());
+  assert.equal(document.getElementById('b-undo').disabled, true);
+  field('preset').value = 'ember';
+  field('preset').listeners.change.call(field('preset'));
+  field('gesture_enabled').checked = true;
+  field('low_battery_enabled').checked = false;
+  document.getElementById('config').listeners.change();
+  assert.equal(document.getElementById('b-undo').disabled, false);
+  assert.match(document.getElementById('edit-status').textContent, /Unsaved changes/);
+  document.getElementById('b-undo').listeners.click();
+  assert.equal(JSON.stringify(context.saveOptions()), opened);
+  assert.equal(field('exact_time_seconds').disabled, true);
+  assert.equal(field('date_format').disabled, true);
+  assert.equal(document.getElementById('b-undo').disabled, true);
+  assert.equal(document.getElementById('edit-status').textContent, 'No unsaved changes');
+});
+
+test('matching all text to the default colour is previewed, saved and reversible', () => {
+  const { context, field, document } = page({ foreground_colour: 'cream', background_colour: 'maroon',
+    row_one_colour: 'peach', row_two_colour: 'rose', row_three_colour: 'white',
+    date_part_one_colour: 'peach', date_position: 'top' });
+  const opened = JSON.stringify(context.saveOptions());
+  document.getElementById('b-match-colours').listeners.click();
+  for (const key of ['row_one_colour', 'row_two_colour', 'row_three_colour',
+    'date_part_one_colour', 'date_part_two_colour', 'date_part_three_colour']) {
+    assert.equal(field(key).value, 'match');
+  }
+  assert.equal(document.getElementById('detail-row-one').style.color, '#ffffaa');
+  assert.equal(document.getElementById('detail-colour-preview').style.backgroundColor, '#550000');
+  assert.equal(document.getElementById('preview-row-one').style.color, '#ffffaa');
+  document.getElementById('b-submit').listeners.click();
+  const saved = JSON.parse(decodeURIComponent(document.location.split('#')[1]));
+  assert.equal(saved.row_one_colour, 'match');
+  document.getElementById('b-undo').listeners.click();
+  assert.equal(JSON.stringify(context.saveOptions()), opened);
 });

@@ -266,7 +266,7 @@
     "resources/CHANGES.html": "4bf7fa61fc73cb9586d649d6d68c9b867bc52306db3abc8dc9f03f9ee754eb76",
     "resources/banner.png": "bb3372c648976a5fe4c7d87d1749a8532333b5735e9740af923d63d3a11a77d1",
     "resources/banner.xcf": "0498ca9772187681791a833193c8cd89881dbf50f11d722c11680f012244426b",
-    "resources/configure-fuzzy-text-two.html": "219c18728ac19a73e50fd1138862b3dc2c8d6ec1c784980ddd1d076983288948",
+    "resources/configure-fuzzy-text-two.html": "0e61d1f170990ecdd033048fdca267434900714a83c3bfa739496513d326f076",
     "resources/fonts/Roboto-Bold.ttf": "deb990e241954e1af87c6033d40a76cf0f48e0d112541794526051ac4a3ee2c8",
     "resources/fonts/Roboto-Condensed.ttf": "2af71369b6e1ab597407c5d720ca6e3fcf33554762c14953aa21dbb8667c55f0",
     "resources/fonts/smooth/Roboto-Bold-48-1.pbf": "7a40f3bfe943806ef72e25eb664e3c7202a4014b8e9437aa0a71e242d74df5ff",
@@ -288,8 +288,8 @@
     "resources/pebble-screenshot-swedish.png": "e502457255c242d49b3f605bc5cfa5097705b466a6323d33ded193be362ffe0f"
   },
   "sdk": "/Users/scottg/Library/Application Support/Pebble SDK/SDKs/4.33.1",
-  "git_head": "119fb6937ef1ef348d9ef36c3b0f56d24fa50cb6",
-  "git_status": " M CHANGES.markdown\n M README.md\n M RELEASE_1.6.0.md\n M appinfo.json\n M makefile\n M resources/CHANGES.html\n M resources/configure-fuzzy-text-two.html\n M screenshots/release-1.6.0/aplite_manifest.json\n M screenshots/release-1.6.0/basalt_manifest.json\n M screenshots/release-1.6.0/chalk_manifest.json\n M screenshots/release-1.6.0/diorite_manifest.json\n M screenshots/release-1.6.0/emery_01-clear-words.png\n M screenshots/release-1.6.0/emery_02-colour-rows.png\n M screenshots/release-1.6.0/emery_03-corner-date.png\n M screenshots/release-1.6.0/emery_04-exact-time.png\n M screenshots/release-1.6.0/emery_05-status-proof.png\n M screenshots/release-1.6.0/emery_07-long-phrase.png\n M screenshots/release-1.6.0/emery_08-double-tap-restored.png\n M screenshots/release-1.6.0/emery_08-double-tap-triggered.png\n M screenshots/release-1.6.0/emery_08-double-tap.png\n M screenshots/release-1.6.0/emery_09-gesture-disabled-restored.png\n M screenshots/release-1.6.0/emery_09-gesture-disabled-triggered.png\n M screenshots/release-1.6.0/emery_09-gesture-disabled.png\n M screenshots/release-1.6.0/emery_manifest.json\n M screenshots/release-1.6.0/flint_manifest.json\n M screenshots/release-1.6.0/gabbro_01-clear-words.png\n M screenshots/release-1.6.0/gabbro_02-colour-rows.png\n M screenshots/release-1.6.0/gabbro_03-corner-date.png\n M screenshots/release-1.6.0/gabbro_04-exact-time.png\n M screenshots/release-1.6.0/gabbro_05-status-proof.png\n M screenshots/release-1.6.0/gabbro_07-long-phrase.png\n M screenshots/release-1.6.0/gabbro_08-double-tap-restored.png\n M screenshots/release-1.6.0/gabbro_08-double-tap-triggered.png\n M screenshots/release-1.6.0/gabbro_08-double-tap.png\n M screenshots/release-1.6.0/gabbro_09-gesture-disabled-restored.png\n M screenshots/release-1.6.0/gabbro_09-gesture-disabled-triggered.png\n M screenshots/release-1.6.0/gabbro_09-gesture-disabled.png\n M screenshots/release-1.6.0/gabbro_manifest.json\n M scripts/capture_screenshots.py\n M src/TextWatch.c\n M src/js/pebble-js-app.js\n M store/1.6.0/release-notes.txt\n M tests/configuration_test.js\n?? resources/fonts/smooth/\n?? screenshots/preset-audit-1.6.0/\n?? scripts/generate_smooth_fonts.py\n?? scripts/screenshot_presets.js\n?? src/smooth_fonts.c\n?? src/smooth_fonts.h\n?? tests/smooth_font_renderer_test.c\n?? tests/smooth_font_stubs/\n?? tests/smooth_fonts_test.py\n",
+  "git_head": "66d7dcbece976188c269216a4d2369dda4750f25",
+  "git_status": " M CHANGES.markdown\n M README.md\n M RELEASE_1.6.0.md\n M resources/configure-fuzzy-text-two.html\n M screenshots/release-1.6.0/aplite_manifest.json\n M screenshots/release-1.6.0/basalt_manifest.json\n M screenshots/release-1.6.0/chalk_manifest.json\n M screenshots/release-1.6.0/diorite_manifest.json\n M screenshots/release-1.6.0/emery_manifest.json\n M screenshots/release-1.6.0/flint_manifest.json\n M screenshots/release-1.6.0/gabbro_manifest.json\n M tests/configuration_test.js\n",
   "emulator": {
     "pid": 88737,
     "platform": "gabbro",
@@ -321,7 +321,7 @@
     {
       "file": "screenshots/preset-audit-1.6.0/gabbro_preset-classic.png",
       "sha256": "8272bc8f2aaff59435989f94214a19c71dc8a37924634e870a2c26b34bb17ed8",
-      "captured_utc": "2026-10-19T02:54:36.854032+00:00",
+      "captured_utc": "2026-10-19T03:09:22.282576+00:00",
       "width": 260,
       "height": 260,
       "settings": {
@@ -356,7 +356,7 @@
     {
       "file": "screenshots/preset-audit-1.6.0/gabbro_preset-paper.png",
       "sha256": "961a446451052d52545ea6c07b90d8b80d0d689dcdf94f9f781f4ecdeaddf9a9",
-      "captured_utc": "2026-10-19T02:54:38.774125+00:00",
+      "captured_utc": "2026-10-19T03:09:24.225055+00:00",
       "width": 260,
       "height": 260,
       "settings": {
@@ -391,7 +391,7 @@
     {
       "file": "screenshots/preset-audit-1.6.0/gabbro_preset-quiet.png",
       "sha256": "032da241d2fa6741045e2a0d3eb94383c04b94924b285ab0e93e951b063f2349",
-      "captured_utc": "2026-10-19T02:54:40.683109+00:00",
+      "captured_utc": "2026-10-19T03:09:26.147695+00:00",
       "width": 260,
       "height": 260,
       "settings": {
@@ -426,7 +426,7 @@
     {
       "file": "screenshots/preset-audit-1.6.0/gabbro_preset-lagoon.png",
       "sha256": "5095a09980571f91fc4d21aea0f4fb3ddeb3a900009c6bd99c2f1d67a905550c",
-      "captured_utc": "2026-10-19T02:54:42.597924+00:00",
+      "captured_utc": "2026-10-19T03:09:28.066919+00:00",
       "width": 260,
       "height": 260,
       "settings": {
@@ -461,7 +461,7 @@
     {
       "file": "screenshots/preset-audit-1.6.0/gabbro_preset-ember.png",
       "sha256": "351a3a62bcebbdebc437bc7fd723600462a52f976a399202e747c410ff052ca5",
-      "captured_utc": "2026-10-19T02:54:44.504793+00:00",
+      "captured_utc": "2026-10-19T03:09:30.004206+00:00",
       "width": 260,
       "height": 260,
       "settings": {
@@ -496,7 +496,7 @@
     {
       "file": "screenshots/preset-audit-1.6.0/gabbro_preset-orchid.png",
       "sha256": "c8e37cd66f6a515f84403ad09d0ec145e2086484fb052e10ca59ca35d1a0d2a1",
-      "captured_utc": "2026-10-19T02:54:46.425631+00:00",
+      "captured_utc": "2026-10-19T03:09:31.932844+00:00",
       "width": 260,
       "height": 260,
       "settings": {
@@ -531,7 +531,7 @@
     {
       "file": "screenshots/preset-audit-1.6.0/gabbro_preset-grove.png",
       "sha256": "f66c0ca3c49950dba4bc0d9fdb9ed54b1dc95a30b6a39a3fbf07941beb70c98a",
-      "captured_utc": "2026-10-19T02:54:48.336600+00:00",
+      "captured_utc": "2026-10-19T03:09:33.886392+00:00",
       "width": 260,
       "height": 260,
       "settings": {
@@ -566,7 +566,7 @@
     {
       "file": "screenshots/preset-audit-1.6.0/gabbro_preset-sand.png",
       "sha256": "aa73ee5ad6cef1e149095b2c3e819a4e2b6df419ff63101d25ac3c973cb5c39f",
-      "captured_utc": "2026-10-19T02:54:50.255078+00:00",
+      "captured_utc": "2026-10-19T03:09:35.813109+00:00",
       "width": 260,
       "height": 260,
       "settings": {

@@ -117,7 +117,7 @@ measurements. The settings preview now also checks small date text against 4.5:1
 See the [preset audit](screenshots/preset-audit-1.6.0/README.md).
 
 The final SDK 4.33.1 build passes `make lint` for all seven targets. The
-`make misc_checks` run passes both host C suites and 21 Node configuration tests,
+`make misc_checks` run passes both host C suites and 23 Node configuration tests,
 plus the smooth-font renderer, generated-font and capture-preset checks.
 The C suite includes 193,536 decorated layout combinations; its SDK model is
 complemented by actual captures from all seven emulators. Real-font regression cases
